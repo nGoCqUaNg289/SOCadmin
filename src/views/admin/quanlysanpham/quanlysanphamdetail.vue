@@ -31,19 +31,34 @@
           </CCardHeader>
           <CCardBody height="auto">
             <CListGroup>
-              <CListGroupItem>Mã số máy: <span>N3I5202W</span></CListGroupItem>
-              <CListGroupItem
-                >Tên máy: <span>Inspiron 7306</span></CListGroupItem
-              >
-              <CListGroupItem>Thương hiệu: <span>Dell</span></CListGroupItem>
-              <CListGroupItem>Giá: <span>27.069.000</span></CListGroupItem>
-              <CListGroupItem
-                >Ngày đăng: <span>30/09/2021</span></CListGroupItem
-              >
-              <CListGroupItem>Trạng thái: <span>Còn hàng</span></CListGroupItem>
-              <CListGroupItem
-                >Thời gian bảo hành: <span>1 năm</span></CListGroupItem
-              >
+              <CListGroupItem>
+                <span class="Title-font-size">Mã số máy : </span>
+                <span>{{ getData.id }}</span>
+              </CListGroupItem>
+              <CListGroupItem>
+                <span class="Title-font-size">Tên máy : </span>
+                <span>{{ getData.name }}</span>
+              </CListGroupItem>
+              <CListGroupItem>
+                <span class="Title-font-size">Thương hiệu : </span>
+                <span>{{ getData.id }}</span>
+              </CListGroupItem>
+              <CListGroupItem>
+                <span class="Title-font-size">Giá : </span>
+                <span>{{ formatPrice(getData.price) }} đ</span>
+              </CListGroupItem>
+              <CListGroupItem>
+                <span class="Title-font-size">Ngày đăng : </span>
+                <span>{{ getData.id }}</span>
+              </CListGroupItem>
+              <CListGroupItem>
+                <span class="Title-font-size">Trạng thái : </span>
+                <span>{{ getData.status }}</span>
+              </CListGroupItem>
+              <CListGroupItem>
+                <span class="Title-font-size">Thời gian bảo hành: : </span>
+                <span>{{ getData.id }}</span>
+              </CListGroupItem>
             </CListGroup>
           </CCardBody>
         </CCard>
@@ -59,9 +74,7 @@
               </tr>
             </thead>
             <tr>
-              <td>
-                Processor
-              </td>
+              <td>Processor</td>
               <td>Intel Core i7 Quad-Core</td>
             </tr>
             <tr>
@@ -201,9 +214,7 @@
             </tr>
             <tr>
               <td>Modem</td>
-              <td>
-                —
-              </td>
+              <td>—</td>
             </tr>
             <tr>
               <td>Wi-Fi</td>
@@ -290,11 +301,16 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "QuanLySanPhamDetail",
-
+  props: {
+    item: Number,
+  },
   data() {
     return {
+      getData: "",
       selected: [], // Must be an array reference!
       show: true,
       horizontal: { label: "col-3", input: "col-9" },
@@ -333,7 +349,14 @@ export default {
       formCollapsed: true,
     };
   },
+  created() {
+    this.getDetailProduct();
+  },
   methods: {
+    formatPrice(value) {
+      let val = (value / 1).toFixed(0).replace(".", ",");
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
     validator(val) {
       return val ? val.length >= 4 : false;
     },
@@ -343,8 +366,25 @@ export default {
     UpdateProduct() {
       this.$router.push("/quanlysanphamupdate");
     },
+    getDetailProduct() {
+      axios
+        .get(
+          "https://javamahtest.herokuapp.com/api/customer/products/" + this.item
+        )
+        .then((response) => {
+          this.getData = response.data.object;
+          console.log(this.getData);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
   },
 };
 </script>
 
-<style></style>
+<style scoped>
+.Title-font-size {
+  font-weight: 600;
+}
+</style>

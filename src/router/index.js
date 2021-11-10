@@ -125,26 +125,58 @@ function configRoutes() {
                     name: 'Dashboard',
                     component: Dashboard
                 },
+
                 {
-                    path: 'quanlysanphamlist',
-                    name: 'Danh sách sản phẩm',
-                    component: quanlysanphamlist
+                    path: 'admin',
+                    redirect: '/admin/quanlysanphamlist',
+                    name: 'admin',
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: 'quanlysanphamlist',
+                            name: 'Danh sách sản phẩm',
+                            component: quanlysanphamlist
+                        }, {
+                            path: 'quanlysanphamupdate',
+                            name: 'Chỉnh sửa nội dung sản phẩm',
+                            component: quanlysanphamupdate
+                        },
+                        {
+                            path: 'quanlysanphamdetail',
+                            name: 'Thông tin chi tiết sản phẩm',
+                            component: quanlysanphamdetail,
+                            props: true,
+                        },
+                        {
+                            path: 'quanlysanphamcreate',
+                            name: 'Thêm mới sản phẩm',
+                            component: quanlysanphamcreate
+                        }
+                    ]
                 },
-                {
-                    path: 'quanlysanphamupdate',
-                    name: 'Chỉnh sửa nội dung sản phẩm',
-                    component: quanlysanphamupdate
-                },
-                {
-                    path: 'quanlysanphamdetail',
-                    name: 'Thông tin chi tiết sản phẩm',
-                    component: quanlysanphamdetail
-                },
-                {
-                    path: 'quanlysanphamcreate',
-                    name: 'Thêm mới sản phẩm',
-                    component: quanlysanphamcreate
-                },
+
+                // {
+                //     path: 'quanlysanphamlist',
+                //     name: 'Danh sách sản phẩm',
+                //     component: quanlysanphamlist
+                // },
+                // {
+                //     path: 'quanlysanphamupdate',
+                //     name: 'Chỉnh sửa nội dung sản phẩm',
+                //     component: quanlysanphamupdate
+                // },
+                // {
+                //     path: 'quanlysanphamdetail',
+                //     name: 'Thông tin chi tiết sản phẩm',
+                //     component: quanlysanphamdetail,
+                //     props: true,
+                // },
+                // {
+                //     path: 'quanlysanphamcreate',
+                //     name: 'Thêm mới sản phẩm',
+                //     component: quanlysanphamcreate
+                // },
                 {
                     path: 'theme',
                     redirect: '/theme/colors',
@@ -365,30 +397,30 @@ function configRoutes() {
                         }
                     ]
                 },
-                {
-                    path: 'quanlysanphamlist',
-                    redirect: '/admin/quanlysanphamlist',
-                    name: 'quanlysanphamlist',
-                    component: {
-                        render(c) { return c('router-view') }
-                    },
-                    children: [{
-                            path: 'quanlysanphamlist',
-                            name: 'quanlysanphamlist',
-                            component: quanlysanphamlist
-                        },
-                        {
-                            path: 'badges',
-                            name: 'Badges',
-                            component: Badges
-                        },
-                        {
-                            path: 'modals',
-                            name: 'Modals',
-                            component: Modals
-                        }
-                    ]
-                }
+                // {
+                //     path: 'quanlysanphamlist',
+                //     redirect: '/admin/quanlysanphamlist',
+                //     name: 'quanlysanphamlist',
+                //     component: {
+                //         render(c) { return c('router-view') }
+                //     },
+                //     children: [{
+                //             path: 'quanlysanphamlist',
+                //             name: 'quanlysanphamlist',
+                //             component: quanlysanphamlist
+                //         },
+                //         {
+                //             path: 'badges',
+                //             name: 'Badges',
+                //             component: Badges
+                //         },
+                //         {
+                //             path: 'modals',
+                //             name: 'Modals',
+                //             component: Modals
+                //         }
+                //     ]
+                // }
             ]
         },
         {

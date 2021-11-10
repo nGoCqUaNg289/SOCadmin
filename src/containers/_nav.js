@@ -1,16 +1,15 @@
 export default [{
     _name: 'CSidebarNav',
-    _children: [
-        // {
-        //     _name: 'CSidebarNavItem',
-        //     name: 'Dashboard',
-        //     to: '/dashboard',
-        //     icon: 'cil-speedometer',
-        //     badge: {
-        //         color: 'primary',
-        //         text: 'NEW'
-        //     }
-        // },
+    _children: [{
+            _name: 'CSidebarNavItem',
+            name: 'Dashboard',
+            to: '/dashboard',
+            icon: 'cil-speedometer',
+            badge: {
+                color: 'primary',
+                text: 'NEW'
+            }
+        },
         // {
         //     _name: 'CSidebarNavTitle',
         //     _children: ['Theme']
@@ -187,7 +186,7 @@ export default [{
         {
             _name: 'CSidebarNavItem',
             name: 'Quản lý sản phẩm',
-            to: '/quanlysanphamlist',
+            to: '/admin/quanlysanphamlist',
             icon: 'cil-cursor',
             badge: {
                 color: 'primary',
@@ -198,7 +197,7 @@ export default [{
         {
             _name: 'CSidebarNavItem',
             name: 'Quản lý tài khoản',
-            to: '/quanlysanphamlist',
+            to: '/admin/quanlysanphamlist',
             icon: 'cil-people',
             badge: {
                 color: 'primary',
