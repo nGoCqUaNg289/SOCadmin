@@ -2,7 +2,7 @@
   <div class="c-app flex-row align-items-center">
     <CContainer>
       <CRow class="justify-content-center">
-        <CCol md="8">
+        <CCol md="5">
           <CCardGroup>
             <CCard class="p-4">
               <CCardBody>
@@ -48,7 +48,7 @@
                 </CForm>
               </CCardBody>
             </CCard>
-            <CCard
+            <!-- <CCard
               color="primary"
               text-color="white"
               class="text-center py-5 d-md-down-none"
@@ -64,7 +64,7 @@
                   Register Now!
                 </CButton>
               </CCardBody>
-            </CCard>
+            </CCard> -->
           </CCardGroup>
         </CCol>
       </CRow>
@@ -84,35 +84,22 @@ export default {
     };
   },
   methods: {
-    // callFunction: function () {
-    //   var v = this;
-    //   setTimeout(function () {
-    //     v.callFunctionTotal();
-    //   }, 0);
-    // },
-    // callFunctionTotal: function () {
-    //   var v = this;
-    //   setTimeout(function () {
-    //     if (localStorage.userToken != "") {
-    //       v.getTotalCart();
-    //     }
-    //   }, 1000);
-    // },
     LoginJWT() {
       console.log("username: " + this.username);
       console.log("password: " + this.password);
       axios
-        .post("https://javamahtest.herokuapp.com/api/authentication/login", {
+        .post("http://socstore.club:8800/api/authentication/login", {
           username: this.username,
           password: this.password,
         })
         .then((response) => {
           console.log("username: " + this.username);
           console.log("password: " + this.password);
-          // localStorage.userToken =
-          //   response.data.tokenType + " " + response.data.accessToken;
-          // this.$store.state.tokenUser = localStorage.userToken;
-          // this.$store.state.userName = response.data.username;
+
+          this.$store.state.userToken =
+            response.data.tokenType + " " + response.data.accessToken;
+
+          console.log(this.$store.state.userToken);
 
           if (response.data.roles[0] == "Director") {
             this.$router.push({
@@ -124,53 +111,16 @@ export default {
               path: "/",
             });
             console.log("Chuyển trang admin");
-          } else if (response.data.roles[0] == "User") {
-            console.log("Đăng nhập user");
           } else {
             console.log("Tài khoản hoặc mật khẩu không chính xác !");
           }
         })
         .catch((e) => {
           this.error.push(e);
-          // console.log(e);
         });
     },
 
-    getTotalCart() {
-      axios
-        .get("https://javamahtest.herokuapp.com/api/customer/cart/get", {
-          headers: {
-            Authorization: this.$store.state.tokenUser,
-          },
-        })
-        .then((response) => {
-          // this.$store.state.totalCart = response.data.object.length;
-          localStorage.sumCart = response.data.object.length;
-          this.$store.state.totalCart = localStorage.sumCart;
-
-          // this.$store.state.StoreCart = response.data.object;
-          // localStorage.detailCart = response.data.object;
-
-          var detailCart = JSON.parse(localStorage.getItem("detailCart")) || [];
-          detailCart.push(response.data.object);
-          localStorage.setItem("detailCart", JSON.stringify(detailCart));
-
-          this.$store.state.StoreCart = JSON.parse(localStorage.detailCart)[0];
-          // console.log(this.$store.state.test);
-          // console.log(response.data.object);
-          // console.log(JSON.parse(localStorage.detailCart)[0]);
-
-          this.$store.state.StoreCartUser = localStorage;
-
-          // console.log(localStorage.detailCart);
-          // console.log(this.$store.state.StoreCartUser);
-          // console.log(response.data.object);
-        })
-        .catch((e) => {
-          this.error.push(e);
-          console.log(e);
-        });
-    },
+    getDataUser() {},
     direcToDash() {
       this.$router.push({
         path: "/",
