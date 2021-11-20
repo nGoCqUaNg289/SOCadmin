@@ -100,8 +100,8 @@ const quanlysanphamlist = () =>
     import ('@/views/admin/quanlysanpham/quanlysanphamlist')
 const quanlysanphamcreate = () =>
     import ('@/views/admin/quanlysanpham/quanlysanphamcreate')
-const quanlysanphamupdate = () =>
-    import ('@/views/admin/quanlysanpham/quanlysanphamupdate')
+// const quanlysanphamupdate = () =>
+//     import ('@/views/admin/quanlysanpham/quanlysanphamupdate')
 const quanlysanphamdetail = () =>
     import ('@/views/admin/quanlysanpham/quanlysanphamdetail')
 
@@ -158,11 +158,12 @@ function configRoutes() {
                             path: 'quanlysanphamlist',
                             name: 'Danh sách sản phẩm',
                             component: quanlysanphamlist
-                        }, {
-                            path: 'quanlysanphamupdate',
-                            name: 'Chỉnh sửa nội dung sản phẩm',
-                            component: quanlysanphamupdate
                         },
+                        // , {
+                        //     path: 'quanlysanphamupdate',
+                        //     name: 'Chỉnh sửa nội dung sản phẩm',
+                        //     component: quanlysanphamupdate
+                        // },
                         {
                             path: 'quanlysanphamdetail',
                             name: 'Thông tin chi tiết sản phẩm',
