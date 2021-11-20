@@ -216,6 +216,16 @@ export default [{
         },
         {
             _name: 'CSidebarNavItem',
+            name: 'Quản lý Blog',
+            to: '/blog',
+            icon: 'cil-star',
+            badge: {
+                color: 'primary',
+                shape: 'pill'
+            }
+        },
+        {
+            _name: 'CSidebarNavItem',
             name: 'Thống kê',
             to: '/quanlysanphamlist',
             icon: 'cil-calculator',
@@ -227,7 +237,7 @@ export default [{
         {
             _name: 'CSidebarNavItem',
             name: 'Quản lý hóa đơn',
-            to: '/quanlysanphamlist',
+            to: '/bill',
             icon: 'cil-puzzle',
             badge: {
                 color: 'primary',

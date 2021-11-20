@@ -2,18 +2,27 @@
   <div>
     <CRow>
       <CCol md="12">
-        
-        <CButton type="reset" size="sm" color="danger" class="btn btn-custom-size">
+        <CButton
+          type="reset"
+          size="sm"
+          color="danger"
+          class="btn btn-custom-size"
+        >
           <i class="cil-x"></i>
-          Huỷ 
+          Huỷ
         </CButton>
-        <CButton type="submit" size="sm" color="primary" class="btn btn-custom-size">
+        <CButton
+          type="submit"
+          size="sm"
+          color="primary"
+          class="btn btn-custom-size"
+        >
           <i class="cil-plus"></i>
           Lưu sản phẩm
-          </CButton>
+        </CButton>
       </CCol>
-      <br/>
-      <br/>
+      <br />
+      <br />
       <CCol md="12" lg="7">
         <CCard>
           <CCardHeader>
@@ -44,49 +53,83 @@
           </CCardHeader>
           <CCardBody height="auto">
             <CListGroup>
-              <CListGroupItem>Mã số máy: 
-                <input type="text" class="input-custom-border-none" placeholder="Nhập mã số máy">
+              <CListGroupItem
+                >Mã số máy:
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Nhập mã số máy"
+                />
               </CListGroupItem>
               <CListGroupItem
-                >Tên máy: <input type="text" class="input-custom-border-none" placeholder="Nhập tên máy">
+                >Tên máy:
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Nhập tên máy"
+                />
               </CListGroupItem>
-              <CListGroupItem>Thương hiệu: 
+              <CListGroupItem
+                >Thương hiệu:
                 <!-- <CSelect
                 horizontal
                 :options="options"
                 placeholder="Chọn thương hiệu"
                 class="input-custom-border-none"
-              /> -->     
-  <select class="custom-select input-custom-border-none" id="inputGroupSelect01" style="width: 60%">
-    <option selected disabled>Chọn thương hiệu</option>
-    <option value="Dell">Dell</option>
-    <option value="HP">HP</option>
-    <option value="LG">LG</option>
-    <option value="Dell">Apple</option>
-    <option value="HP">Asus</option>
-    <option value="LG">Lenovo</option>
-    <option value="Dell">VAIO</option>
-    <option value="HP">Acer</option>
-    <option value="LG">Samsung</option>
-    <option value="HP">Toshiba</option>
-    <option value="LG">MSI</option>
-  </select>
+              /> -->
+                <select
+                  class="custom-select input-custom-border-none"
+                  id="inputGroupSelect01"
+                  style="width: 60%"
+                >
+                  <option selected disabled>Chọn thương hiệu</option>
+                  <option value="Dell">Dell</option>
+                  <option value="HP">HP</option>
+                  <option value="LG">LG</option>
+                  <option value="Dell">Apple</option>
+                  <option value="HP">Asus</option>
+                  <option value="LG">Lenovo</option>
+                  <option value="Dell">VAIO</option>
+                  <option value="HP">Acer</option>
+                  <option value="LG">Samsung</option>
+                  <option value="HP">Toshiba</option>
+                  <option value="LG">MSI</option>
+                </select>
                 <!-- <input type="text" class="input-custom-border-none" placeholder="Nhập thương hiệu"> -->
-                </CListGroupItem>
-              <CListGroupItem>Giá: <input type="text" class="input-custom-border-none" placeholder="Giá máy"></CListGroupItem>
-              <CListGroupItem>Ngày đăng: 
+              </CListGroupItem>
+              <CListGroupItem
+                >Giá:
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Giá máy"
+              /></CListGroupItem>
+              <CListGroupItem
+                >Ngày đăng:
 
                 <input
-                class="input-custom-border-none"
-                type="date"
-                horizontal
-                placeholder=""/>
+                  class="input-custom-border-none"
+                  type="date"
+                  horizontal
+                  placeholder=""
+                />
                 <!-- <input type="text" class="input-custom-border-none" placeholder="Ngày đăng"> -->
-
               </CListGroupItem>
-              <CListGroupItem>Trạng thái: <input type="text" class="input-custom-border-none" placeholder="Trạng thái máy"></CListGroupItem>
-              <CListGroupItem>Thời gian bảo hành: 
-                <input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%">
+              <CListGroupItem
+                >Trạng thái:
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Trạng thái máy"
+              /></CListGroupItem>
+              <CListGroupItem
+                >Thời gian bảo hành:
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
               </CListGroupItem>
             </CListGroup>
           </CCardBody>
@@ -104,44 +147,112 @@
             </thead>
             <tr>
               <td class="title-td">Processor</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Base Clock Speed</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Maximum Boost Speed</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Total Installed Memory</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Memory Type</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Onboard Memory</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Maximum Boost Speed</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Available Memory Slots</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Graphics Type</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>GPU</td>
               <td>
-                <input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%">
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
               </td>
             </tr>
             <thead>
@@ -151,31 +262,80 @@
             </thead>
             <tr>
               <td>Panel Type</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Size</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Aspect Ratio</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Native Resolution</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Touchscreen</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Finish</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Brightness</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <thead>
               <tr>
@@ -184,19 +344,47 @@
             </thead>
             <tr>
               <td>Available Slots</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Total Capacity</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Solid State Storage</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Optical Drive</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <thead>
               <tr>
@@ -205,25 +393,58 @@
             </thead>
             <tr>
               <td>Ports</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Display</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Audio</td>
               <td>
-                <input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%">
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
               </td>
             </tr>
             <tr>
               <td>Expansion Slots</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Media Card Slots</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <thead>
               <tr>
@@ -232,23 +453,58 @@
             </thead>
             <tr>
               <td>Ports</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Network</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Modem</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Wi-Fi</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Bluetooth</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <thead>
               <tr>
@@ -257,23 +513,58 @@
             </thead>
             <tr>
               <td>Battery Chemistry</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Watt Hours / Type</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Maximum Runtime</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Power Requirements</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Power Supply</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <thead>
               <tr>
@@ -282,26 +573,59 @@
             </thead>
             <tr>
               <td>Operating System</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Security</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Keyboard</td>
               <td>
-                <input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%">
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
               </td>
             </tr>
 
             <tr>
               <td>Pointing Device</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Weight</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <thead>
               <tr>
@@ -310,15 +634,50 @@
             </thead>
             <tr>
               <td>Package Weight</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
             <tr>
               <td>Box Dimensions (L × W × H)</td>
-              <td><input type="text" class="input-custom-border-none" placeholder="Thời gian" style="width: 50%"></td>
+              <td>
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Thời gian"
+                  style="width: 50%"
+                />
+              </td>
             </tr>
           </tbody>
         </table>
       </CCol>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">
+              <button @click="createNewValue()">Thêm mới</button>
+            </th>
+            <th scope="col" class="Title-table" colspan="1">Tên sản phẩm</th>
+            <th scope="col" class="Title-table td-action">
+              Tình trạng sản phẩm
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in newObject" :key="index">
+            <th scope="row" class="td-table">{{ index + 1 }}</th>
+            <td class="td-table status-color-out td-action"><input /></td>
+            <td class="td-table status-color-in td-action"><input /></td>
+          </tr>
+        </tbody>
+      </table>
     </CRow>
   </div>
 </template>
@@ -364,6 +723,8 @@ export default {
       ],
       selectedOption: "some value",
 
+      newObject: [],
+
       formCollapsed: true,
     };
   },
@@ -377,22 +738,29 @@ export default {
     UpdateProduct() {
       this.$router.push("/quanlysanphamupdate");
     },
+    createNewValue() {
+      let item = {
+        propertyName: "",
+        propertyValue: "",
+      };
+      this.newObject.push(item);
+    },
   },
 };
 </script>
 
 <style scope>
-.btn-custom-size{
+.btn-custom-size {
   width: 130px;
   margin-left: 15px;
-  float: right
+  float: right;
 }
-.input-custom-border-none{
+.input-custom-border-none {
   border: none;
   box-shadow: none;
   box-sizing: border-box;
 }
-.title-td{
+.title-td {
   width: 35%;
 }
 </style>

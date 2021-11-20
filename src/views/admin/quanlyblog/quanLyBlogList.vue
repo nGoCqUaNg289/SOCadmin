@@ -31,47 +31,6 @@
         </button>
       </form>
     </nav>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">STT</th>
-          <th scope="col" class="Title-table" colspan="1">Tên sản phẩm</th>
-          <!-- <th scope="col" class="Title-table td-action">Tên sản phẩm</th> -->
-          <!-- <th scope="col" class="Title-table td-action">Hãng</th> -->
-          <th scope="col" class="Title-table td-action" colspan="2">
-            Tình trạng sản phẩm
-          </th>
-          <th class="Title-table"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- {{
-          getData
-        }} -->
-        <tr v-for="item in getData" :key="item.id">
-          <th>{{ item.id }}</th>
-          <th scope="row" class="td-table">{{ item.name }}</th>
-          <!-- <td class="td-table">Inspiron 7306</td> -->
-          <!-- <td class="td-table td-action">
-            <i class="cib-dell"></i>
-          </td> -->
-          <td class="td-table status-color-out td-action">Hết hàng</td>
-          <td class="td-table status-color-in td-action">Còn hàng</td>
-          <td class="td-table td-action">
-            <button
-              type="button"
-              class="btn btn-primary btn-size"
-              @click="DetailProduct(item.id)"
-            >
-              <i class="cil-folder-open"></i>
-            </button>
-            <button type="button" class="btn btn-danger btn-size">
-              <i class="cil-trash"></i>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </template>
 

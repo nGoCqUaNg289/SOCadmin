@@ -105,6 +105,27 @@ const quanlysanphamupdate = () =>
 const quanlysanphamdetail = () =>
     import ('@/views/admin/quanlysanpham/quanlysanphamdetail')
 
+//Blog
+const quanLyBlogList = () =>
+    import ('@/views/admin/quanlyblog/quanLyBlogList')
+const quanLyBlogCreate = () =>
+    import ('@/views/admin/quanlyblog/quanLyBlogCreate')
+const quanLyBlogUpdate = () =>
+    import ('@/views/admin/quanlyblog/quanLyBlogUpdate')
+const quanLyBlogDetail = () =>
+    import ('@/views/admin/quanlyblog/quanLyBlogDetail')
+
+//HoaDon
+const quanlyhoadoncreate = () =>
+    import ('@/views/admin/quanlyhoadon/quanlyhoadoncreate')
+const quanlyhoadondetail = () =>
+    import ('@/views/admin/quanlyhoadon/quanlyhoadondetail')
+const quanlyhoadonupdate = () =>
+    import ('@/views/admin/quanlyhoadon/quanlyhoadonupdate')
+const quanlyhoadonlist = () =>
+    import ('@/views/admin/quanlyhoadon/quanlyhoadonlist')
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -117,8 +138,8 @@ export default new Router({
 function configRoutes() {
     return [{
             path: '/',
-            redirect: '/dashboard',
-            name: 'Home',
+            redirect: '/pages/login',
+            name: 'Login',
             component: TheContainer,
             children: [{
                     path: 'dashboard',
@@ -156,27 +177,68 @@ function configRoutes() {
                     ]
                 },
 
-                // {
-                //     path: 'quanlysanphamlist',
-                //     name: 'Danh sách sản phẩm',
-                //     component: quanlysanphamlist
-                // },
-                // {
-                //     path: 'quanlysanphamupdate',
-                //     name: 'Chỉnh sửa nội dung sản phẩm',
-                //     component: quanlysanphamupdate
-                // },
-                // {
-                //     path: 'quanlysanphamdetail',
-                //     name: 'Thông tin chi tiết sản phẩm',
-                //     component: quanlysanphamdetail,
-                //     props: true,
-                // },
-                // {
-                //     path: 'quanlysanphamcreate',
-                //     name: 'Thêm mới sản phẩm',
-                //     component: quanlysanphamcreate
-                // },
+                {
+                    path: 'blog',
+                    redirect: '/blog/quanlyblog',
+                    name: 'blog',
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: 'quanlyblog',
+                            name: 'Danh sách Blog',
+                            component: quanLyBlogList
+                        },
+                        {
+                            path: 'quanlyblogupdate',
+                            name: 'Chỉnh sửa nội dung Blog',
+                            component: quanLyBlogUpdate
+                        },
+                        {
+                            path: 'quanlyblogdetail',
+                            name: 'Thông tin chi tiết Blog',
+                            component: quanLyBlogDetail,
+                            props: true,
+                        },
+                        {
+                            path: 'quanlyblogcreate',
+                            name: 'Thêm mới Blog',
+                            component: quanLyBlogCreate
+                        }
+                    ]
+                },
+
+                {
+                    path: 'bill',
+                    redirect: '/bill/quanlyhoadonlist',
+                    name: 'bill',
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: 'quanlyhoadonlist',
+                            name: 'Danh sách hóa đơn',
+                            component: quanlyhoadonlist
+                        },
+                        {
+                            path: 'quanlyhoadonupdate',
+                            name: 'Chỉnh sửa nội dung hóa đơn',
+                            component: quanlyhoadonupdate
+                        },
+                        {
+                            path: 'quanlyhoadondetail',
+                            name: 'Thông tin chi tiết hóa đơn',
+                            component: quanlyhoadondetail,
+                            props: true,
+                        },
+                        {
+                            path: 'quanlyhoadoncreate',
+                            name: 'Thêm mới hóa đơn',
+                            component: quanlyhoadoncreate
+                        }
+                    ]
+                },
+
                 {
                     path: 'theme',
                     redirect: '/theme/colors',
@@ -397,30 +459,6 @@ function configRoutes() {
                         }
                     ]
                 },
-                // {
-                //     path: 'quanlysanphamlist',
-                //     redirect: '/admin/quanlysanphamlist',
-                //     name: 'quanlysanphamlist',
-                //     component: {
-                //         render(c) { return c('router-view') }
-                //     },
-                //     children: [{
-                //             path: 'quanlysanphamlist',
-                //             name: 'quanlysanphamlist',
-                //             component: quanlysanphamlist
-                //         },
-                //         {
-                //             path: 'badges',
-                //             name: 'Badges',
-                //             component: Badges
-                //         },
-                //         {
-                //             path: 'modals',
-                //             name: 'Modals',
-                //             component: Modals
-                //         }
-                //     ]
-                // }
             ]
         },
         {

@@ -85,32 +85,34 @@ export default {
   },
   methods: {
     LoginJWT() {
-      console.log("username: " + this.username);
-      console.log("password: " + this.password);
+      // console.log("username: " + this.username);
+      // console.log("password: " + this.password);
       axios
         .post("http://socstore.club:8800/api/authentication/login", {
           username: this.username,
           password: this.password,
         })
         .then((response) => {
-          console.log("username: " + this.username);
-          console.log("password: " + this.password);
+          // console.log("username: " + this.username);
+          // console.log("password: " + this.password);
+          this.$store.state.userName = response.data.username;
 
+          console.log(response);
           this.$store.state.userToken =
             response.data.tokenType + " " + response.data.accessToken;
 
-          console.log(this.$store.state.userToken);
+          // console.log(this.$store.state.userToken);
 
           if (response.data.roles[0] == "Director") {
             this.$router.push({
-              path: "/",
+              path: "/dashboard",
             });
-            console.log("Chuyển trang admin");
+            // console.log("Chuyển trang admin");
           } else if (response.data.roles[0] == "Staff") {
             this.$router.push({
-              path: "/",
+              path: "/dashboard",
             });
-            console.log("Chuyển trang admin");
+            // console.log("Chuyển trang admin");
           } else {
             console.log("Tài khoản hoặc mật khẩu không chính xác !");
           }

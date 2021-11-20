@@ -7,7 +7,7 @@
   >
     <template #toggler>
       <CHeaderNavLink>
-        <span> Xin chào, admin! </span>
+        <div>Xin chào,{{ userName }}!</div>
         <div class="c-avatar">
           <img src="img/avatars/avatar.png" class="c-avatar-img" />
         </div>
@@ -46,9 +46,17 @@ export default {
   data() {
     return {
       itemsCount: 42,
+      userName: "",
     };
   },
+  created() {
+    // console.log(this.$store.state.userName);
+    this.setUserName();
+  },
   methods: {
+    setUserName() {
+      this.userName = this.$store.state.userName;
+    },
     // direcToLogin() {
     //   console.log("TheHeaderDropdownAccnt");
     //   this.$route.push({
