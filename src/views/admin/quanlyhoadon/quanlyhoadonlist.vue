@@ -31,7 +31,7 @@
         </button>
       </form>
     </nav>
-    <table class="table">
+    <table class="table table-hover">
       <thead>
         <tr>
           <th scope="col">ID</th>

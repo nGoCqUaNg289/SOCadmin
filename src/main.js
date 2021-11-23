@@ -12,8 +12,10 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import JwPagination from 'jw-vue-pagination';
 
 
+Vue.component('jw-pagination', JwPagination);
 Vue.use(BootstrapVue);
 Vue.use(VueAxios, axios)
 Vue.use(IconsPlugin);

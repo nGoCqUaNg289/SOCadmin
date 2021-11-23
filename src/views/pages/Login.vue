@@ -88,7 +88,7 @@ export default {
       // console.log("username: " + this.username);
       // console.log("password: " + this.password);
       axios
-        .post("http://socstore.club:8800/api/authentication/login", {
+        .post(this.$store.state.MainLink + "authentication/login", {
           username: this.username,
           password: this.password,
         })

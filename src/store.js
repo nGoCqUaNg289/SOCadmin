@@ -6,7 +6,8 @@ const state = {
     sidebarShow: 'responsive',
     sidebarMinimize: false,
     userToken: "",
-    userName: ""
+    userName: "",
+    MainLink: "http://150.95.105.29:8800/api/"
 }
 
 const mutations = {
