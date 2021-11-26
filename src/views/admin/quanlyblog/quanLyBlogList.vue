@@ -90,7 +90,7 @@ export default {
     },
     getAllProduct() {
       axios
-        .get("http://socstore.club:8800/api/admin/blog", {
+        .get(this.$store.state.MainLink + "admin/blog", {
           headers: {
             Authorization: this.$store.state.userToken,
           },

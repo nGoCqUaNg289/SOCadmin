@@ -111,7 +111,7 @@ export default {
     },
     getAllProduct() {
       axios
-        .get("http://socstore.club:8800/api/customer/orders/getall")
+        .get(this.$store.state.MainLink + "customer/orders/getall")
         .then((response) => {
           this.getData = response.data.object;
           // console.log(response.data.object);

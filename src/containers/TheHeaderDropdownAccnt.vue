@@ -7,9 +7,9 @@
   >
     <template #toggler>
       <CHeaderNavLink>
-        <div>Xin chào,{{ userName }}!</div>
+        <div>Xin chào,{{ userName }} !   </div>
         <div class="c-avatar">
-          <img src="img/avatars/avatar.png" class="c-avatar-img" />
+          <img src="/img/avatars/avatar.png" class="c-avatar-img" />
         </div>
       </CHeaderNavLink>
     </template>

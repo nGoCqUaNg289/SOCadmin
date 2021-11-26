@@ -14,14 +14,6 @@
           <i class="cil-plus"></i>
           Thêm mới
         </button>
-        <button
-          type="button"
-          class="btn btn-primary float-right btn-add"
-          @click="UpdateProduct()"
-        >
-          <i class="cil-plus"></i>
-          update
-        </button>
       </div>
     </div>
     <nav class="col-12 navbar justify-content-between">
@@ -120,7 +112,7 @@ export default {
     searchProduct() {
       axios
         .get(
-          `http://150.95.105.29:8800/api/admin/products?find=${this.searchString}`
+          this.$store.state.MainLink + "admin/products?find="
         )
         .then((response) => {
           this.getData = response.data.object;
@@ -130,7 +122,7 @@ export default {
         });
     },
     CreateNewProduct() {
-      this.$router.push("/quanlysanphamcreate");
+      this.$router.push("/admin/quanlysanphamcreate");
     },
     UpdateProduct() {
       this.$router.push("/admin/quanlysanphamcreatedetail");
@@ -145,7 +137,7 @@ export default {
       console.log(this.$store.state.tokenUser);
       axios
         .delete(
-          "http://150.95.105.29:8800/api/admin/products/delete/" + item.id,
+          this.$store.state.MainLink + "admin/products/delete/" + item.id,
           {
             headers: {
               Authorization: this.$store.state.tokenUser,
@@ -180,7 +172,7 @@ export default {
     },
     getAllProduct() {
       axios
-        .get("http://150.95.105.29:8800/api/customer/products")
+        .get(this.$store.state.MainLink + "customer/products")
         .then((response) => {
           this.getData = response.data.object;
         })
