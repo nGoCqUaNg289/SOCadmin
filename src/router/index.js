@@ -100,6 +100,8 @@ const quanlysanphamlist = () =>
     import ('@/views/admin/quanlysanpham/quanlysanphamlist')
 const quanlysanphamcreate = () =>
     import ('@/views/admin/quanlysanpham/quanlysanphamcreate')
+const quanlysanphamcreatedetail = () =>
+    import ('@/views/admin/quanlysanpham/quanlysanphamcreatedetail')
 const quanlysanphamupdate = () =>
     import ('@/views/admin/quanlysanpham/quanlysanphamupdate')
 const quanlysanphamdetail = () =>
@@ -124,7 +126,13 @@ const quanlyhoadonupdate = () =>
     import ('@/views/admin/quanlyhoadon/quanlyhoadonupdate')
 const quanlyhoadonlist = () =>
     import ('@/views/admin/quanlyhoadon/quanlyhoadonlist')
-
+//SALE
+const quanlykhuyenmailist = () =>
+    import ('@/views/admin/quanlykhuyenmai/quanlykhuyenmailist')
+const quanlykhuyenmaidaketthuc = () =>
+    import ('@/views/admin/quanlykhuyenmai/quanlykhuyenmaidaketthuc')
+const quanlykhuyenmaidangdienra = () =>
+    import ('@/views/admin/quanlykhuyenmai/quanlykhuyenmaidangdienra')
 
 Vue.use(Router)
 
@@ -173,7 +181,12 @@ function configRoutes() {
                             path: 'quanlysanphamcreate',
                             name: 'Thêm mới sản phẩm',
                             component: quanlysanphamcreate
-                        }
+                        },
+                        {
+                            path: 'quanlysanphamcreatedetail',
+                            name: 'Thêm mới sản phẩm',
+                            component: quanlysanphamcreatedetail
+                        },
                     ]
                 },
 
@@ -205,6 +218,32 @@ function configRoutes() {
                             name: 'Thêm mới Blog',
                             component: quanLyBlogCreate
                         }
+                    ]
+                },
+                {
+                    path: 'sale',
+                    redirect: '/sale/quanlysale',
+                    name: 'sale',
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [
+                        {
+                            path: 'quanlysale',
+                            name: 'Danh sách sale',
+                            component: quanlykhuyenmailist
+                        },
+                        {
+                            path: 'quanlysaleEnd',
+                            name:'Sale đã kết thúc',
+                            component: quanlykhuyenmaidaketthuc
+                        },
+                        {
+                            path: 'quanlysaleNow',
+                            name:'Sale đang diễn ra',
+                            component: quanlykhuyenmaidangdienra
+                        },
+                       
                     ]
                 },
 

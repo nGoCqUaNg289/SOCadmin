@@ -197,7 +197,7 @@ export default [{
         {
             _name: 'CSidebarNavItem',
             name: 'Quản lý tài khoản',
-            to: '/admin/quanlysanphamlist',
+            to: '/admin/quanlytaikhoan',
             icon: 'cil-people',
             badge: {
                 color: 'primary',
@@ -257,7 +257,7 @@ export default [{
         {
             _name: 'CSidebarNavItem',
             name: 'Quản lý khuyến mại',
-            to: '/quanlysanphamlist',
+            to: '/sale/quanlysale',
             icon: 'cil-bell',
             badge: {
                 color: 'primary',

@@ -9,19 +9,10 @@
         <button
           type="button"
           class="btn btn-primary float-right btn-add"
-          @click="SaleEnd()"
+          @click="CreateNewProduct()"
         >
           <i class="cil-plus"></i>
-          Sale End
-        </button>
-
-        <button
-          type="button"
-          class="btn btn-primary float-right btn-add"
-          @click="SaleNow()"
-        >
-          <i class="cil-plus"></i>
-          Sale Now
+          Thêm mới
         </button>
       </div>
     </div>
@@ -136,11 +127,8 @@ export default {
           console.log(e);
         });
     },
-    SaleEnd() {
-      this.$router.push("/sale/quanlysaleEnd");
-    },
-    SaleNow() {
-      this.$router.push("/sale/quanlysaleEnd");
+    CreateNewProduct() {
+      this.$router.push("/admin/quanlysanphamcreate");
     },
     UpdateProduct() {
       this.$router.push("/admin/quanlysanphamcreatedetail");
@@ -192,7 +180,7 @@ export default {
     
     getAllSale() {
       axios
-        .get( this.$store.state.MainLink + "admin/sale/get",
+        .get( this.$store.state.MainLink + "admin/sale/getSellEnd",
          {
             headers: {
               Authorization: this.$store.state.userToken,
