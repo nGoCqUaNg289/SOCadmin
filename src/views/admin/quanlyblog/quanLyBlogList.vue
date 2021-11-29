@@ -31,6 +31,22 @@
         </button>
       </form>
     </nav>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Tên Blog</th>
+          <th scope="col">Thời gian tạo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(item, index) in getData" :key="index">
+          <th scope="row">{{ index + 1 }}</th>
+          <td>{{ item.title }}</td>
+          <td>{{ item.timeCreated }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -74,7 +90,11 @@ export default {
     },
     getAllProduct() {
       axios
-        .get("http://socstore.club:8800/api/customer/products")
+        .get(this.$store.state.MainLink + "admin/blog", {
+          headers: {
+            Authorization: this.$store.state.userToken,
+          },
+        })
         .then((response) => {
           this.getData = response.data.object;
           // console.log(response.data.object);

@@ -15,14 +15,14 @@
               </CListGroupItem>
               <CListGroupItem>
                 <span class="Title-font-size">Tổng tiền : </span>
-                <span>{{ formatPrice(getData.sumprice) }}đ</span>
+                <span>{{ formatPrice(getData.sumprice) }} đ</span>
               </CListGroupItem>
               <CListGroupItem>
                 <span class="Title-font-size">Thời gian mua hàng : </span>
                 <span>{{ getDateString(getData.dateCreated) }}</span>
               </CListGroupItem>
               <CListGroupItem>
-                <span class="Title-font-size">username mua : </span>
+                <span class="Title-font-size">username : </span>
                 <span>{{ getData.username }} </span>
               </CListGroupItem>
               <CListGroupItem>
@@ -180,7 +180,7 @@ export default {
     },
     getDetailProduct() {
       axios
-        .get("http://socstore.club:8800/api/admin/orders/" + this.item, {
+        .get(this.$store.state.MainLink + "admin/orders/" + this.item, {
           headers: {
             Authorization: this.$store.state.userToken,
           },

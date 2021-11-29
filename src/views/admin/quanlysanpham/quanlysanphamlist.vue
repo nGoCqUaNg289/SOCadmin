@@ -20,15 +20,14 @@
       <a class="navbar-brand"></a>
       <form class="form-inline">
         <input
+          @change="searchProduct()"
           class="form-control mr-sm-2"
           type="search"
           placeholder="Search"
           aria-label="Search"
           style="box-shadow: none"
+          v-model="searchString"
         />
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-          <i class="cil-magnifying-glass"></i>
-        </button>
       </form>
     </nav>
     <table class="table">
@@ -36,8 +35,6 @@
         <tr>
           <th scope="col">STT</th>
           <th scope="col" class="Title-table" colspan="1">Tên sản phẩm</th>
-          <!-- <th scope="col" class="Title-table td-action">Tên sản phẩm</th> -->
-          <!-- <th scope="col" class="Title-table td-action">Hãng</th> -->
           <th scope="col" class="Title-table td-action" colspan="2">
             Tình trạng sản phẩm
           </th>
@@ -45,18 +42,12 @@
         </tr>
       </thead>
       <tbody>
-        <!-- {{
-          getData
-        }} -->
-        <tr v-for="item in getData" :key="item.id">
+        <tr v-for="item in pageOfItems" :key="item.id">
           <th>{{ item.id }}</th>
           <th scope="row" class="td-table">{{ item.name }}</th>
-          <!-- <td class="td-table">Inspiron 7306</td> -->
-          <!-- <td class="td-table td-action">
-            <i class="cib-dell"></i>
-          </td> -->
-          <td class="td-table status-color-out td-action">Hết hàng</td>
-          <td class="td-table status-color-in td-action">Còn hàng</td>
+          <td :style="{ color: Status(item) }">
+            {{ item.status }}
+          </td>
           <td class="td-table td-action">
             <button
               type="button"
@@ -65,13 +56,25 @@
             >
               <i class="cil-folder-open"></i>
             </button>
-            <button type="button" class="btn btn-danger btn-size">
+            <button
+              type="button"
+              class="btn btn-danger btn-size"
+              @click="deleteProduct(item)"
+            >
               <i class="cil-trash"></i>
             </button>
           </td>
         </tr>
       </tbody>
     </table>
+    <div class="card-body"></div>
+    <div class="card-footer pb-0 pt-3" style="text-align: center">
+      <jw-pagination
+        :maxPages="15"
+        :items="getData"
+        @changePage="onChangePage"
+      ></jw-pagination>
+    </div>
   </div>
 </template>
 
@@ -82,6 +85,7 @@ export default {
   name: "QuanLySanPhamList",
   data() {
     return {
+      pageOfItems: [],
       getData: "",
       formData: {
         name: "",
@@ -95,35 +99,82 @@ export default {
         cartDetails: "",
         productDetails: [],
       },
+      searchString: "",
     };
   },
   created() {
     this.getAllProduct();
   },
   methods: {
+    onChangePage(pageOfItems) {
+      this.pageOfItems = pageOfItems;
+    },
+    searchProduct() {
+      axios
+        .get(
+          this.$store.state.MainLink + "admin/products?find="
+        )
+        .then((response) => {
+          this.getData = response.data.object;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
     CreateNewProduct() {
-      this.$router.push({
-        name: "Thêm mới sản phẩm",
-      });
+      this.$router.push("/admin/quanlysanphamcreate");
+    },
+    UpdateProduct() {
+      this.$router.push("/admin/quanlysanphamcreatedetail");
     },
     DetailProduct(id) {
-      console.log(id);
       this.$router.push({
         name: "Thông tin chi tiết sản phẩm",
         params: { item: id },
       });
     },
+    deleteProduct(item) {
+      console.log(this.$store.state.tokenUser);
+      axios
+        .delete(
+          this.$store.state.MainLink + "admin/products/delete/" + item.id,
+          {
+            headers: {
+              Authorization: this.$store.state.tokenUser,
+            },
+          }
+        )
+
+        .then((response) => {
+          if (response.data.object) {
+            alert("Delete thành công.");
+          } else {
+            alert("Delete thất bại.");
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    Status(products) {
+      switch (products.status) {
+        case "Đang bán":
+          return "green";
+        case "Không kinh doanh":
+          return " gray";
+        case "Hàng sắp về":
+          return "black";
+        case "Chưa có":
+          return " yellow";
+        case "Hết hàng":
+          return " red";
+      }
+    },
     getAllProduct() {
       axios
-        .get("http://socstore.club:8800/api/customer/products")
+        .get(this.$store.state.MainLink + "customer/products")
         .then((response) => {
           this.getData = response.data.object;
-          // console.log(response.data.object);
-          for (var item in this.getData) {
-            // console.log(item);
-
-            console.log(this.getData[item].productColors);
-          }
         })
         .catch((e) => {
           console.log(e);
