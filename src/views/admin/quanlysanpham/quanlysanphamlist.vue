@@ -59,7 +59,7 @@
             <button
               type="button"
               class="btn btn-danger btn-size"
-              @click="deleteProduct(item)"
+              @click="deleteProduct(item.id)"
             >
               <i class="cil-trash"></i>
             </button>
@@ -134,13 +134,14 @@ export default {
       });
     },
     deleteProduct(item) {
-      console.log(this.$store.state.tokenUser);
+      console.log(item)
+      console.log(this.$store.state.userToken);
       axios
         .delete(
-          this.$store.state.MainLink + "admin/products/delete/" + item.id,
+          this.$store.state.MainLink + "admin/products/delete/" + item,
           {
             headers: {
-              Authorization: this.$store.state.tokenUser,
+              Authorization: this.$store.state.userToken,
             },
           }
         )
@@ -165,7 +166,7 @@ export default {
         case "Hàng sắp về":
           return "black";
         case "Chưa có":
-          return " yellow";
+          return " orange";
         case "Hết hàng":
           return " red";
       }
