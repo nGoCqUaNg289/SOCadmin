@@ -111,7 +111,12 @@ export default {
     },
     getAllProduct() {
       axios
-        .get(this.$store.state.MainLink + "customer/orders/getall")
+        .get(this.$store.state.MainLink + "customer/orders/getall",
+         {
+            headers: {
+              Authorization: this.$store.state.userToken,
+            },
+          })
         .then((response) => {
           this.getData = response.data.object;
           // console.log(response.data.object);

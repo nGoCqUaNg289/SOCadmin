@@ -13,9 +13,9 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import JwPagination from 'jw-vue-pagination';
-import Toasted from 'vue-toasted';
+// import Toasted from 'vue-toasted';
 
-Vue.use(Toasted)
+// Vue.use(Toasted)
 
 // Vue.use(Toasted, Options)
 

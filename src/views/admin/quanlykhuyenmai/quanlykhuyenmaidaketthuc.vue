@@ -2,7 +2,7 @@
   <div>
     <div class="col-12 col-title">
       <div class="col-md-6 float-left margin-left">
-        <p class="Text-tile">Danh sách sản phẩm</p>
+        <p class="Text-tile">Danh sách sale</p>
         <p class="Text-tile-2">Trang chủ ● Sản phẩm</p>
       </div>
       <div class="col-md-6 float-right">
@@ -34,9 +34,15 @@
       <thead>
         <tr>
           <th scope="col">STT</th>
-          <th scope="col" class="Title-table" colspan="1">Tên sản phẩm</th>
-          <th scope="col" class="Title-table td-action" colspan="2">
-            Tình trạng sản phẩm
+          <th scope="col" class="Title-table">Tên sale</th>
+          <th scope="col" class="Title-table td-action" style="text-align:center" >
+            Thời gian bắt đầu sale
+          </th>
+          <th scope="col" class="Title-table td-action" >
+            Thời gian kết thúc
+          </th>
+          <th scope="col" class="Title-table td-action" >
+            Trạng thái
           </th>
           <th class="Title-table"></th>
         </tr>
@@ -45,25 +51,30 @@
         <tr v-for="item in pageOfItems" :key="item.id">
           <th>{{ item.id }}</th>
           <th scope="row" class="td-table">{{ item.name }}</th>
-          <td :style="{ color: Status(item) }">
+          <th scope="row" class="td-table">{{ item.startTime }}</th>
+          <th scope="row" class="td-table">{{ item.endTime }}</th>
+          <th scope="row" class="td-table">{{ item.status }}</th>
+
+
+          <!-- <td :style="{ color: Status(item) }">
             {{ item.status }}
-          </td>
-          <td class="td-table td-action">
+          </td> -->
+          <!-- <td class="td-table td-action">
             <button
               type="button"
               class="btn btn-primary btn-size"
-              @click="DetailProduct(item.id)"
+              @click="DetailSale(item.id)"
             >
               <i class="cil-folder-open"></i>
             </button>
             <button
               type="button"
               class="btn btn-danger btn-size"
-              @click="deleteProduct(item.id)"
+              @click="deleteProduct(item)"
             >
               <i class="cil-trash"></i>
             </button>
-          </td>
+          </td> -->
         </tr>
       </tbody>
     </table>
@@ -89,21 +100,16 @@ export default {
       getData: "",
       formData: {
         name: "",
-        price: "",
+        startTime: "",
+        endTime: "",
         status: "",
-        orderDetails: "",
-        blogs: "",
-        productCategories: "",
-        sales: "",
-        productColors: [],
-        cartDetails: "",
-        productDetails: [],
       },
       searchString: "",
     };
   },
   created() {
-    this.getAllProduct();
+    this.getAllSale();
+
   },
   methods: {
     onChangePage(pageOfItems) {
@@ -127,21 +133,20 @@ export default {
     UpdateProduct() {
       this.$router.push("/admin/quanlysanphamcreatedetail");
     },
-    DetailProduct(id) {
+    DetailSale(id) {
       this.$router.push({
         name: "Thông tin chi tiết sản phẩm",
         params: { item: id },
       });
     },
     deleteProduct(item) {
-      console.log(item)
-      console.log(this.$store.state.userToken);
+      console.log(this.$store.state.tokenUser);
       axios
         .delete(
-          this.$store.state.MainLink + "admin/products/delete/" + item,
+          this.$store.state.MainLink + "admin/products/delete/" + item.id,
           {
             headers: {
-              Authorization: this.$store.state.userToken,
+              Authorization: this.$store.state.tokenUser,
             },
           }
         )
@@ -157,25 +162,33 @@ export default {
           console.log(e);
         });
     },
-    Status(products) {
-      switch (products.status) {
-        case "Đang bán":
-          return "green";
-        case "Không kinh doanh":
-          return " gray";
-        case "Hàng sắp về":
-          return "black";
-        case "Chưa có":
-          return " orange";
-        case "Hết hàng":
-          return " red";
-      }
-    },
-    getAllProduct() {
+    // Status(products) {
+
+    //   switch (products.status) {
+    //     case "Đang bán":
+    //       return "green";
+    //     case "Không kinh doanh":
+    //       return " gray";
+    //     case "Hàng sắp về":
+    //       return "black";
+    //     case "Chưa có":
+    //       return " yellow";
+    //     case "Hết hàng":
+    //       return " red";
+    //   }
+    // },
+    
+    getAllSale() {
       axios
-        .get(this.$store.state.MainLink + "customer/products")
+        .get( this.$store.state.MainLink + "admin/sale/getSellEnd",
+         {
+            headers: {
+              Authorization: this.$store.state.userToken,
+            },
+          })
         .then((response) => {
           this.getData = response.data.object;
+          console.log(response)
         })
         .catch((e) => {
           console.log(e);
