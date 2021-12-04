@@ -1,4 +1,4 @@
-<template>
+ <template>
   <div>
     <div class="col-12 col-title">
       <div class="col-md-6 float-left margin-left">
