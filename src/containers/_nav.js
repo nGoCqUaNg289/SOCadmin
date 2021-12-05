@@ -264,6 +264,16 @@ export default [{
                 shape: 'pill'
             }
         },
+        {
+            _name: 'CSidebarNavItem',
+            name: 'Quản lý category',
+            to: '/category/quanlycategory',
+            icon: 'cil-bell',
+            badge: {
+                color: 'primary',
+                shape: 'pill'
+            }
+        },
         // {
         //     _name: 'CSidebarNavDivider',
         //     _class: 'm-2'

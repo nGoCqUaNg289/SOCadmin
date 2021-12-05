@@ -138,8 +138,14 @@ const quanlykhuyenmaidaketthuc = () =>
     import ('@/views/admin/quanlykhuyenmai/quanlykhuyenmaidaketthuc')
 const quanlykhuyenmaidangdienra = () =>
     import ('@/views/admin/quanlykhuyenmai/quanlykhuyenmaidangdienra')
+const quanlykhuyenmaicreate = () =>
+    import ('@/views/admin/quanlykhuyenmai/quanlykhuyenmaicreate')
+const quanlykhuyenmaidetail = () =>
+    import ('@/views/admin/quanlykhuyenmai/quanlykhuyenmaidetail')
+    // category
+    const quanlycategorylist =()=> 
+        import('@/views/admin/quanlycategory/quanlycategorylist')
 //account
-
 const quanlytaikhoanlist= () =>
     import ('@/views/admin/quanlytaikhoan/quanlytaikhoanlist')
 Vue.use(Router)
@@ -252,7 +258,32 @@ function configRoutes() {
                             name:'Sale đang diễn ra',
                             component: quanlykhuyenmaidangdienra
                         },
-                       
+                        {
+                            path: 'quanlysaleCreate',
+                            name:'Sale create',
+                            component: quanlykhuyenmaicreate
+                        },
+                        {
+                            path: 'quanlysaleDetail',
+                            name:'Sale detail',
+                            component: quanlykhuyenmaidetail
+                        },
+                    ]
+                },
+
+                {
+                    path: 'category',
+                    redirect: '/category/quanlycategory',
+                    name: 'category',
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [
+                        {
+                            path: 'quanlycategory',
+                            name: 'Danh sách category',
+                            component: quanlycategorylist
+                        },
                     ]
                 },
 

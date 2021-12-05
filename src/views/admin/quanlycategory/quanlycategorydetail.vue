@@ -1,44 +1,11 @@
-<template>
+ <template>
   <div>
     <div class="col-12 col-title">
       <div class="col-md-6 float-left margin-left">
-        <p class="Text-tile">Danh sách sale</p>
-        <p class="Text-tile-2">Trang chủ ● Sản phẩm</p>
+        <p class="Text-tile">Danh sách category</p>
+        <p class="Text-tile-2">Trang chủ ● category</p>
       </div>
       <div class="col-md-6 float-right">
-        <button
-          type="button"
-          class="btn btn-primary float-right btn-add"
-          @click="SaleEnd()"
-        >
-          <i class="cil-plus"></i>
-          Sale End
-        </button>
-
-        <button
-          type="button"
-          class="btn btn-primary float-right btn-add"
-          @click="SaleNow()"
-        >
-          <i class="cil-plus"></i>
-          Sale Now
-        </button>
-        <button
-          type="button"
-          class="btn btn-primary float-right btn-add"
-          @click="create()"
-        >
-          <i class="cil-plus"></i>
-          Thêm mới
-        </button>
-         <button
-          type="button"
-          class="btn btn-primary float-right btn-add"
-          @click="detail()"
-        >
-          <i class="cil-plus"></i>
-          Chi tiết
-        </button>
       </div>
     </div>
     <nav class="col-12 navbar justify-content-between">
@@ -59,26 +26,46 @@
       <thead>
         <tr>
           <th scope="col">STT</th>
-          <th scope="col" class="Title-table">Tên sale</th>
+          <!-- <th scope="col" class="Title-table">Tên sale</th> -->
           <th scope="col" class="Title-table td-action" style="text-align:center" >
-            Thời gian bắt đầu sale
+             name
           </th>
           <th scope="col" class="Title-table td-action" >
-            Thời gian kết thúc
+            type
           </th>
           <th scope="col" class="Title-table td-action" >
-            Trạng thái
+           status
           </th>
-          <th class="Title-table"></th>
+          <th scope="col" class="Title-table" >
+           
+          </th>
+         
+          <!-- <th class="Title-table"></th> -->
+          
         </tr>
       </thead>
       <tbody>
         <tr v-for="item in pageOfItems" :key="item.id">
           <th>{{ item.id }}</th>
-          <th scope="row" class="td-table">{{ item.name }}</th>
-          <th scope="row" class="td-table">{{ item.startTime }}</th>
-          <th scope="row" class="td-table">{{ item.endTime }}</th>
-          <th scope="row" class="td-table">{{ item.status }}</th>
+          <td scope="row" class="td-table">{{ item.name }}</td>
+          <td scope="row" class="td-table">{{ item.type }}</td>
+          <td scope="row" class="td-table">{{ item.status }}</td>
+          <td class="td-table td-action">
+            <button
+              type="button"
+              class="btn btn-primary btn-size"
+              @click="DetailProduct(item.id)"
+            >
+              <i class="cil-folder-open"></i>
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger btn-size"
+              @click="deleteCategory(item)"
+            >
+              <i class="cil-trash"></i>
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -103,42 +90,20 @@ export default {
       pageOfItems: [],
       getData: "",
       formData: {
-        name: "",
-        startTime: "",
-        endTime: "",
-        status: "",
+       name: "",
+        type: "",
+        status: ""
       },
       searchString: "",
     };
   },
   created() {
-    this.getAllSale();  
+    this.getAllCategory();
 
   },
   methods: {
     onChangePage(pageOfItems) {
       this.pageOfItems = pageOfItems;
-    },
-    searchProduct() {
-      axios
-        .get(
-          this.$store.state.MainLink + "admin/products?find="
-        )
-        .then((response) => {
-          this.getData = response.data.object;
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    },
-    SaleEnd() {
-      this.$router.push("/sale/quanlysaleEnd");
-    },
-    SaleNow() {
-      this.$router.push("/sale/quanlysaleEnd");
-    },
-     create() {
-      this.$router.push("/sale/quanlysaleCreate");
     },
     UpdateProduct() {
       this.$router.push("/admin/quanlysanphamcreatedetail");
@@ -149,14 +114,11 @@ export default {
         params: { item: id },
       });
     },
-    detail(){
-      this.$router.push("/sale/quanlysaleDetail");
-    },
-    deleteProduct(item) {
+    deleteCategory(item) {
       console.log(this.$store.state.tokenUser);
       axios
-        .delete(
-          this.$store.state.MainLink + "admin/products/delete/" + item.id,
+        .put(
+          this.$store.state.MainLink + "/categories/delete/" + item.id,
           {
             headers: {
               Authorization: this.$store.state.tokenUser,
@@ -175,9 +137,11 @@ export default {
           console.log(e);
         });
     },
-    getAllSale() {
+  
+    
+    getAllCategory() {
       axios
-        .get( this.$store.state.MainLink + "admin/sale/get",
+        .get( this.$store.state.MainLink + "customer/categories",
          {
             headers: {
               Authorization: this.$store.state.userToken,
@@ -191,9 +155,7 @@ export default {
           console.log(e);
         });
     },
-    
   },
-
 };
 </script>
 
