@@ -83,7 +83,7 @@
       </CCardFooter>
     </CCard>
     <WidgetsBrand/>
-    <CRow>
+    <!-- <CRow>
       <CCol md="12">
         <CCard>
           <CCardHeader>
@@ -449,7 +449,7 @@
           </CCardBody>
         </CCard>
       </CCol>
-    </CRow>
+    </CRow> -->
   </div>
 </template>
 
