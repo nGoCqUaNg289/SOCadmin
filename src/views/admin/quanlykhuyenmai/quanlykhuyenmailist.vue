@@ -3,26 +3,9 @@
     <div class="col-12 col-title">
       <div class="col-md-6 float-left margin-left">
         <p class="Text-tile">Danh sách sale</p>
-        <p class="Text-tile-2">Trang chủ ● Sản phẩm</p>
+        <p class="Text-tile-2">Trang chủ ● Khuyến mại</p>
       </div>
       <div class="col-md-6 float-right">
-        <button
-          type="button"
-          class="btn btn-primary float-right btn-add"
-          @click="SaleEnd()"
-        >
-          <i class="cil-plus"></i>
-          Sale End
-        </button>
-
-        <button
-          type="button"
-          class="btn btn-primary float-right btn-add"
-          @click="SaleNow()"
-        >
-          <i class="cil-plus"></i>
-          Sale Now
-        </button>
         <button
           type="button"
           class="btn btn-primary float-right btn-add"
@@ -42,7 +25,7 @@
       </div>
     </div>
     <nav class="col-12 navbar justify-content-between">
-      <a class="navbar-brand"></a>
+      <!-- <a class="navbar-brand"></a>
       <form class="form-inline">
         <input
           @change="searchProduct()"
@@ -53,37 +36,49 @@
           style="box-shadow: none"
           v-model="searchString"
         />
-      </form>
+      </form> -->
     </nav>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">STT</th>
-          <th scope="col" class="Title-table">Tên sale</th>
-          <th scope="col" class="Title-table td-action" style="text-align:center" >
-            Thời gian bắt đầu sale
-          </th>
-          <th scope="col" class="Title-table td-action" >
-            Thời gian kết thúc
-          </th>
-          <th scope="col" class="Title-table td-action" >
-            Trạng thái
-          </th>
-          <th class="Title-table"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in pageOfItems" :key="item.id">
-          <th>{{ item.id }}</th>
-          <th scope="row" class="td-table">{{ item.name }}</th>
-          <th scope="row" class="td-table">{{ item.startTime }}</th>
-          <th scope="row" class="td-table">{{ item.endTime }}</th>
-          <th scope="row" class="td-table">{{ item.status }}</th>
-        </tr>
-      </tbody>
-    </table>
-    <div class="card-body"></div>
-    <div class="card-footer pb-0 pt-3" style="text-align: center">
+    
+      <CCardBody>
+        <CNav justified variant="tabs">
+          <CNavItem active>Tất cả</CNavItem>
+          <CNavItem>Đang diễn ra</CNavItem>
+          <CNavItem>Sắp diễn ra</CNavItem>
+          <CNavItem>Đã kết thúc</CNavItem>
+        </CNav>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">STT</th>
+              <th scope="col" class="Title-table">Tên sale</th>
+              <th scope="col" class="Title-table td-action" style="text-align:center" >
+                Thời gian bắt đầu sale
+              </th>
+              <th scope="col" class="Title-table td-action" >
+                Thời gian kết thúc
+              </th>
+              <th scope="col" class="Title-table td-action" >
+                Trạng thái
+              </th>
+              <th class="Title-table"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in pageOfItems" :key="item.id">
+              <th>{{ item.id }}</th>
+              <th scope="row" class="td-table">{{ item.name }}</th>
+              <th scope="row" class="td-table" style="text-align:center">{{ item.startTime }}</th>
+              <th scope="row" class="td-table" style="text-align:center">{{ item.endTime }}</th>
+              <td scope="row" class="td-table td-center" style="text-align:center">
+                  <span class="badge rounded-pill bg-primary" v-if="item.status == 'đang sale'">{{ item.status }}</span>
+                  <span class="badge rounded-pill bg-danger" v-else-if="item.status == 'Đã dừng'">{{ item.status }}</span>
+                  <span class="badge rounded-pill bg-light text-dark" v-else>{{ item.status }}</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </CCardBody>
+    <div class="pb-0 pt-0" style="text-align: center">
       <jw-pagination
         :maxPages="15"
         :items="getData"

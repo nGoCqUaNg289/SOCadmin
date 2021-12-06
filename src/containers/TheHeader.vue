@@ -18,7 +18,7 @@
       />
     </CHeaderBrand>
     <CHeaderNav class="d-md-down-none mr-auto">
-      <CBreadcrumbRouter class="border-0 mb-0" />
+      <!-- <CBreadcrumbRouter class="border-0 mb-0" /> -->
     </CHeaderNav>
     <CHeaderNav class="mr-4">
       <TheHeaderDropdownAccnt />
