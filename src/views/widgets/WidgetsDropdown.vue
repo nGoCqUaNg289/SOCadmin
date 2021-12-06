@@ -2,7 +2,7 @@
   <CRow>
     <CCol sm="6" lg="3">
       <CWidgetDropdown color="primary" :header="countOrder" text="Tổng hóa đơn">
-        <template #default>
+        <!-- <template #default>
           <CDropdown color="transparent p-0" placement="bottom-end">
             <template #toggler-content>
               <CIcon name="cil-settings" />
@@ -12,7 +12,7 @@
             <CDropdownItem>Something else here...</CDropdownItem>
             <CDropdownItem disabled>Disabled action</CDropdownItem>
           </CDropdown>
-        </template>
+        </template> -->
         <template #footer>
           <CChartLineSimple
             pointed
@@ -32,7 +32,7 @@
         :header="ComfimCountOrder"
         text="Tổng số đơn hoàn thành"
       >
-        <template #default>
+        <!-- <template #default>
           <CDropdown
             color="transparent p-0"
             placement="bottom-end"
@@ -46,7 +46,7 @@
             <CDropdownItem>Something else here...</CDropdownItem>
             <CDropdownItem disabled>Disabled action</CDropdownItem>
           </CDropdown>
-        </template>
+        </template> -->
         <template #footer>
           <CChartLineSimple
             pointed
@@ -63,7 +63,7 @@
     </CCol>
     <CCol sm="6" lg="3">
       <CWidgetDropdown color="warning" :header="CancerCountOrder" text="Số đơn bị hủy">
-        <template #default>
+        <!-- <template #default>
           <CDropdown color="transparent p-0" placement="bottom-end">
             <template #toggler-content>
               <CIcon name="cil-settings" />
@@ -73,7 +73,7 @@
             <CDropdownItem>Something else here...</CDropdownItem>
             <CDropdownItem disabled>Disabled action</CDropdownItem>
           </CDropdown>
-        </template>
+        </template> -->
         <template #footer>
           <CChartLineSimple
             class="mt-3"
@@ -90,7 +90,7 @@
     </CCol>
     <CCol sm="6" lg="3">
       <CWidgetDropdown color="danger" :header="unconfirm.length" text="Số đơn chưa hoàn thành">
-        <template #default>
+        <!-- <template #default>
           <CDropdown color="transparent p-0" placement="bottom-end">
             <template #toggler-content>
               <CIcon name="cil-settings" />
@@ -100,7 +100,7 @@
             <CDropdownItem>Something else here...</CDropdownItem>
             <CDropdownItem disabled>Disabled action</CDropdownItem>
           </CDropdown>
-        </template>
+        </template> -->
         <template #footer>
           <CChartBarSimple
             class="mt-3 mx-3"
