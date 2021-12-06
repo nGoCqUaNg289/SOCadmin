@@ -30,7 +30,7 @@
         />
       </form>
     </nav>
-    <table class="table">
+    <table class="table table-hover">
       <thead>
         <tr>
           <th scope="col">STT</th>
@@ -42,24 +42,25 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in pageOfItems" :key="item.id">
+        <tr v-for="item in pageOfItems" :key="item.id" @click="DetailProduct(item.id)">
           <th>{{ item.id }}</th>
           <th scope="row" class="td-table">{{ item.name }}</th>
           <td :style="{ color: Status(item) }">
             {{ item.status }}
           </td>
           <td class="td-table td-action">
-            <button
+            <!-- <button
               type="button"
               class="btn btn-primary btn-size"
               @click="DetailProduct(item.id)"
             >
               <i class="cil-folder-open"></i>
-            </button>
+            </button> -->
             <button
               type="button"
               class="btn btn-danger btn-size"
               @click="deleteProduct(item.id)"
+              v-if="item.status == 'Đang bán'"
             >
               <i class="cil-trash"></i>
             </button>
@@ -67,8 +68,8 @@
         </tr>
       </tbody>
     </table>
-    <div class="card-body"></div>
-    <div class="card-footer pb-0 pt-3" style="text-align: center">
+    <!-- <div class="card-body"></div> -->
+    <div class="pb-0 pt-3 text-center">
       <jw-pagination
         :maxPages="15"
         :items="getData"
@@ -134,8 +135,8 @@ export default {
       });
     },
     deleteProduct(item) {
-      console.log(item)
-      console.log(this.$store.state.userToken);
+      // console.log(item)
+      // console.log(this.$store.state.userToken);
       axios
         .delete(
           this.$store.state.MainLink + "admin/products/delete/" + item,
@@ -145,13 +146,13 @@ export default {
             },
           }
         )
-
-        .then((response) => {
-          if (response.data.object) {
-            alert("Delete thành công.");
-          } else {
-            alert("Delete thất bại.");
-          }
+        .then(() => {
+          // if (response.data.object) {
+          //   alert("Delete thành công.");
+          // } else {
+          //   alert("Delete thất bại.");
+          // }
+          this.getAllProduct();
         })
         .catch((e) => {
           console.log(e);

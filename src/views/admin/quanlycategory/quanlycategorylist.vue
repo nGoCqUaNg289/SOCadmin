@@ -39,7 +39,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in pageOfItems" :key="index">
+        <tr v-for="(item, index) in getData" :key="index">
           <th>{{ index + 1 }}</th>
           <td scope="row" class="td-table" style="width: 35%;">
                   <a class="custom-a" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -59,14 +59,13 @@
         </tr>
       </tbody>
     </table>
-    <!-- <div class="card-body"></div> -->
-    <div class="pb-0 pt-3" style="text-align: center">
+    <!-- <div class="pb-0 pt-3" style="text-align: center">
       <jw-pagination
         :maxPages="15"
         :items="getData"
         @changePage="onChangePage"
       ></jw-pagination>
-    </div>
+    </div> -->
   </div>
 </template>
 

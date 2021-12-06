@@ -16,7 +16,7 @@
         </button>
       </div>
     </div>
-    <nav class="col-12 navbar justify-content-between">
+    <!-- <nav class="col-12 navbar justify-content-between">
       <a class="navbar-brand"></a>
       <form class="form-inline">
         <input
@@ -30,11 +30,11 @@
           <i class="cil-magnifying-glass"></i>
         </button>
       </form>
-    </nav>
+    </nav> -->
     <table class="table table-hover">
       <thead>
         <tr>
-          <th scope="col">ID</th>
+          <th scope="col">Mã hóa đơn</th>
           <th scope="col" class="Title-table">Username</th>
           <th scope="col" class="Title-table td-action">Tổng tiền</th>
           <th class="Title-table">Thời gian thanh toán</th>

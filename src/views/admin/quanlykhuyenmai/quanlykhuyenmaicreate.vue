@@ -10,46 +10,40 @@
             <strong> Sản phẩm khuyến mãi</strong>
           </CCardHeader>
           <CListGroupItem
-            >Nhập tên sản phẩm:
+            > 
             <input
               type="text"
-              v-model="userName"
+              v-model="searchP"
               class="input-custom-border-none"
               placeholder="Nhập tên sản phẩm"
+              style="width: 85%;border-bottom: 1px solid gray;padding: 9px;margin-right: 5%;"
             />
-            <CButton
-              type="submit"
-              size="sm"
-              color="primary"
-              class="btn btn-custom-size"
-              @click="getAllUserForUserName()"
-            >
-              <i class="cil-plus"></i>
-              Tìm
-            </CButton>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" @click="searchProduct()">
+              <i class="cil-magnifying-glass"></i>
+            </button>
           </CListGroupItem>
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">Id</th>
-                <th scope="col" class="Title-table" colspan="1">Username</th>
-                <th scope="col" class="Title-table" colspan="2">Hành động</th>
-                <th class="Title-table"></th>
+                <th scope="col" class="text-center">STT</th>
+                <th scope="col" class="Title-table" colspan="1">Tên sản phẩm</th>
+                <th scope="col" class="Title-table" colspan=""></th>
+                <!-- <th class="Title-table"></th> -->
               </tr>
             </thead>
             <tbody class="text-center" v-if="getData.length > 0">
               <tr v-for="item in getData" :key="item.id">
-                <th>{{ item.userId }}</th>
+                <th>{{ item.id }}</th>
                 <th scope="row" class="td-table" colspan="1">
-                  {{ item.userName }}
+                  {{ item.name.substr(6,25) }} ...
                 </th>
-                <td class="td-table td-action" colspan="2">
+                <td class="td-table td-action" colspan="">
                   <button
                     type="button"
                     class="btn btn-primary btn-size"
                     @click="selectUser(item.userId)"
                   >
-                    <i class="cil-folder-open">Chọn</i>
+                    <i class="cil-check-circle">Chọn</i>
                   </button>
                 </td>
               </tr>
@@ -153,7 +147,7 @@
 import axios from "axios";
 
 export default {
-  name: "quanlybonuscreate",
+  name: "quanlysalecreate",
 
   data() {
     return {
@@ -166,12 +160,15 @@ export default {
         endTime: "",
         statusL:""
       },
+      searchP: ""
     };
   },
-
+  created(){
+    this.getAllProduct()
+  },
   methods: {
     creatSale() {
-      console.log("abc");
+      // console.log("abc");
       const formData = new FormData();
       for (let index in this.formData) {
         formData.append(index, this.formData.index);
@@ -194,6 +191,31 @@ export default {
         .catch(function (error) {
           console.log("Thêm mới thất bại!");
           alert(error);
+        });
+    },
+    searchProduct(){
+      // console.log(this.searchP)
+      axios
+        .get(
+          this.$store.state.MainLink + "customer/products?find=" + this.searchP
+        )
+        .then((response) => {
+          this.getData = response.data.object;
+          // console.log(response.data.object);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    getAllProduct() {
+      axios
+        .get(this.$store.state.MainLink + "customer/products")
+        .then((response) => {
+          this.getData = response.data.object;
+          // console.log(this.getData);
+        })
+        .catch((e) => {
+          console.log(e);
         });
     },
   },

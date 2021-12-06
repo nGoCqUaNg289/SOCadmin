@@ -16,7 +16,7 @@
         </button>
       </div>
     </div>
-    <nav class="col-12 navbar justify-content-between">
+    <!-- <nav class="col-12 navbar justify-content-between">
       <a class="navbar-brand"></a>
       <form class="form-inline">
         <input
@@ -30,10 +30,10 @@
           <i class="cil-magnifying-glass"></i>
         </button>
       </form>
-    </nav>
+    </nav> -->
     <table class="table table-hover">
       <thead>
-        <tr>
+        <tr class="text-center">
           <th scope="col">#</th>
           <th scope="col">Tên Blog</th>
           <th scope="col">Thời gian tạo</th>
@@ -78,7 +78,7 @@ export default {
     };
   },
   created() {
-    this.getAllProduct();
+    this.getAlBlog();
   },
   methods: {
     CreateNewProduct() {
@@ -93,7 +93,7 @@ export default {
         params: { item: id },
       });
     },
-    getAllProduct() {
+    getAlBlog() {
       axios
         .get(this.$store.state.MainLink + "admin/blog", {
           headers: {
@@ -102,7 +102,7 @@ export default {
         })
         .then((response) => {
           this.getData = response.data.object;
-          console.log(this.getData)
+          // console.log(this.getData)
         })
         .catch((e) => {
           console.log(e);
