@@ -141,7 +141,8 @@ export default {
           this.$store.state.MainLink + "admin/products/delete/" + item,
           {
             headers: {
-              Authorization: this.$store.state.userToken,
+              // Authorization: this.$store.state.userToken,
+              Authorization: localStorage.usertoken,
             },
           }
         )

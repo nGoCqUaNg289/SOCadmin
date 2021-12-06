@@ -2,7 +2,7 @@ export default [{
     _name: 'CSidebarNav',
     _children: [{
             _name: 'CSidebarNavItem',
-            name: 'Dashboard',
+            name: 'Thống kê',
             to: '/dashboard',
             icon: 'cil-speedometer',
             badge: {
@@ -204,16 +204,16 @@ export default [{
                 shape: 'pill'
             }
         },
-        {
-            _name: 'CSidebarNavItem',
-            name: 'Quản lý đánh giá',
-            to: '/quanlysanphamlist',
-            icon: 'cil-star',
-            badge: {
-                color: 'primary',
-                shape: 'pill'
-            }
-        },
+        // {
+        //     _name: 'CSidebarNavItem',
+        //     name: 'Quản lý đánh giá',
+        //     to: '/quanlysanphamlist',
+        //     icon: 'cil-star',
+        //     badge: {
+        //         color: 'primary',
+        //         shape: 'pill'
+        //     }
+        // },
         {
             _name: 'CSidebarNavItem',
             name: 'Quản lý Blog',
@@ -224,16 +224,16 @@ export default [{
                 shape: 'pill'
             }
         },
-        {
-            _name: 'CSidebarNavItem',
-            name: 'Thống kê',
-            to: '/quanlysanphamlist',
-            icon: 'cil-calculator',
-            badge: {
-                color: 'primary',
-                shape: 'pill'
-            }
-        },
+        // {
+        //     _name: 'CSidebarNavItem',
+        //     name: 'Thống kê',
+        //     to: '/quanlysanphamlist',
+        //     icon: 'cil-calculator',
+        //     badge: {
+        //         color: 'primary',
+        //         shape: 'pill'
+        //     }
+        // },
         {
             _name: 'CSidebarNavItem',
             name: 'Quản lý hóa đơn',
@@ -244,16 +244,16 @@ export default [{
                 shape: 'pill'
             }
         },
-        {
-            _name: 'CSidebarNavItem',
-            name: 'Quản lý khách hàng',
-            to: '/quanlysanphamlist',
-            icon: 'cil-calculator',
-            badge: {
-                color: 'primary',
-                shape: 'pill'
-            }
-        },
+        // {
+        //     _name: 'CSidebarNavItem',
+        //     name: 'Quản lý khách hàng',
+        //     to: '/quanlysanphamlist',
+        //     icon: 'cil-calculator',
+        //     badge: {
+        //         color: 'primary',
+        //         shape: 'pill'
+        //     }
+        // },
         {
             _name: 'CSidebarNavItem',
             name: 'Quản lý khuyến mại',

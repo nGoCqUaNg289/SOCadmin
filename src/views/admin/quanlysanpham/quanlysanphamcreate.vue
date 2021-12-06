@@ -2,52 +2,117 @@
   <div>
     <CRow>
       <CCol md="12">
-        
-        <CButton type="reset" size="sm" color="danger" class="btn btn-custom-size">
+        <CButton
+          type="reset"
+          size="sm"
+          color="danger"
+          class="btn btn-custom-size"
+        >
           <i class="cil-x"></i>
-          Huỷ 
+          Huỷ
         </CButton>
-        <CButton type="submit" 
-        size="sm" color="primary" 
-        class="btn btn-custom-size"
-        @click="createProduct()"
+        <CButton
+          type="submit"
+          size="sm"
+          color="primary"
+          class="btn btn-custom-size"
+          @click="createProduct()"
+          v-if="checkProduct == 1"
         >
           <i class="cil-plus"></i>
           Lưu sản phẩm
-          </CButton>
+        </CButton>
       </CCol>
-      <br/>
-      <br/>
-      <CCol md="12" lg="5">
+      <br />
+      <br />
+      <CCol md="12" lg="12">
         <CCard>
           <CCardHeader>
             <CIcon name="cil-justify-center" />
             <strong> Thông tin của sản phẩm </strong>
+            <CButton
+              type="submit"
+              size="sm"
+              color="primary"
+              class="btn btn-custom-size"
+              @click="createProduct()"
+            >
+              <i class="cil-plus"></i>
+              Lưu sản phẩm
+            </CButton>
           </CCardHeader>
           <CCardBody height="auto">
             <CListGroup>
               <CListGroupItem
-                >Tên máy: <input 
-                type="text" 
-                class="input-custom-border-none" 
-                placeholder="Nhập tên máy"
-                v-model="formData.name"
-                >
+                >Tên máy:
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Nhập tên máy"
+                  v-model="formData.name"
+                  style="width: 80%"
+                />
               </CListGroupItem>
-              <CListGroupItem>Giá: 
-                <input 
-                type="text" 
-                class="input-custom-border-none" 
-                placeholder="Giá máy"
-                v-model="formData.price"
-                ></CListGroupItem>
-              <CListGroupItem>Trạng thái: 
-                <input 
-                type="text" 
-                class="input-custom-border-none" 
-                placeholder="Trạng thái máy"
-                v-model="formData.status"
-                ></CListGroupItem>
+              <CListGroupItem
+                >Giá:
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Giá máy"
+                  v-model="formData.price"
+                  style="width: 80%"
+              /></CListGroupItem>
+              <CListGroupItem
+                >Thời gian bảo hành:
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Trạng thái máy"
+                  v-model="formData.warranty"
+                  style="width: 5%"
+                />
+                <span>tháng</span></CListGroupItem
+              >
+            </CListGroup>
+          </CCardBody>
+        </CCard>
+      </CCol>
+      <CCol md="12" lg="12">
+        <CCard>
+          <CCardHeader>
+            <CIcon name="cil-justify-center" />
+            <strong> Thông tin chi tiết sản phẩm </strong>
+          </CCardHeader>
+          <CCardBody height="auto">
+            <CListGroup>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">
+                      <button @click="createNewValue()" style="border: none">
+                        +
+                      </button>
+                    </th>
+                    <th scope="col">Sản phẩm</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(item, index) in orderDetails" :key="index">
+                    <th scope="row">{{ index + 1 }}</th>
+                    <td><input type="text" v-model="item.quantity" /></td>
+                    <td><input type="text" v-model="item.discount" /></td>
+                    <td>
+                      <i
+                        class="cil-trash"
+                        style="color: red"
+                        @click="deleteProduct(index)"
+                      ></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </CListGroup>
           </CCardBody>
         </CCard>
@@ -57,7 +122,7 @@
 </template>
 
 <script>
-import axios from "axios"
+import axios from "axios";
 export default {
   name: "QuanLySanPhamCreate",
   data() {
@@ -65,53 +130,17 @@ export default {
       formData: {
         name: "",
         price: "",
-        status: "",
-        warranty: 24
+        warranty: 0,
       },
-      selected: [],
-      show: true,
-      horizontal: { label: "col-3", input: "col-9" },
-      options: [
-        "Dell",
-        "HP",
-        "LG",
-        "Apple",
-        "Asus",
-        "Lenovo",
-        "VAIO",
-        "Acer",
-        "Samsung",
-        "Toshiba",
-        "MSI",
-      ],
-      selectOptions: [
-        "Dell",
-        "HP",
-        "LG",
-        "Apple",
-        "Asus",
-        "Lenovo",
-        "VAIO",
-        "Acer",
-        "Samsung",
-        "Toshiba",
-        "MSI",
-        {
-          value: "some value",
-          label: "Selected option",
-        },
-      ],
-      selectedOption: "some value",
-
-      formCollapsed: true,
+      checkProduct: 0
     };
   },
   methods: {
     validator(val) {
       return val ? val.length >= 4 : false;
     },
-    createProduct(){
-      console.log("abc")
+    createProduct() {
+      console.log("abc");
       const formData = new FormData();
       for (let index in this.formData) {
         formData.append(index, this.formData.index);
@@ -120,17 +149,21 @@ export default {
       axios
         .post(
           "http://150.95.105.29:8800/api/admin/products/newproduct",
-          this.formData,{
+          this.formData,
+          {
             headers: {
-              Authorization: this.$store.state.userToken,
+              // Authorization: this.$store.state.userToken,
+              Authorization: localStorage.usertoken,
             },
           }
         )
         .then((response) => {
-        console.log(response)
-        this.$router.push(`/admin/quanlysanphamcreatedetail/${response.data.object.id}`);
+          console.log(response);
+          this.$router.push(
+            `/admin/quanlysanphamcreatedetail/${response.data.object.id}`
+          );
         })
-        .catch(function(error) {
+        .catch(function (error) {
           alert(error);
         });
     },
@@ -144,17 +177,17 @@ export default {
 };
 </script>
 <style scope>
-.btn-custom-size{
+.btn-custom-size {
   width: 130px;
   margin-left: 15px;
-  float: right
+  float: right;
 }
-.input-custom-border-none{
+.input-custom-border-none {
   border: none;
   box-shadow: none;
   box-sizing: border-box;
 }
-.title-td{
+.title-td {
   width: 35%;
 }
 </style>

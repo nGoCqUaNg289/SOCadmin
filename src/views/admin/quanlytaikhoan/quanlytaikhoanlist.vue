@@ -2,93 +2,65 @@
   <div>
     <div class="col-12 col-title">
       <div class="col-md-6 float-left margin-left">
-        <p class="Text-tile">Danh sách account</p>
-        <p class="Text-tile-2">Trang chủ ● Sản phẩm</p>
+        <p class="Text-tile">Danh sách tài khoản</p>
+        <p class="Text-tile-2">Trang chủ ● tài khoản</p>
       </div>
       <div class="col-md-6 float-right">
+        <button
+            type="button"
+            class="btn btn-primary float-right btn-add"
+            @click="CreateNewAccount()"
+        >
+          <i class="cil-plus"></i>
+          Thêm mới
+        </button>
       </div>
     </div>
     <nav class="col-12 navbar justify-content-between">
       <a class="navbar-brand"></a>
       <form class="form-inline">
         <input
-          @change="searchProduct()"
-          class="form-control mr-sm-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-          style="box-shadow: none"
-          v-model="searchString"
+            class="form-control mr-sm-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+            style="box-shadow: none"
         />
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+          <i class="cil-magnifying-glass"></i>
+        </button>
       </form>
     </nav>
-    <table class="table">
+    <table class="table table-hover">
       <thead>
-        <tr>
-          <th scope="col">STT</th>
-          <!-- <th scope="col" class="Title-table">Tên sale</th> -->
-          <th scope="col" class="Title-table td-action" style="text-align:center" >
-            user name
-          </th>
-          <th scope="col" class="Title-table td-action" >
-            password
-          </th>
-          <th scope="col" class="Title-table td-action" >
-           fullname
-          </th>
-          <th scope="col" class="Title-table td-action" >
-           email
-          </th>
-          <th scope="col" class="Title-table td-action" >
-           phone
-          </th>
-          <th scope="col" class="Title-table td-action" >
-           address
-          </th>
-          <th scope="col" class="Title-table td-action" >
-           userStatus
-          </th>
-          <!-- <th class="Title-table"></th> -->
-          
-        </tr>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Tên đăng nhập</th>
+        <th scope="col">Tên người dùng</th>
+        <th scope="col">Email</th>
+        <th scope="col">Trạng thái</th>
+        <th scope="col"></th>
+      </tr>
       </thead>
       <tbody>
-        <tr v-for="item in pageOfItems" :key="item.id">
-          <th>{{ item.id }}</th>
-          <td scope="row" class="td-table">{{ item.username }}</td>
-          <td scope="row" class="td-table">{{ item.password }}</td>
-          <td scope="row" class="td-table">{{ item.fullname }}</td>
-          <td scope="row" class="td-table">{{ item.email }}</td>
-          <td scope="row" class="td-table">{{ item.phone }}</td>
-          <td scope="row" class="td-table">{{ item.address }}</td>
-          <td scope="row" class="td-table">{{ item.userStatus }}</td>
-          <td class="td-table td-action">
-            <button
-              type="button"
-              class="btn btn-primary btn-size"
-              @click="DetailProduct(item.id)"
-            >
-              <i class="cil-folder-open"></i>
-            </button>
-            <button
+      <tr v-for="(item, index) in getData" :key="index" @click="detailAccount(item.id)">
+        <th scope="row">{{ index + 1 }}</th>
+        <td>{{ item.username }}</td>
+        <td>{{ item.fullname }}</td>
+        <td>{{ item.email }}</td>
+        <td>{{ item.userStatus }}</td>
+        <td class="td-table td-action">
+          <button
               type="button"
               class="btn btn-danger btn-size"
-              @click="deleteAccount(item)"
-            >
-              <i class="cil-trash"></i>
-            </button>
-          </td>
-        </tr>
+              @click="deleteAccount(item.id)"
+          >
+            <i class="cil-trash"></i>
+          </button>
+        </td>
+      </tr>
       </tbody>
     </table>
-    <div class="card-body"></div>
-    <div class="card-footer pb-0 pt-3" style="text-align: center">
-      <jw-pagination
-        :maxPages="15"
-        :items="getData"
-        @changePage="onChangePage"
-      ></jw-pagination>
-    </div>
   </div>
 </template>
 
@@ -99,95 +71,59 @@ export default {
   name: "QuanLySanPhamList",
   data() {
     return {
-      pageOfItems: [],
       getData: "",
       formData: {
-        username: "",
-        password: "",
-        fullname: "",
-        email: "",
-        phone: "",
-        address: "",
-        userStatus: "",
+        name: "",
+        price: "",
+        status: "",
+        orderDetails: "",
+        blogs: "",
+        productCategories: "",
+        sales: "",
+        productColors: [],
+        cartDetails: "",
+        productDetails: [],
       },
-      searchString: "",
     };
   },
   created() {
-    this.getAllAccount();
-
+    this.getAllProduct();
   },
   methods: {
-    onChangePage(pageOfItems) {
-      this.pageOfItems = pageOfItems;
-    },
-    searchProduct() {
-      axios
-        .get(
-          this.$store.state.MainLink + "admin/products?find="
-        )
-        .then((response) => {
-          this.getData = response.data.object;
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    },
-    SaleEnd() {
-      this.$router.push("/sale/quanlysaleEnd");
-    },
-    SaleNow() {
-      this.$router.push("/sale/quanlysaleEnd");
-    },
-    UpdateProduct() {
-      this.$router.push("/admin/quanlysanphamcreatedetail");
-    },
-    DetailSale(id) {
+    CreateNewAccount() {
       this.$router.push({
-        name: "Thông tin chi tiết sản phẩm",
+        name: "Tạo mới tài khoản",
+      });
+    },
+    detailAccount(id) {
+      console.log(id);
+      this.$router.push({
+        name: "Chi tiết tài khoản",
         params: { item: id },
       });
     },
-    deleteAccount(item) {
-      console.log(this.$store.state.tokenUser);
-      axios
-        .put(
-          this.$store.state.MainLink + "customer/account/update/" + item.id,
-          {
-            headers: {
-              Authorization: this.$store.state.tokenUser,
-            },
-          }
-        )
-
-        .then((response) => {
-          if (response.data.object) {
-            alert("Delete thành công.");
-          } else {
-            alert("Delete thất bại.");
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+    deleteAccount(item){
+      console.log(item)
     },
-  
-    
-    getAllAccount() {
+    getAllProduct() {
       axios
-        .get( this.$store.state.MainLink + "customer/account/findAll",
-         {
+          .get(this.$store.state.MainLink + "customer/account/findAll", {
             headers: {
-              Authorization: this.$store.state.userToken,
+              // Authorization: this.$store.state.userToken,
+              Authorization: localStorage.usertoken,
             },
           })
-        .then((response) => {
-          this.getData = response.data.object;
-          console.log(response)
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+          .then((response) => {
+            this.getData = response.data.object;
+            console.log(this.getData)
+            // console.log(response.data.object);
+            // for (var item in this.getData) {
+            //   console.log(this.getData[item].productColors);
+            // }
+          })
+          .catch((e) => {
+            console.log(e);
+          });
     },
   },
 };
