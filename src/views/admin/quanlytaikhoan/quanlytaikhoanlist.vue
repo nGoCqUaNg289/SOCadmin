@@ -71,7 +71,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in pageOfItems" :key="item.id">
+        <tr v-for="item in pageOfItems" :key="item.id" @click="detailAccount(item.id)">
           <th>{{ item.id }}</th>
           <td scope="row" class="td-table">{{ item.username }}</td>
           <!-- <td scope="row" class="td-table">{{ item.password }}</td> -->
@@ -146,9 +146,9 @@ export default {
     UpdateProduct() {
       this.$router.push("/admin/quanlysanphamcreatedetail");
     },
-    DetailSale(id) {
+    detailAccount(id) {
       this.$router.push({
-        name: "Thông tin chi tiết sản phẩm",
+        name: "Thông tin chi tiết tài khoản",
         params: { item: id },
       });
     },
@@ -189,7 +189,7 @@ export default {
           })
         .then((response) => {
           this.getData = response.data.object;
-          console.log(response)
+          // console.log(response)
         })
         .catch((e) => {
           console.log(e);

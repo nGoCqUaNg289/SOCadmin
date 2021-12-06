@@ -150,6 +150,10 @@ const quanlytaikhoanlist = () =>
     import ('@/views/admin/quanlytaikhoan/quanlytaikhoanlist')
 const quanlytaikhoancreate = () =>
     import ('@/views/admin/quanlytaikhoan/quanlytaikhoancreate')
+const quanlytaikhoandetail = () =>
+    import ('@/views/admin/quanlytaikhoan/quanlytaikhoandetail')
+const quanlytaikhoanupdate = () =>
+    import ('@/views/admin/quanlytaikhoan/quanlytaikhoanupdate')
 Vue.use(Router)
 
 export default new Router({
@@ -302,12 +306,20 @@ function configRoutes() {
                         {
                             path: 'quanlyaccountcreate',
                             name: 'Tạo tài khoản mới',
-                            component: quanlytaikhoancreate
+                            component: quanlytaikhoancreate,
+                            props: true
                         },
                         {
-                            path: 'quanlysaleNow',
-                            name: 'Sale đang diễn ra',
-                            component: quanlykhuyenmaidangdienra
+                            path: 'quanlytaikhoandetail',
+                            name: 'Thông tin chi tiết tài khoản',
+                            component: quanlytaikhoandetail,
+                            props: true
+                        },
+                        {
+                            path: 'quanlytaikhoanupdate',
+                            name: 'Cập nhật thông tin tài khoản',
+                            component: quanlytaikhoanupdate,
+                            props: true
                         },
 
                     ]
