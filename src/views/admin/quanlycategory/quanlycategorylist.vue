@@ -22,7 +22,7 @@
         />
       </form>
     </nav> -->
-    <table class="table table-hover">
+    <table class="table">
       <thead>
         <tr @click="detailCategory()">
           <th scope="col">STT</th>
@@ -36,20 +36,20 @@
           <th scope="col" class="Title-table td-action" >
            Trạng thái
           </th>
-         
-          <!-- <th class="Title-table"></th> -->
-          
         </tr>
       </thead>
       <tbody>
         <tr v-for="(item, index) in pageOfItems" :key="index">
           <th>{{ index + 1 }}</th>
-          <td scope="row" class="td-table">{{ item.name }}
-              <ul>
-                  <li v-for="items in item.categories" :key="items.id">
-                      {{items.name}}
-                  </li>
-              </ul>
+          <td scope="row" class="td-table" style="width: 35%;">
+                  <a class="custom-a" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                   - {{ item.name }}
+                  </a>  
+                <div class="collapse" id="collapseExample">
+                  <div class="">
+                    <div v-for="items in item.categories" :key="items.id" style="margin-left: 15%">+ {{items.name}}</div>
+                  </div>
+                </div>
           </td>
           <td scope="row" class="td-table td-center">{{ item.type }}</td>
           <td scope="row" class="td-table td-center">
@@ -59,8 +59,8 @@
         </tr>
       </tbody>
     </table>
-    <div class="card-body"></div>
-    <div class="card-footer pb-0 pt-3" style="text-align: center">
+    <!-- <div class="card-body"></div> -->
+    <div class="pb-0 pt-3" style="text-align: center">
       <jw-pagination
         :maxPages="15"
         :items="getData"
@@ -131,7 +131,7 @@ export default {
     
     getAllCategory() {
       axios
-        .get( this.$store.state.MainLink + "customer/categories",
+        .get( this.$store.state.MainLink + "customer/categories?active=true",
          {
             headers: {
               Authorization: this.$store.state.userToken,
@@ -155,5 +155,9 @@ export default {
 }
 .td-center{
     text-align: center;
+}
+.custom-a{
+  text-decoration: none;
+    color: black;
 }
 </style>

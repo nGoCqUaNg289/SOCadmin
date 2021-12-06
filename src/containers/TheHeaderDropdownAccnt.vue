@@ -6,7 +6,7 @@
     add-menu-classes="pt-0"
   >
     <template #toggler>
-      <CHeaderNavLink>
+      <CHeaderNavLink style="text-decoration: none">
         <div>Xin chào,{{ userName }} !   </div>
         <div class="c-avatar">
           <img src="/img/avatars/avatar.png" class="c-avatar-img" />
@@ -32,9 +32,10 @@
     <!-- <CDropdownItem>
       <CIcon name="cil-shield-alt" /> Lock Account
     </CDropdownItem> -->
-    <CDropdownItem>
-      <router-link to="/pages/login" style="text-decoration: none">
-        <CIcon name="cil-lock-locked" /> Đăng xuất
+    <CDropdownItem >
+      <router-link to="/pages/login" style="text-decoration: none" >
+        <CIcon name="cil-lock-locked"/> 
+        <a @click="resetLocal()">Đăng xuất</a>
       </router-link>
     </CDropdownItem>
   </CDropdown>
@@ -55,15 +56,14 @@ export default {
   },
   methods: {
     setUserName() {
-      this.userName = this.$store.state.userName;
+      this.userName = localStorage.username
+      this.$store.state.userToken =
+            localStorage.usertoken
     },
-    // direcToLogin() {
-    //   console.log("TheHeaderDropdownAccnt");
-    //   this.$route.push({
-    //     // path: `/pages/login`,
-    //     name: "/pages/login",
-    //   });
-    // },
+    resetLocal(){
+      console.log("Chạy ở đây");
+      window.localStorage.clear();
+    }
   },
 };
 </script>

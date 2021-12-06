@@ -14,14 +14,14 @@
           <i class="cil-plus"></i>
           Thêm mới
         </button>
-         <button
+         <!-- <button
           type="button"
           class="btn btn-primary float-right btn-add"
           @click="detail()"
         >
           <i class="cil-plus"></i>
           Chi tiết
-        </button>
+        </button> -->
       </div>
     </div>
     <nav class="col-12 navbar justify-content-between">
@@ -41,10 +41,10 @@
     
       <CCardBody>
         <CNav justified variant="tabs">
-          <CNavItem active>Tất cả</CNavItem>
-          <CNavItem>Đang diễn ra</CNavItem>
-          <CNavItem>Sắp diễn ra</CNavItem>
-          <CNavItem>Đã kết thúc</CNavItem>
+          <CNavItem active><p @click="getAllSale()" style="margin-bottom: 0">Tất cả</p></CNavItem>
+          <CNavItem><p @click="getSaleNow()" style="margin-bottom: 0">Đang diễn ra</p></CNavItem>
+          <CNavItem><p @click="getAboutSale()" style="margin-bottom: 0">Sắp diễn ra</p></CNavItem>
+          <CNavItem><p @click="getSaleEnd()" style="margin-bottom: 0">Đã kết thúc</p></CNavItem>
         </CNav>
         <table class="table table-hover">
           <thead>
@@ -64,27 +64,27 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in pageOfItems" :key="item.id">
+            <tr v-for="item in getData" :key="item.id">
               <th>{{ item.id }}</th>
               <th scope="row" class="td-table">{{ item.name }}</th>
-              <th scope="row" class="td-table" style="text-align:center">{{ item.startTime }}</th>
-              <th scope="row" class="td-table" style="text-align:center">{{ item.endTime }}</th>
+              <th scope="row" class="td-table" style="text-align:center">{{ getDateString(item.startTime) }}</th>
+              <th scope="row" class="td-table" style="text-align:center">{{ getDateString(item.endTime) }}</th>
               <td scope="row" class="td-table td-center" style="text-align:center">
                   <span class="badge rounded-pill bg-primary" v-if="item.status == 'đang sale'">{{ item.status }}</span>
                   <span class="badge rounded-pill bg-danger" v-else-if="item.status == 'Đã dừng'">{{ item.status }}</span>
-                  <span class="badge rounded-pill bg-light text-dark" v-else>{{ item.status }}</span>
+                  <span class="badge rounded-pill bg-success" v-else>{{ item.status }}</span>
               </td>
             </tr>
           </tbody>
         </table>
       </CCardBody>
-    <div class="pb-0 pt-0" style="text-align: center">
+    <!-- <div class="pb-0 pt-0" style="text-align: center">
       <jw-pagination
         :maxPages="15"
         :items="getData"
         @changePage="onChangePage"
       ></jw-pagination>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -111,9 +111,9 @@ export default {
 
   },
   methods: {
-    onChangePage(pageOfItems) {
-      this.pageOfItems = pageOfItems;
-    },
+    // onChangePage(pageOfItems) {
+    //   this.pageOfItems = pageOfItems;
+    // },
     searchProduct() {
       axios
         .get(
@@ -186,7 +186,58 @@ export default {
           console.log(e);
         });
     },
-    
+    getSaleNow() {
+      axios
+        .get(this.$store.state.MainLink + "admin/sale/getSaleNow", {
+          headers: {
+            Authorization: this.$store.state.userToken,
+          },
+        })
+        .then((response) => {
+          this.getData = response.data.object;
+          console.log(response);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    getAboutSale() {
+      axios
+        .get(this.$store.state.MainLink + "admin/sale/getSaleAboutStart", {
+          headers: {
+            Authorization: this.$store.state.userToken,
+          },
+        })
+        .then((response) => {
+          this.getData = response.data.object;
+          console.log(response);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    getSaleEnd() {
+      axios
+        .get(this.$store.state.MainLink + "admin/sale/getSellEnd", {
+          headers: {
+            Authorization: this.$store.state.userToken,
+          },
+        })
+        .then((response) => {
+          this.getData = response.data.object;
+          console.log(response);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    getDateString(date) {
+      return `${new Date(date).getFullYear()}-${
+        new Date(date).getMonth() + 1
+      }-${new Date(date).getDate()} ${new Date(date).getHours()}:${new Date(
+        date
+      ).getMinutes()}:${new Date(date).getSeconds()}`;
+    },
   },
 
 };

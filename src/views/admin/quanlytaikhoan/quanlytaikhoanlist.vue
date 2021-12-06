@@ -28,25 +28,25 @@
           <th scope="col">STT</th>
           <!-- <th scope="col" class="Title-table">Tên sale</th> -->
           <th scope="col" class="Title-table td-action" style="text-align:center" >
-            user name
+            Tài khoản
           </th>
-          <th scope="col" class="Title-table td-action" >
+          <!-- <th scope="col" class="Title-table td-action" >
             password
+          </th> -->
+          <th scope="col" class="Title-table td-action" >
+           Tên người dùng
           </th>
           <th scope="col" class="Title-table td-action" >
-           fullname
+           Email
           </th>
           <th scope="col" class="Title-table td-action" >
-           email
+           Điện thoại
           </th>
           <th scope="col" class="Title-table td-action" >
-           phone
+           Địa chỉ
           </th>
           <th scope="col" class="Title-table td-action" >
-           address
-          </th>
-          <th scope="col" class="Title-table td-action" >
-           userStatus
+           Tình trạng tài khoản
           </th>
           <!-- <th class="Title-table"></th> -->
           
@@ -56,13 +56,16 @@
         <tr v-for="item in pageOfItems" :key="item.id">
           <th>{{ item.id }}</th>
           <td scope="row" class="td-table">{{ item.username }}</td>
-          <td scope="row" class="td-table">{{ item.password }}</td>
+          <!-- <td scope="row" class="td-table">{{ item.password }}</td> -->
           <td scope="row" class="td-table">{{ item.fullname }}</td>
           <td scope="row" class="td-table">{{ item.email }}</td>
           <td scope="row" class="td-table">{{ item.phone }}</td>
           <td scope="row" class="td-table">{{ item.address }}</td>
-          <td scope="row" class="td-table">{{ item.userStatus }}</td>
-          <td class="td-table td-action">
+          <td scope="row" class="td-table td-center" style="text-align:center">
+                  <span class="badge rounded-pill bg-success" v-if="item.status = true">{{ item.status }}</span>
+                  <span class="badge rounded-pill bg-danger" v-else>{{ item.status }}</span>
+          </td>
+          <!-- <td class="td-table td-action">
             <button
               type="button"
               class="btn btn-primary btn-size"
@@ -77,7 +80,7 @@
             >
               <i class="cil-trash"></i>
             </button>
-          </td>
+          </td> -->
         </tr>
       </tbody>
     </table>

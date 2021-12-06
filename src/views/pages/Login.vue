@@ -95,12 +95,14 @@ export default {
         .then((response) => {
           // console.log("username: " + this.username);
           // console.log("password: " + this.password);
-          this.$store.state.userName = response.data.username;
 
-          console.log(response);
-          this.$store.state.userToken =
+          // console.log(response);
+          localStorage.usertoken =
             response.data.tokenType + " " + response.data.accessToken;
-
+          localStorage.username = response.data.username;
+          this.$store.state.userToken =
+            localStorage.usertoken
+          this.$store.state.userName = localStorage.username;
           // console.log(this.$store.state.userToken);
 
           if (response.data.roles[0] == "Director") {
