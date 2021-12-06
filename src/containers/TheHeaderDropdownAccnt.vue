@@ -6,7 +6,7 @@
     add-menu-classes="pt-0"
   >
     <template #toggler>
-      <CHeaderNavLink>
+      <CHeaderNavLink style="    text-decoration: none;">
         <div>Xin chào,{{ userName }} !   </div>
         <div class="c-avatar">
           <img src="/img/avatars/avatar.png" class="c-avatar-img" />
@@ -20,14 +20,14 @@
       <CIcon name="cil-user" /> Thông tin tài khoản
     </CDropdownItem>
     <CDropdownItem> <CIcon name="cil-settings" /> Cài đặt </CDropdownItem>
-    <CDropdownItem>
+    <!-- <CDropdownItem>
       <CIcon name="cil-dollar" /> Payments
       <CBadge color="secondary" class="mfs-auto">{{ itemsCount }}</CBadge>
     </CDropdownItem>
     <CDropdownItem>
       <CIcon name="cil-file" /> Projects
       <CBadge color="primary" class="mfs-auto">{{ itemsCount }}</CBadge>
-    </CDropdownItem>
+    </CDropdownItem> -->
     <CDropdownDivider />
     <!-- <CDropdownItem>
       <CIcon name="cil-shield-alt" /> Lock Account
@@ -55,7 +55,8 @@ export default {
   },
   methods: {
     setUserName() {
-      this.userName = this.$store.state.userName;
+      // this.userName = this.$store.state.userName;
+      this.userName = localStorage.username;
     },
     // direcToLogin() {
     //   console.log("TheHeaderDropdownAccnt");

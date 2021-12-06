@@ -106,8 +106,8 @@ const quanlysanphamcreate = () =>
 
 const quanlysanphamcreatedetail = () =>
     import ('@/views/admin/quanlysanpham/quanlysanphamcreatedetail')
-// const quanlysanphamupdate = () =>
-//     import ('@/views/admin/quanlysanpham/quanlysanphamupdate')
+    // const quanlysanphamupdate = () =>
+    //     import ('@/views/admin/quanlysanpham/quanlysanphamupdate')
 
 const quanlysanphamdetail = () =>
     import ('@/views/admin/quanlysanpham/quanlysanphamdetail')
@@ -131,17 +131,25 @@ const quanlyhoadonupdate = () =>
     import ('@/views/admin/quanlyhoadon/quanlyhoadonupdate')
 const quanlyhoadonlist = () =>
     import ('@/views/admin/quanlyhoadon/quanlyhoadonlist')
-//SALE
+    //SALE
 const quanlykhuyenmailist = () =>
     import ('@/views/admin/quanlykhuyenmai/quanlykhuyenmailist')
 const quanlykhuyenmaidaketthuc = () =>
     import ('@/views/admin/quanlykhuyenmai/quanlykhuyenmaidaketthuc')
 const quanlykhuyenmaidangdienra = () =>
     import ('@/views/admin/quanlykhuyenmai/quanlykhuyenmaidangdienra')
-//account
+    //account
 
-const quanlytaikhoanlist= () =>
+const quanlytaikhoanlist = () =>
     import ('@/views/admin/quanlytaikhoan/quanlytaikhoanlist')
+const quanlytaikhoandetail = () =>
+    import ('@/views/admin/quanlytaikhoan/quanlytaikhoandetail')
+const quanlytaikhoanupdate = () =>
+    import ('@/views/admin/quanlytaikhoan/quanlytaikhoanupdate')
+const quanlytaikhoancreate = () =>
+    import ('@/views/admin/quanlytaikhoan/quanlytaikhoancreate')
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -236,23 +244,22 @@ function configRoutes() {
                     component: {
                         render(c) { return c('router-view') }
                     },
-                    children: [
-                        {
+                    children: [{
                             path: 'quanlysale',
                             name: 'Danh sách sale',
                             component: quanlykhuyenmailist
                         },
                         {
                             path: 'quanlysaleEnd',
-                            name:'Sale đã kết thúc',
+                            name: 'Sale đã kết thúc',
                             component: quanlykhuyenmaidaketthuc
                         },
                         {
                             path: 'quanlysaleNow',
-                            name:'Sale đang diễn ra',
+                            name: 'Sale đang diễn ra',
                             component: quanlykhuyenmaidangdienra
                         },
-                       
+
                     ]
                 },
 
@@ -264,23 +271,27 @@ function configRoutes() {
                     component: {
                         render(c) { return c('router-view') }
                     },
-                    children: [
-                        {
+                    children: [{
                             path: 'quanlyaccount',
-                            name: 'Danh sách account',
+                            name: 'Danh sách tài khoản',
                             component: quanlytaikhoanlist
                         },
                         {
-                            path: 'quanlysaleEnd',
-                            name:'Sale đã kết thúc',
-                            component: quanlykhuyenmaidaketthuc
+                            path: 'quanlytaikhoandetail',
+                            name: 'Chi tiết tài khoản',
+                            component: quanlytaikhoandetail,
+                            props: true
                         },
                         {
-                            path: 'quanlysaleNow',
-                            name:'Sale đang diễn ra',
-                            component: quanlykhuyenmaidangdienra
+                            path: 'quanlyaccountupdate',
+                            name: 'Cập nhật thông tin tài khoản',
+                            component: quanlytaikhoanupdate
                         },
-                       
+                        {
+                            path: 'quanlytaikhoancreate',
+                            name: 'Tạo mới tài khoản',
+                            component: quanlytaikhoancreate
+                        },
                     ]
                 },
 

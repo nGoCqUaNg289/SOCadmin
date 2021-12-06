@@ -97,7 +97,9 @@ export default {
           // console.log("password: " + this.password);
           this.$store.state.userName = response.data.username;
 
-          console.log(response);
+          // console.log(response);
+          localStorage.username = response.data.username;
+          localStorage.usertoken = response.data.tokenType + " " + response.data.accessToken;
           this.$store.state.userToken =
             response.data.tokenType + " " + response.data.accessToken;
 
@@ -112,6 +114,18 @@ export default {
             this.$router.push({
               path: "/dashboard",
             });
+            // console.log("Chuyển trang admin");
+          } else if (response.data.roles[0] == "User") {
+            // this.$router.push({
+            //   path: "/dashboard",
+            // });
+            this.$toasted.show(
+              "Thông tin không chính xác, vui lòng nhập lại !",
+              {
+                type: "error",
+                duration: 2000,
+              }
+            );
             // console.log("Chuyển trang admin");
           } else {
             console.log("Tài khoản hoặc mật khẩu không chính xác !");

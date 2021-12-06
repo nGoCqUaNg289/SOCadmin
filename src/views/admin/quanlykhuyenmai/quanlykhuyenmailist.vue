@@ -5,25 +5,6 @@
         <p class="Text-tile">Danh sách sale</p>
         <p class="Text-tile-2">Trang chủ ● Sản phẩm</p>
       </div>
-      <div class="col-md-6 float-right">
-        <button
-          type="button"
-          class="btn btn-primary float-right btn-add"
-          @click="SaleEnd()"
-        >
-          <i class="cil-plus"></i>
-          Sale End
-        </button>
-
-        <button
-          type="button"
-          class="btn btn-primary float-right btn-add"
-          @click="SaleNow()"
-        >
-          <i class="cil-plus"></i>
-          Sale Now
-        </button>
-      </div>
     </div>
     <nav class="col-12 navbar justify-content-between">
       <a class="navbar-brand"></a>
@@ -39,55 +20,91 @@
         />
       </form>
     </nav>
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a
+          class="nav-link active"
+          aria-current="page"
+          v-if="onButton == 0"
+          @click="getAllSale()"
+          >Tất cả khuyến mại</a
+        >
+        <a class="nav-link" v-else @click="getAllSale()">Tất cả khuyến mại</a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link active"
+          aria-current="page"
+          v-if="onButton == 1"
+          @click="getSaleNow()"
+          >Chương trình đang diễn ra</a
+        >
+        <a class="nav-link" v-else @click="getSaleNow()"
+          >Chương trình đang diễn ra</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link active"
+          aria-current="page"
+          v-if="onButton == 2"
+          @click="getAboutSale()"
+          >Chương trình sắp diễn ra</a
+        >
+        <a class="nav-link" v-else @click="getAboutSale()"
+          >Chương trình sắp diễn ra</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link active"
+          aria-current="page"
+          v-if="onButton == 3"
+          @click="getSaleEnd()"
+          >Chương trình đã kết thúc</a
+        >
+        <a class="nav-link" v-else @click="getSaleEnd()"
+          >Chương trình đã kết thúc</a
+        >
+      </li>
+    </ul>
     <table class="table">
       <thead>
         <tr>
           <th scope="col">STT</th>
           <th scope="col" class="Title-table">Tên sale</th>
-          <th scope="col" class="Title-table td-action" style="text-align:center" >
+          <th
+            scope="col"
+            class="Title-table td-action"
+            style="text-align: center"
+          >
             Thời gian bắt đầu sale
           </th>
-          <th scope="col" class="Title-table td-action" >
-            Thời gian kết thúc
-          </th>
-          <th scope="col" class="Title-table td-action" >
-            Trạng thái
-          </th>
+          <th scope="col" class="Title-table td-action">Thời gian kết thúc</th>
+          <th scope="col" class="Title-table td-action">Trạng thái</th>
           <th class="Title-table"></th>
         </tr>
       </thead>
-      <tbody>
+      <tbody v-if="getData != ''">
         <tr v-for="item in pageOfItems" :key="item.id">
           <th>{{ item.id }}</th>
           <th scope="row" class="td-table">{{ item.name }}</th>
-          <th scope="row" class="td-table">{{ item.startTime }}</th>
-          <th scope="row" class="td-table">{{ item.endTime }}</th>
-          <th scope="row" class="td-table">{{ item.status }}</th>
-
-
-          <!-- <td :style="{ color: Status(item) }">
-            {{ item.status }}
-          </td> -->
-          <!-- <td class="td-table td-action">
-            <button
-              type="button"
-              class="btn btn-primary btn-size"
-              @click="DetailSale(item.id)"
-            >
-              <i class="cil-folder-open"></i>
-            </button>
-            <button
-              type="button"
-              class="btn btn-danger btn-size"
-              @click="deleteProduct(item)"
-            >
-              <i class="cil-trash"></i>
-            </button>
-          </td> -->
+          <td scope="row" class="td-table">
+            {{ getDateString(item.startTime) }}
+          </td>
+          <td scope="row" class="td-table">
+            {{ getDateString(item.endTime) }}
+          </td>
+          <td scope="row" class="td-table">{{ item.status }}</td>
+        </tr>
+      </tbody>
+      <tbody v-else>
+        <tr colspan="5" class="">
+          Không có chương trình nào!
         </tr>
       </tbody>
     </table>
-    <div class="card-body"></div>
+    <!-- <div class="card-body"></div> -->
     <div class="card-footer pb-0 pt-3" style="text-align: center">
       <jw-pagination
         :maxPages="15"
@@ -114,11 +131,11 @@ export default {
         status: "",
       },
       searchString: "",
+      onButton: 0,
     };
   },
   created() {
-    this.getAllSale();  
-
+    this.getAllSale();
   },
   methods: {
     onChangePage(pageOfItems) {
@@ -126,21 +143,13 @@ export default {
     },
     searchProduct() {
       axios
-        .get(
-          this.$store.state.MainLink + "admin/products?find="
-        )
+        .get(this.$store.state.MainLink + "admin/products?find=")
         .then((response) => {
           this.getData = response.data.object;
         })
         .catch((e) => {
           console.log(e);
         });
-    },
-    SaleEnd() {
-      this.$router.push("/sale/quanlysaleEnd");
-    },
-    SaleNow() {
-      this.$router.push("/sale/quanlysaleEnd");
     },
     UpdateProduct() {
       this.$router.push("/admin/quanlysanphamcreatedetail");
@@ -174,41 +183,78 @@ export default {
           console.log(e);
         });
     },
-    // Status(products) {
-
-    //   switch (products.status) {
-    //     case "Đang bán":
-    //       return "green";
-    //     case "Không kinh doanh":
-    //       return " gray";
-    //     case "Hàng sắp về":
-    //       return "black";
-    //     case "Chưa có":
-    //       return " yellow";
-    //     case "Hết hàng":
-    //       return " red";
-    //   }
-    // },
-    
     getAllSale() {
+      this.onButton = 0;
       axios
-        .get( this.$store.state.MainLink + "admin/sale/get",
-         {
-            headers: {
-              Authorization: this.$store.state.userToken,
-            },
-          })
+        .get(this.$store.state.MainLink + "admin/sale/get", {
+          headers: {
+            Authorization: this.$store.state.userToken,
+          },
+        })
         .then((response) => {
           this.getData = response.data.object;
-          console.log(response)
+          console.log(response);
         })
         .catch((e) => {
           console.log(e);
         });
     },
-    
+    getSaleNow() {
+      this.onButton = 1;
+      axios
+        .get(this.$store.state.MainLink + "admin/sale/getSaleNow", {
+          headers: {
+            Authorization: this.$store.state.userToken,
+          },
+        })
+        .then((response) => {
+          this.getData = response.data.object;
+          console.log(response);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    getAboutSale() {
+      this.onButton = 2;
+      axios
+        .get(this.$store.state.MainLink + "admin/sale/getSaleAboutStart", {
+          headers: {
+            Authorization: this.$store.state.userToken,
+          },
+        })
+        .then((response) => {
+          this.getData = response.data.object;
+          console.log(response);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    getSaleEnd() {
+      this.onButton = 3;
+      axios
+        .get(this.$store.state.MainLink + "admin/sale/getSellEnd", {
+          headers: {
+            Authorization: this.$store.state.userToken,
+          },
+        })
+        .then((response) => {
+          this.getData = response.data.object;
+          console.log(response);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    getDateString(date) {
+      return `${new Date(date).getFullYear()}-${
+        new Date(date).getMonth() + 1
+      }-${new Date(date).getDate()} ${new Date(date).getHours()}:${new Date(
+        date
+      ).getMinutes()}:${new Date(date).getSeconds()}`;
+    },
   },
-
 };
 </script>
 
