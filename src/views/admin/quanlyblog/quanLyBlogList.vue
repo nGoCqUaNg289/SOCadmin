@@ -2,8 +2,8 @@
   <div>
     <div class="col-12 col-title">
       <div class="col-md-6 float-left margin-left">
-        <p class="Text-tile">Danh sách sản phẩm</p>
-        <p class="Text-tile-2">Trang chủ ● Sản phẩm</p>
+        <p class="Text-tile">Danh sách Blog</p>
+        <p class="Text-tile-2">Trang chủ ● Blog</p>
       </div>
       <div class="col-md-6 float-right">
         <button
@@ -37,6 +37,7 @@
           <th scope="col">#</th>
           <th scope="col">Tên Blog</th>
           <th scope="col">Thời gian tạo</th>
+          <th scope="col">Trạng thái</th>
         </tr>
       </thead>
       <tbody>
@@ -44,6 +45,10 @@
           <th scope="row">{{ index + 1 }}</th>
           <td>{{ item.title }}</td>
           <td>{{ item.timeCreated }}</td>
+          <td scope="row" class="td-table td-center" style="text-align:center">
+                  <span class="badge rounded-pill bg-success" v-if="item.status = true">{{ item.status }}</span>
+                  <span class="badge rounded-pill bg-danger" v-else>{{ item.status }}</span>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -97,12 +102,7 @@ export default {
         })
         .then((response) => {
           this.getData = response.data.object;
-          // console.log(response.data.object);
-          for (var item in this.getData) {
-            // console.log(item);
-
-            console.log(this.getData[item].productColors);
-          }
+          console.log(this.getData)
         })
         .catch((e) => {
           console.log(e);

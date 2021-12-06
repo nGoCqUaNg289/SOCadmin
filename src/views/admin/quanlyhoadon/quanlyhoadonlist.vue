@@ -2,8 +2,8 @@
   <div>
     <div class="col-12 col-title">
       <div class="col-md-6 float-left margin-left">
-        <p class="Text-tile">Danh sách sản phẩm</p>
-        <p class="Text-tile-2">Trang chủ ● Sản phẩm</p>
+        <p class="Text-tile">Danh sách hóa đơn</p>
+        <p class="Text-tile-2">Trang chủ ● Hóa đơn</p>
       </div>
       <div class="col-md-6 float-right">
         <button
@@ -38,6 +38,7 @@
           <th scope="col" class="Title-table">Username</th>
           <th scope="col" class="Title-table td-action">Tổng tiền</th>
           <th class="Title-table">Thời gian thanh toán</th>
+          <th class="Title-table">Trạng thái</th>
         </tr>
       </thead>
       <tbody>
@@ -54,6 +55,11 @@
           <td scope="row" class="td-table-custom">
             {{ getDateString(item.dateCreated) }}
           </td>
+          <td scope="row" class="td-table td-center" style="text-align:center">
+                  <span class="badge rounded-pill bg-primary" v-if="item.status == 'Chờ xác nhận'">{{ item.status }}</span>
+                  <span class="badge rounded-pill bg-success" v-else-if="item.status == 'Giao hàng thành công'">{{ item.status }}</span>
+                  <span class="badge rounded-pill bg-danger" v-else>{{ item.status }}</span>
+              </td>
         </tr>
       </tbody>
     </table>
@@ -119,7 +125,7 @@ export default {
           })
         .then((response) => {
           this.getData = response.data.object;
-          // console.log(response.data.object);
+          console.log(response.data.object);
           // for (var item in this.getData) {
 
           //   console.log(this.getData[item].productColors);
