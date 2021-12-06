@@ -18,11 +18,19 @@
       </CCol>
       <br/>
       <br/>
-      <CCol md="12" lg="5">
+      <CCol md="12" lg="12">
         <CCard>
           <CCardHeader>
             <CIcon name="cil-justify-center" />
             <strong> Thông tin của sản phẩm </strong>
+            <CButton type="submit" 
+                    size="sm" color="primary" 
+                    class="btn btn-custom-size"
+                    @click="createProduct()"
+                    >
+                      <i class="cil-plus"></i>
+                      Lưu
+            </CButton>
           </CCardHeader>
           <CCardBody height="auto">
             <CListGroup>
@@ -49,6 +57,25 @@
                 v-model="formData.status"
                 ></CListGroupItem>
             </CListGroup>
+          </CCardBody>
+        </CCard>
+      </CCol>
+      <CCol md="12" lg="12">
+        <CCard>
+          <CCardHeader>
+            <CIcon name="cil-justify-center" />
+            <strong> Thông tin chi tiết sản phẩm </strong>
+            <CButton type="submit" 
+                    size="sm" color="primary" 
+                    class="btn btn-custom-size"
+                    @click="createProduct()"
+                    >
+                      <i class="cil-plus"></i>
+                      Lưu
+            </CButton>
+          </CCardHeader>
+          <CCardBody height="auto">
+              
           </CCardBody>
         </CCard>
       </CCol>
