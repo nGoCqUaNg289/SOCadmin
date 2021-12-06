@@ -67,8 +67,8 @@
             <tr v-for="item in getData" :key="item.id">
               <th>{{ item.id }}</th>
               <th scope="row" class="td-table">{{ item.name }}</th>
-              <th scope="row" class="td-table" style="text-align:center">{{ getDateString(item.startTime) }}</th>
-              <th scope="row" class="td-table" style="text-align:center">{{ getDateString(item.endTime) }}</th>
+              <td scope="row" class="td-table" style="text-align:center">{{ getDateString(item.startTime) }}</td>
+              <td scope="row" class="td-table" style="text-align:center">{{ getDateString(item.endTime) }}</td>
               <td scope="row" class="td-table td-center" style="text-align:center">
                   <span class="badge rounded-pill bg-primary" v-if="item.status == 'đang sale'">{{ item.status }}</span>
                   <span class="badge rounded-pill bg-danger" v-else-if="item.status == 'Đã dừng'">{{ item.status }}</span>

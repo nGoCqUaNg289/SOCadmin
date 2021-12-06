@@ -6,6 +6,24 @@
         <p class="Text-tile-2">Trang chủ ● Sản phẩm</p>
       </div>
       <div class="col-md-6 float-right">
+        <button
+          type="button"
+          class="btn btn-primary float-right btn-add"
+          @click="CreateNewAccount()"
+        >
+          <i class="cil-plus"></i>
+          Tạo mới
+        </button>
+        <!-- <CButton
+          type="submit"
+          size="sm"
+          color="primary"
+          class="btn btn-custom-size"
+          @click="CreateNewAccount()"
+        >
+          <i class="cil-plus"></i>
+          Thêm mới
+        </CButton> -->
       </div>
     </div>
     <nav class="col-12 navbar justify-content-between">
@@ -22,7 +40,7 @@
         />
       </form>
     </nav>
-    <table class="table">
+    <table class="table table-hover">
       <thead>
         <tr>
           <th scope="col">STT</th>
@@ -65,27 +83,10 @@
                   <span class="badge rounded-pill bg-success" v-if="item.status = true">{{ item.status }}</span>
                   <span class="badge rounded-pill bg-danger" v-else>{{ item.status }}</span>
           </td>
-          <!-- <td class="td-table td-action">
-            <button
-              type="button"
-              class="btn btn-primary btn-size"
-              @click="DetailProduct(item.id)"
-            >
-              <i class="cil-folder-open"></i>
-            </button>
-            <button
-              type="button"
-              class="btn btn-danger btn-size"
-              @click="deleteAccount(item)"
-            >
-              <i class="cil-trash"></i>
-            </button>
-          </td> -->
         </tr>
       </tbody>
     </table>
-    <div class="card-body"></div>
-    <div class="card-footer pb-0 pt-3" style="text-align: center">
+    <div class="pb-0 pt-3" style="text-align: center">
       <jw-pagination
         :maxPages="15"
         :items="getData"
@@ -175,7 +176,9 @@ export default {
         });
     },
   
-    
+    CreateNewAccount(){
+      this.$router.push("/account/quanlyaccountcreate")
+    },
     getAllAccount() {
       axios
         .get( this.$store.state.MainLink + "customer/account/findAll",
