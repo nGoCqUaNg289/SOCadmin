@@ -163,7 +163,7 @@
                       color="danger"
                     />
                   </div>
-                </div>
+                </div> 
                 <div class="progress-group mb-4">
                   <div class="progress-group-prepend">
                     <span class="progress-group-text">
