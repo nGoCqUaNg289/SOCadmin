@@ -8,7 +8,7 @@
               <CCardBody>
                 <CForm>
                   <h1>Đăng nhập</h1>
-                  <p class="text-muted">Đăng nhập vào tài khoản quản trị</p>
+                  <p class="text-muted">Đăng nhập vào tài khoản quản trị viên</p>
                   <CInput
                     placeholder="Tài khoản"
                     autocomplete="username email"
@@ -38,8 +38,8 @@
                         >Đăng nhập</CButton
                       >
                     </CCol>
-                    <CCol col="6" class="text-right">
-                      <CButton color="link" class="px-0">Quên mật khẩu</CButton>
+                    <CCol col="6" class="text-right text-center">
+                      <CButton color="link" class="px-0" style="text-decoration: none;margin-top: 10px;">Quên mật khẩu</CButton>
                       <!-- <CButton color="link" class="d-lg-none"
                         >Register now!</CButton
                       > -->

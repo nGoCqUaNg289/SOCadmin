@@ -38,6 +38,7 @@
           <th scope="col">Tên Blog</th>
           <th scope="col">Thời gian tạo</th>
           <th scope="col">Trạng thái</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -46,12 +47,36 @@
           <td>{{ item.title }}</td>
           <td>{{ item.timeCreated }}</td>
           <td scope="row" class="td-table td-center" style="text-align:center">
-                  <span class="badge rounded-pill bg-success" v-if="item.status = true">{{ item.status }}</span>
-                  <span class="badge rounded-pill bg-danger" v-else>{{ item.status }}</span>
+                  <span class="badge rounded-pill bg-success" v-if="item.status == true">{{ item.status }}</span>
+                  <span class="badge rounded-pill bg-danger" v-else-if="item.status == false">{{ item.status }}</span>
+                  <!-- {{item.status}} -->
+          </td>
+          <td>
+            <CButton  @click="darkModal = true" class="mr-1">
+                <i class="cil-trash" style="color: red; text-align: center;" @click="setId(item.id)"></i>
+              </CButton>
           </td>
         </tr>
       </tbody>
     </table>
+    <CModal
+      :show.sync="darkModal"
+      :no-close-on-backdrop="true"
+      :centered="true"
+      title="Modal title 2"
+      size="lg"
+      color="danger"
+    >
+      Bạn có chắc muốn xóa Blog này ?
+      <template #header>
+        <h6 class="modal-title">Xác nhận</h6>
+        <CButtonClose @click="darkModal = false" class="text-white"/>
+      </template>
+      <template #footer>
+        <CButton @click="darkModal = false" color="secondary">Hủy</CButton>
+        <CButton @click="darkModal = false, deleteBlog()" color="danger">Xóa Blog</CButton>
+      </template>
+    </CModal>
   </div>
 </template>
 
@@ -62,6 +87,7 @@ export default {
   name: "QuanLySanPhamList",
   data() {
     return {
+      darkModal: false,
       getData: "",
       formData: {
         name: "",
@@ -74,6 +100,7 @@ export default {
         productColors: [],
         cartDetails: "",
         productDetails: [],
+        setIdBlog: "",
       },
     };
   },
@@ -81,15 +108,18 @@ export default {
     this.getAlBlog();
   },
   methods: {
+    setId(id){
+      this.setIdBlog = id
+    },
     CreateNewProduct() {
       this.$router.push({
-        name: "Thêm mới sản phẩm",
+        name: "Thêm mới Blog",
       });
     },
     DetailProduct(id) {
       console.log(id);
       this.$router.push({
-        name: "Thông tin chi tiết sản phẩm",
+        name: "Thông tin chi tiết Blog",
         params: { item: id },
       });
     },
@@ -108,6 +138,21 @@ export default {
           console.log(e);
         });
     },
+    deleteBlog(){
+      console.log(this.setIdBlog)
+      axios
+        .delete(this.$store.state.MainLink + "admin/blog/delete/" + this.setIdBlog, {
+          headers: {
+            Authorization: this.$store.state.userToken,
+          },
+        })
+        .then(() => {
+          this.getAlBlog()
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
   },
 };
 </script>

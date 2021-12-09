@@ -154,6 +154,12 @@ const quanlytaikhoandetail = () =>
     import ('@/views/admin/quanlytaikhoan/quanlytaikhoandetail')
 const quanlytaikhoanupdate = () =>
     import ('@/views/admin/quanlytaikhoan/quanlytaikhoanupdate')
+
+//trash
+const trashList = () =>
+    import ('@/views/admin/thungrac/trashList')
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -290,6 +296,19 @@ function configRoutes() {
                     }, ]
                 },
 
+                {
+                    path: 'trash',
+                    redirect: '/trash/trashlist',
+                    name: 'trashlist',
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                        path: 'trashlist',
+                        name: 'Danh sách các danh mục bị xóa bỏ',
+                        component: trashList
+                    }, ]
+                },
 
                 {
                     path: 'account',

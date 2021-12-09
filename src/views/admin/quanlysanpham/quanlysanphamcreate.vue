@@ -25,15 +25,6 @@
                       <i class="cil-plus"></i>
                       Lưu
         </CButton>
-        <CButton type="submit" 
-                    size="sm" color="primary" 
-                    class="btn btn-custom-size"
-                    @click="updateProductColor()"
-                    v-if="showDetail == 2"
-                    >
-                      <i class="cil-plus"></i>
-                      Lưu
-        </CButton>
       </CCol>
       <br/>
       <br/>
@@ -164,7 +155,7 @@
         </CCard>
       </CCol>
 
-      <CCol md="12" lg="12" v-if="showDetail == 1">
+      <CCol md="12" lg="6" v-if="showDetail == 1">
         <CCard>
           <CCardHeader>
             <CIcon name="cil-justify-center" />
@@ -180,7 +171,7 @@
                         +
                       </button>
                     </th>
-                    <th scope="col">Tên trường</th>
+                    <th scope="col" class="text-center">Tên trường</th>
                     <th scope="col" class="text-center">Giá trị</th>
                     <th scope="col"></th>
                   </tr>
@@ -205,7 +196,7 @@
         </CCard>
       </CCol>
 
-      <CCol md="12" lg="12" v-if="showDetail == 2">
+      <CCol md="12" lg="6" v-if="showDetail == 1">
         <CCard>
           <CCardHeader>
             <CIcon name="cil-justify-center" />
@@ -342,7 +333,6 @@ export default {
         });
     },
     updateProductDetail(){
-      this.showDetail = 2
       console.log(this.orderDetails)
       axios
         .post(
@@ -353,16 +343,14 @@ export default {
             },
           }
         )
-        .then((response) => {
-        console.log(response)
-        this.showDetail = 2
+        .then(() => {
+        this.updateProductColor()
         })
         .catch(function(error) {
           alert(error);
         });
     },
     updateProductColor(){
-      // this.$router.push("/admin/quanlysanphamlist")
       axios
         .post(
           "http://150.95.105.29:8800/api/admin/products/newproductcolor/" + this.getIdProduct,
@@ -372,8 +360,7 @@ export default {
             },
           }
         )
-        .then((response) => {
-        console.log(response)
+        .then(() => {
         this.$router.push("/admin/quanlysanphamlist")
         })
         .catch(function(error) {

@@ -30,77 +30,77 @@ export default [{
         //     _name: 'CSidebarNavTitle',
         //     _children: ['Components']
         // },
-        // {
-        //     _name: 'CSidebarNavDropdown',
-        //     name: 'Base',
-        //     route: '/base',
-        //     icon: 'cil-puzzle',
-        //     items: [{
-        //             name: 'Breadcrumbs',
-        //             to: '/base/breadcrumbs'
-        //         },
-        //         {
-        //             name: 'Cards',
-        //             to: '/base/cards'
-        //         },
-        //         {
-        //             name: 'Carousels',
-        //             to: '/base/carousels'
-        //         },
-        //         {
-        //             name: 'Collapses',
-        //             to: '/base/collapses'
-        //         },
-        //         {
-        //             name: 'Forms',
-        //             to: '/base/forms'
-        //         },
-        //         {
-        //             name: 'Jumbotrons',
-        //             to: '/base/jumbotrons'
-        //         },
-        //         {
-        //             name: 'List Groups',
-        //             to: '/base/list-groups'
-        //         },
-        //         {
-        //             name: 'Navs',
-        //             to: '/base/navs'
-        //         },
-        //         {
-        //             name: 'Navbars',
-        //             to: '/base/navbars'
-        //         },
-        //         {
-        //             name: 'Paginations',
-        //             to: '/base/paginations'
-        //         },
-        //         {
-        //             name: 'Popovers',
-        //             to: '/base/popovers'
-        //         },
-        //         {
-        //             name: 'Progress Bars',
-        //             to: '/base/progress-bars'
-        //         },
-        //         {
-        //             name: 'Switches',
-        //             to: '/base/switches'
-        //         },
-        //         {
-        //             name: 'Tables',
-        //             to: '/base/tables'
-        //         },
-        //         {
-        //             name: 'Tabs',
-        //             to: '/base/tabs'
-        //         },
-        //         {
-        //             name: 'Tooltips',
-        //             to: '/base/tooltips'
-        //         }
-        //     ]
-        // },
+        {
+            _name: 'CSidebarNavDropdown',
+            name: 'Base',
+            route: '/base',
+            icon: 'cil-puzzle',
+            items: [{
+                    name: 'Breadcrumbs',
+                    to: '/base/breadcrumbs'
+                },
+                {
+                    name: 'Cards',
+                    to: '/base/cards'
+                },
+                {
+                    name: 'Carousels',
+                    to: '/base/carousels'
+                },
+                {
+                    name: 'Collapses',
+                    to: '/base/collapses'
+                },
+                {
+                    name: 'Forms',
+                    to: '/base/forms'
+                },
+                {
+                    name: 'Jumbotrons',
+                    to: '/base/jumbotrons'
+                },
+                {
+                    name: 'List Groups',
+                    to: '/base/list-groups'
+                },
+                {
+                    name: 'Navs',
+                    to: '/base/navs'
+                },
+                {
+                    name: 'Navbars',
+                    to: '/base/navbars'
+                },
+                {
+                    name: 'Paginations',
+                    to: '/base/paginations'
+                },
+                {
+                    name: 'Popovers',
+                    to: '/base/popovers'
+                },
+                {
+                    name: 'Progress Bars',
+                    to: '/base/progress-bars'
+                },
+                {
+                    name: 'Switches',
+                    to: '/base/switches'
+                },
+                {
+                    name: 'Tables',
+                    to: '/base/tables'
+                },
+                {
+                    name: 'Tabs',
+                    to: '/base/tabs'
+                },
+                {
+                    name: 'Tooltips',
+                    to: '/base/tooltips'
+                }
+            ]
+        },
         // {
         //     _name: 'CSidebarNavDropdown',
         //     name: 'Buttons',
@@ -153,25 +153,25 @@ export default [{
         //         }
         //     ]
         // },
-        // {
-        //     _name: 'CSidebarNavDropdown',
-        //     name: 'Notifications',
-        //     route: '/notifications',
-        //     icon: 'cil-bell',
-        //     items: [{
-        //             name: 'Alerts',
-        //             to: '/notifications/alerts'
-        //         },
-        //         {
-        //             name: 'Badges',
-        //             to: '/notifications/badges'
-        //         },
-        //         {
-        //             name: 'Modals',
-        //             to: '/notifications/modals'
-        //         }
-        //     ]
-        // },
+        {
+            _name: 'CSidebarNavDropdown',
+            name: 'Notifications',
+            route: '/notifications',
+            icon: 'cil-bell',
+            items: [{
+                    name: 'Alerts',
+                    to: '/notifications/alerts'
+                },
+                {
+                    name: 'Badges',
+                    to: '/notifications/badges'
+                },
+                {
+                    name: 'Modals',
+                    to: '/notifications/modals'
+                }
+            ]
+        },
         // {
         //     _name: 'CSidebarNavItem',
         //     name: 'Widgets',
@@ -268,10 +268,20 @@ export default [{
             _name: 'CSidebarNavItem',
             name: 'Quản lý category',
             to: '/category/quanlycategory',
-            icon: 'cil-bell',
+            icon: 'cil-calculator',
             badge: {
                 color: 'primary',
                 shape: 'pill'
+            }
+        },
+        {
+            _name: 'CSidebarNavItem',
+            name: 'Thùng rác',
+            to: '/trash/trashlist',
+            icon: 'cil-layers',
+            badge: {
+                color: 'danger',
+                shape: 'x'
             }
         },
         // {
