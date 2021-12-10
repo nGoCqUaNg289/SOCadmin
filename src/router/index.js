@@ -106,9 +106,6 @@ const quanlysanphamcreate = () =>
 
 const quanlysanphamcreatedetail = () =>
     import ('@/views/admin/quanlysanpham/quanlysanphamcreatedetail')
-    // const quanlysanphamupdate = () =>
-    //     import ('@/views/admin/quanlysanpham/quanlysanphamupdate')
-
 const quanlysanphamdetail = () =>
     import ('@/views/admin/quanlysanpham/quanlysanphamdetail')
 
@@ -358,7 +355,6 @@ function configRoutes() {
                             component: quanlytaikhoanupdate,
                             props: true
                         },
-
                     ]
                 },
 
