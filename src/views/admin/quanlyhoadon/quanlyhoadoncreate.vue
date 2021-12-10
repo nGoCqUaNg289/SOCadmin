@@ -7,6 +7,7 @@
           size="sm"
           color="danger"
           class="btn btn-custom-size"
+          @click="CancelCreate()"
         >
           <i class="cil-x"></i>
           Huỷ
@@ -170,7 +171,7 @@ export default {
       return val ? val.length >= 4 : false;
     },
     CancelCreate() {
-      this.$router.push("/quanlysanphamlist");
+      this.$router.push("/bill/quanlyhoadonlist");
     },
     UpdateProduct() {
       this.$router.push("/quanlysanphamupdate");
@@ -191,7 +192,7 @@ export default {
     },
     getAllProduct() {
       axios
-        .get("http://socstore.club:8800/api/customer/products")
+        .get(this.$store.state.MainLink + "customer/products")
         .then((response) => {
           this.getData = response.data.object;
           //   console.log(response.data.object);

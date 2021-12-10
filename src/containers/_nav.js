@@ -276,6 +276,16 @@ export default [{
         },
         {
             _name: 'CSidebarNavItem',
+            name: 'Bảo hành sản phẩm',
+            to: '/warranty/warrantylist',
+            icon: 'cil-layers',
+            badge: {
+                color: 'primary',
+                shape: 'x'
+            }
+        },
+        {
+            _name: 'CSidebarNavItem',
             name: 'Thùng rác',
             to: '/trash/trashlist',
             icon: 'cil-layers',
@@ -284,6 +294,7 @@ export default [{
                 shape: 'x'
             }
         },
+
         // {
         //     _name: 'CSidebarNavDivider',
         //     _class: 'm-2'

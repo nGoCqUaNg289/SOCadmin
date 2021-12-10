@@ -41,10 +41,6 @@
           </CCardHeader>
           <CCardBody height="auto">
             <CListGroup>
-              <!-- <CListGroupItem>
-                <span class="Title-font-size">Mã khách hàng : </span>
-                <span>{{ getUser.id }} </span>
-              </CListGroupItem> -->
               <CListGroupItem>
                 <span class="Title-font-size">Tên khách hàng : </span>
                 <span>{{ getUser.fullname }}</span>
@@ -179,6 +175,7 @@ export default {
       this.$router.push("/quanlysanphamupdate");
     },
     getDetailProduct() {
+      console.log(this.item)
       axios
         .get(this.$store.state.MainLink + "admin/orders/" + this.item, {
           headers: {
@@ -186,9 +183,9 @@ export default {
           },
         })
         .then((response) => {
+          console.log(response)
           this.getData = response.data.object;
           this.getUser = this.getData.customer;
-          console.log(this.getData);
           console.log(this.getUser);
         })
         .catch((e) => {

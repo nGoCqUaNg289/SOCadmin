@@ -35,7 +35,7 @@
         <tr>
           <th scope="col">STT</th>
           <th scope="col" class="Title-table" colspan="1">Tên sản phẩm</th>
-          <th scope="col" class="Title-table td-action" colspan="2">
+          <th scope="col" class="Title-table td-action" colspan="1">
             Tình trạng sản phẩm
           </th>
           <th class="Title-table"></th>
@@ -56,7 +56,7 @@
           </div>  
         </th>
 
-        <tr v-for="item in pageOfItems" :key="item.id">
+        <tr v-for="item in pageOfItems" :key="item.id" class="text-center">
           <th>{{ item.id }}</th>
           <td scope="row" class="td-table"  @click="DetailProduct(item.id)">{{ item.name }}</td>
           <td :style="{ color: Status(item) }">
@@ -221,11 +221,18 @@ export default {
           return " red";
         case "Ngừng kinh doanh":
           return " blue";
+        case "Đã xóa":
+          return " red";
       }
     },
     getAllProduct() {
       axios
-        .get(this.$store.state.MainLink + "customer/products")
+        .get(this.$store.state.MainLink + "admin/products/getListDelete",
+          {
+            headers: {
+              Authorization: this.$store.state.userToken,
+            },
+          })
         .then((response) => {
           this.getData = response.data.object;
         })

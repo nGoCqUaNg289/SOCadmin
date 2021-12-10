@@ -159,6 +159,10 @@ const quanlytaikhoanupdate = () =>
 const trashList = () =>
     import ('@/views/admin/thungrac/trashList')
 
+//warranty
+const warrantylist = () =>
+    import ('@/views/admin/quanlybaohanh/warrantylist')
+
 
 Vue.use(Router)
 
@@ -307,6 +311,20 @@ function configRoutes() {
                         path: 'trashlist',
                         name: 'Danh sách các danh mục bị xóa bỏ',
                         component: trashList
+                    }, ]
+                },
+
+                {
+                    path: 'warranty',
+                    redirect: '/warranty/warrantylist',
+                    name: 'warrantylist',
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                        path: 'warrantylist',
+                        name: 'Danh sách các đơn bảo hành',
+                        component: warrantylist
                     }, ]
                 },
 

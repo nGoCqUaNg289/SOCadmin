@@ -67,7 +67,7 @@
             {{ item.status }}
           </td>
           <td class="td-table td-action">
-            <CButton  @click="darkModal = true, setId(item.id), setTitle()" class="mr-1" v-if="item.status != 'Không kinh doanh' && item.status != 'Ngừng kinh doanh' && item.status != 'Hết hàng'">
+            <CButton  @click="darkModal = true, setId(item.id), setTitle()" class="mr-1" v-if="item.status != 'Không kinh doanh' && item.status != 'Ngừng kinh doanh'">
               <i class="cil-reload"></i>
               </CButton>
             <CButton  @click="darkModal = true, setId(item.id), setTitle1()" class="mr-1" v-if="item.status == 'Không kinh doanh' || item.status == 'Ngừng kinh doanh'">
@@ -111,7 +111,7 @@
 import axios from "axios";
 
 export default {
-  name: "QuanLySanPhamList",
+  name: "QuanLyBaoHanhList",
   data() {
     return {
       darkModal: false,
