@@ -31,7 +31,7 @@
       </thead>
       <tbody>
         <tr
-          v-for="item in getData"
+          v-for="item in pageOfItems"
           :key="item.id"
         >
           <th>{{ item.id }}</th>
@@ -68,6 +68,13 @@
         </tr>
       </tbody>
     </table>
+    <div class="pb-0 pt-3 text-center">
+      <jw-pagination
+        :maxPages="15"
+        :items="getData"
+        @changePage="onChangePage"
+      ></jw-pagination>
+    </div>
     <CModal
       :show.sync="darkModal"
       :no-close-on-backdrop="true"
@@ -132,6 +139,7 @@ export default {
   name: "QuanLySanPhamList",
   data() {
     return {
+      pageOfItems: [],
       successModal: false,
       darkModal : false,
       setIdOrder: "",
@@ -161,6 +169,9 @@ export default {
     formatPrice(value) {
       let val = (value / 1).toFixed(0).replace(".", ",");
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
+     onChangePage(pageOfItems) {
+      this.pageOfItems = pageOfItems;
     },
     getDateString(date) {
       return `${new Date(date).getFullYear()}-${

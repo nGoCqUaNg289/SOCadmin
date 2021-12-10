@@ -42,8 +42,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in getData" :key="index">
-          <th scope="row">{{ index + 1 }}</th>
+        <tr v-for="item in pageOfItems" :key="item.id">
+          <th scope="row">{{ item.id + 1 }}</th>
           <td>{{ item.title }}</td>
           <td>{{ item.timeCreated }}</td>
           <td scope="row" class="td-table td-center" style="text-align:center">
@@ -65,6 +65,13 @@
     </table>
     <!-- <CAlert :show.sync="success" color="success">Success Alert</CAlert>
     <CAlert :show.sync="danger" color="danger">Danger Alert</CAlert> -->
+    <div class="pb-0 pt-3 text-center">
+      <jw-pagination
+        :maxPages="15"
+        :items="getData"
+        @changePage="onChangePage"
+      ></jw-pagination>
+    </div>
     <CModal
       :show.sync="darkModal"
       :no-close-on-backdrop="true"
@@ -100,6 +107,8 @@ export default {
   name: "QuanLySanPhamList",
   data() {
     return {
+      pageOfItems: [],
+
       setTilte: "",
       myModal: false,
       darkModal: false,
@@ -144,6 +153,9 @@ export default {
         name: "Thông tin chi tiết Blog",
         params: { item: id },
       });
+    },
+     onChangePage(pageOfItems) {
+      this.pageOfItems = pageOfItems;
     },
     getAlBlog() {
       axios

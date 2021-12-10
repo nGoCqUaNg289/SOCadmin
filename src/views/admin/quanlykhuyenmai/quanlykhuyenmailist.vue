@@ -64,7 +64,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in getData" :key="item.id">
+            <tr  v-for="item in pageOfItems" :key="item.id">
               <th>{{ item.id }}</th>
               <th scope="row" class="td-table">{{ item.name }}</th>
               <td scope="row" class="td-table" style="text-align:center">{{ getDateString(item.startTime) }}</td>
@@ -77,6 +77,13 @@
             </tr>
           </tbody>
         </table>
+         <div class="pb-0 pt-3 text-center">
+      <jw-pagination
+        :maxPages="15"
+        :items="getData"
+        @changePage="onChangePage"
+      ></jw-pagination>
+    </div>
       </CCardBody>
     <!-- <div class="pb-0 pt-0" style="text-align: center">
       <jw-pagination
@@ -131,6 +138,9 @@ export default {
     },
     SaleNow() {
       this.$router.push("/sale/quanlysaleEnd");
+    },
+     onChangePage(pageOfItems) {
+      this.pageOfItems = pageOfItems;
     },
      create() {
       this.$router.push("/sale/quanlysaleCreate");
