@@ -63,7 +63,7 @@
           <th scope="col" class="Title-table td-action" >
            Địa chỉ
           </th>
-          <th scope="col" class="Title-table td-action" >
+          <th scope="col" class="Title-table td-action" colspan="2">
            Tình trạng tài khoản
           </th>
           <!-- <th class="Title-table"></th> -->
@@ -71,17 +71,25 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in pageOfItems" :key="item.id" @click="detailAccount(item.id)">
-          <th>{{ item.id }}</th>
-          <td scope="row" class="td-table">{{ item.username }}</td>
+        <tr v-for="item in pageOfItems" :key="item.id">
+          <th @click="detailAccount(item.id)">{{ item.id }}</th>
+          <td scope="row" class="td-table" @click="detailAccount(item.id)">{{ item.username }}</td>
           <!-- <td scope="row" class="td-table">{{ item.password }}</td> -->
-          <td scope="row" class="td-table">{{ item.fullname }}</td>
-          <td scope="row" class="td-table">{{ item.email }}</td>
-          <td scope="row" class="td-table">{{ item.phone }}</td>
-          <td scope="row" class="td-table">{{ item.address }}</td>
+          <td scope="row" class="td-table" @click="detailAccount(item.id)">{{ item.fullname }}</td>
+          <td scope="row" class="td-table" @click="detailAccount(item.id)">{{ item.email }}</td>
+          <td scope="row" class="td-table" @click="detailAccount(item.id)">{{ item.phone }}</td>
+          <td scope="row" class="td-table" @click="detailAccount(item.id)">{{ item.address }}</td>
           <td scope="row" class="td-table td-center" style="text-align:center">
                   <span class="badge rounded-pill bg-success" v-if="item.status = true">{{ item.status }}</span>
                   <span class="badge rounded-pill bg-danger" v-else>{{ item.status }}</span>
+          </td>
+          <td scope="row" class="td-table td-center" style="text-align:center">
+            <CButton  @click="darkModal = true, setId(item.id), setTitle()" class="mr-1" v-if="item.status == true">
+              <i class="cil-trash" style="color: red; text-align: center;"></i>
+              </CButton>
+            <CButton  @click="darkModal = true, setId(item.id), setTitle1()" class="mr-1" v-else>
+               <i class="cil-reload"></i>
+              </CButton>
           </td>
         </tr>
       </tbody>
@@ -93,6 +101,25 @@
         @changePage="onChangePage"
       ></jw-pagination>
     </div>
+    <CModal
+      :show.sync="darkModal"
+      :no-close-on-backdrop="true"
+      :centered="true"
+      title="Modal title 2"
+      size="lg"
+      color="danger"
+    >
+      Bạn có chắc muốn {{setTitleModal}} tài khoản này ?
+      <template #header>
+        <h6 class="modal-title">Xác nhận</h6>
+        <CButtonClose @click="darkModal = false" class="text-white"/>
+      </template>
+      <template #footer>
+        <CButton @click="darkModal = false" color="secondary">Hủy</CButton>
+        <CButton @click="darkModal = false, deleteProduct()" color="danger" v-if="setTitleModal == 'xóa'">Xóa tài khoản</CButton>
+        <CButton @click="darkModal = false, dontSell()" color="success" v-else-if="setTitleModal == 'khôi phục'">Khôi phục</CButton>
+      </template>
+    </CModal>
   </div>
 </template>
 
@@ -103,6 +130,7 @@ export default {
   name: "QuanLySanPhamList",
   data() {
     return {
+      darkModal: false,
       pageOfItems: [],
       getData: "",
       formData: {
@@ -115,6 +143,8 @@ export default {
         userStatus: "",
       },
       searchString: "",
+      setIdAccount: "",
+      setTitleModal: ""
     };
   },
   created() {
@@ -122,6 +152,15 @@ export default {
 
   },
   methods: {
+    setId(id){
+      this.setIdAccount = id
+    },
+    setTitle(){
+      this.setTitleModal = "xóa"
+    },
+    setTitle1(){
+      this.setTitleModal = "khôi phục"
+    },
     onChangePage(pageOfItems) {
       this.pageOfItems = pageOfItems;
     },

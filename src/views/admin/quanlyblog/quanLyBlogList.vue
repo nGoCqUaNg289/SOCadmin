@@ -52,30 +52,43 @@
                   <!-- {{item.status}} -->
           </td>
           <td>
-            <CButton  @click="darkModal = true" class="mr-1">
-                <i class="cil-trash" style="color: red; text-align: center;" @click="setId(item.id)"></i>
+            <CButton  @click="darkModal = true" class="mr-1" v-if="item.status == true">
+                <i class="cil-trash" style="color: red; text-align: center;" @click="setId(item.id,1)"></i>
+              </CButton>
+            <CButton  @click="darkModal = true" class="mr-1" v-else-if="item.status == false">
+              <i class="cil-reload" @click="setId(item.id,2)"></i>
+                <!-- <i class="cil-trash" style="color: red; text-align: center;" @click="setId(item.id)"></i> -->
               </CButton>
           </td>
         </tr>
       </tbody>
     </table>
+    <!-- <CAlert :show.sync="success" color="success">Success Alert</CAlert>
+    <CAlert :show.sync="danger" color="danger">Danger Alert</CAlert> -->
     <CModal
       :show.sync="darkModal"
       :no-close-on-backdrop="true"
       :centered="true"
-      title="Modal title 2"
+      title="Xác nhận"
       size="lg"
-      color="danger"
     >
-      Bạn có chắc muốn xóa Blog này ?
+      Bạn có chắc muốn {{setTilte}} bài viết này ?
       <template #header>
         <h6 class="modal-title">Xác nhận</h6>
         <CButtonClose @click="darkModal = false" class="text-white"/>
       </template>
       <template #footer>
         <CButton @click="darkModal = false" color="secondary">Hủy</CButton>
-        <CButton @click="darkModal = false, deleteBlog()" color="danger">Xóa Blog</CButton>
+        <CButton @click="darkModal = false, deleteBlog()" color="danger" v-if="setTilte == 'xóa'">Xóa bài viết</CButton>
+        <CButton @click="darkModal = false, deleteBlog()" color="success" v-else>Khôi phục</CButton>
       </template>
+    </CModal>
+    <CModal
+      title="Modal title"
+      :show.sync="myModal"
+      size="xl"
+    >
+     {{errorBlog}}
     </CModal>
   </div>
 </template>
@@ -87,7 +100,10 @@ export default {
   name: "QuanLySanPhamList",
   data() {
     return {
+      setTilte: "",
+      myModal: false,
       darkModal: false,
+      errorBlog: "",
       getData: "",
       formData: {
         name: "",
@@ -108,7 +124,13 @@ export default {
     this.getAlBlog();
   },
   methods: {
-    setId(id){
+    setId(id,index){
+      console.log(index)
+      if(index == 1){
+        this.setTilte = "xóa"
+      }else{
+        this.setTilte = "khôi phục"
+      }
       this.setIdBlog = id
     },
     CreateNewProduct() {
@@ -148,8 +170,12 @@ export default {
         })
         .then(() => {
           this.getAlBlog()
+          this.myModal = true
+          this.errorBlog = "Đã xóa blog"
         })
         .catch((e) => {
+          this.myModal = true
+          this.errorBlog = "Lỗi ! Vui lòng thử lại."
           console.log(e);
         });
     }
