@@ -12,9 +12,33 @@
             <CCarousel arrows indicators animate height="auto" > 
               <!-- {{getData}} -->
               
-              <CCarouselItem v-for="itemPhoto in getData.photos" :key="itemPhoto"
+              <!-- <CCarouselItem v-for="itemPhoto in getData.photos" :key="itemPhoto"
                 image="itemPhoto"
-              />
+              /> -->
+
+              <div class="container">
+                <div class="row row-cols-3">
+                  <div class="col" v-for="itemPhoto in getData.photos" :key="itemPhoto">
+                    <img :src="itemPhoto" class="d-block w-100" alt="...">
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <div class="carousel-item active" v-for="itemPhoto in getData.photos" :key="itemPhoto">
+                    <img :src="itemPhoto" class="d-block w-100" alt="...">
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div> -->
               <!-- <div v-for="itemPhoto in getData.photos" :key="itemPhoto">
                 <img :src="itemPhoto" alt="">
               </div> -->

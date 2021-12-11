@@ -114,6 +114,10 @@
           </CCardHeader>
           <CCardBody height="auto">
             <CListGroup>
+              <div>
+                <i class="" style="font-size: smaller">Với những thông tin là <strong>hình ảnh</strong> ,
+                 vui lòng nhập <strong>Tên trường</strong> là <strong>photo</strong></i>  
+              </div>
               <table class="table">
                 <thead>
                   <tr>
@@ -157,13 +161,14 @@
           <CCardBody height="auto">
             <CListGroup>
               <div class="form-check" style="">
-                
+                <div>
                   <input class="form-check-input" type="radio" value="Đang bán" v-model="statusProduct" name="flexRadioDefault1" id="flexRadioDefault1">
                   <p>Đang bán</p>
-                
+                </div>
+                <div>
                   <input class="form-check-input" type="radio" value="Không kinh doanh" v-model="statusProduct" name="flexRadioDefault2" id="flexRadioDefault2">
                   <p>Không kinh doanh</p>
-
+                </div>
               </div>
               <table class="table">
                 <thead>
@@ -183,7 +188,7 @@
                     <th scope="row">{{ index + 1 }}</th>
                     <td>
                       <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="item.colorId" style="border: none;border-bottom: 1px dashed;box-shadow: none;">
-                        <option selected>Open this select menu</option>
+                        <option selected disabled>Chọn màu ...</option>
                         <option :value="color.id" v-for="color in getDataColor" :key="color.id">{{color.colorName}}</option>
                       </select>
                     </td>
