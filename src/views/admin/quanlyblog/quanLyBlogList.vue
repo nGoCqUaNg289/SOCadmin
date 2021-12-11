@@ -69,6 +69,7 @@
       <jw-pagination
         :maxPages="15"
         :items="getData"
+        :labels="customLabels"
         @changePage="onChangePage"
       ></jw-pagination>
     </div>
@@ -103,12 +104,19 @@
 <script>
 import axios from "axios";
 
+
+const customLabels = {
+    first: '<<',
+    last: '>>',
+    previous: '<',
+    next: '>'
+};
 export default {
   name: "QuanLySanPhamList",
   data() {
     return {
       pageOfItems: [],
-
+      customLabels,
       setTilte: "",
       myModal: false,
       darkModal: false,

@@ -12,12 +12,12 @@
             <CCarousel arrows indicators animate height="auto" > 
               <!-- {{getData}} -->
               
-              <!-- <CCarouselItem v-for="itemPhoto in getData.photos" :key="itemPhoto"
+              <CCarouselItem v-for="itemPhoto in getData.photos" :key="itemPhoto"
                 image="itemPhoto"
-              /> -->
-              <div v-for="itemPhoto in getData.photos" :key="itemPhoto">
+              />
+              <!-- <div v-for="itemPhoto in getData.photos" :key="itemPhoto">
                 <img :src="itemPhoto" alt="">
-              </div>
+              </div> -->
             </CCarousel>
           </CCardBody>
         </CCard>

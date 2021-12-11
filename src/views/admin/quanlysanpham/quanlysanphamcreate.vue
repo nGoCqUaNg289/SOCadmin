@@ -38,18 +38,18 @@
           <CCardBody height="auto">
             <CListGroup>
               <CListGroupItem
-                ><div style="width: 15%; float: left; font-weight: 600">
+                ><div style="width: 25%; float: left; font-weight: 600">
                   Tên sản phẩm <span style="color: red">*</span>
                 </div><input 
                 type="text" 
                 class="input-custom-border-none" 
                 placeholder="Nhập tên máy"
                 v-model="formData.name"
-                style="width: 70%"
+                style="width: 60%"
                 >
               </CListGroupItem>
               <CListGroupItem>
-                <div style="width: 15%; float: left; font-weight: 600">
+                <div style="width: 25%; float: left; font-weight: 600">
                   Giá tiền <span style="color: red">*</span>
                 </div>
                 <input 
@@ -57,43 +57,22 @@
                 class="input-custom-border-none" 
                 placeholder="Giá máy"
                 v-model="formData.price"
-                style="width: 70%"
+                style="width: 60%"
                 ></CListGroupItem>
-              <!-- <CListGroupItem>
-                <div style="width: 15%; float: left; font-weight: 600">
-                  Trạng thái <span style="color: red">*</span>
+              <CListGroupItem>
+                <div style="width: 25%; float: left; font-weight: 600">
+                  Thời hạn bảo hành <span style="color: red">*</span>
                 </div>
                 <input 
-                type="text" 
+                type="number" 
                 class="input-custom-border-none" 
-                placeholder="Trạng thái máy"
-                v-model="formData.status"
-                style="width: 70%"
-                ></CListGroupItem> -->
-                <!-- <table class="table">
-                  <thead>
-                    <tr @click="detailCategory()">
-                      <th scope="col">Thể loại</th>
-                      <th scope="col" style="text-align:center" >
-                        Tên
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="(item, index) in getDataCategory" :key="index">
-                      <th>{{ item.name }}</th>
-                      <td scope="row" class="td-table" style="width: 55%;">
-                          <div v-for="items in item.categories" :key="items.id" style="margin-left: 15%">
-                            <input class="form-check-input" type="checkbox" :value="items.name" id="flexCheckDefault" v-model="formData">
-                            <label class="form-check-label" for="flexCheckDefault" style="margin-left : 15px">
-                              {{items.name}}
-                            </label>
-                          </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table> -->
-                
+                placeholder="Thời hạn"
+                v-model="formData.warranty"
+                style="width: 10%"
+                >tháng
+              </CListGroupItem>  
+
+              <div style="margin: 15px 0px 0px 15px;">Các trường có dấu <span style="color: red">*</span> không được bỏ trống! </div>
             </CListGroup>
           </CCardBody>
         </CCard>
@@ -106,34 +85,6 @@
           </CCardHeader>
           <CCardBody height="auto">
             <CListGroup>
-              <!-- <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">
-                      <button @click="createNewValue()" style="border: none">
-                        +
-                      </button>
-                    </th>
-                    <th scope="col">Tên trường</th>
-                    <th scope="col" class="text-center">Giá trị</th>
-                    <th scope="col"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(item, index) in orderDetails" :key="index">
-                    <th scope="row">{{ index + 1 }}</th>
-                    <td><input type="text" v-model="item.propertyName" style="width: 100%;border: none;border-bottom: 1px dashed;"/></td>
-                    <td><input type="text" v-model="item.propertyValue" style="width: 100%;border: none;border-bottom: 1px dashed;"/></td>
-                    <td>
-                      <i
-                        class="cil-trash"
-                        style="color: red"
-                        @click="deleteProduct(index)"
-                      ></i>
-                    </td>
-                  </tr>
-                </tbody>
-              </table> -->
 
               <table class="table">
                   <tbody>
@@ -201,9 +152,19 @@
           <CCardHeader>
             <CIcon name="cil-justify-center" />
             <strong> Màu và số lượng sản phẩm </strong>
+            <!-- <button type="button" @click="updateProductColor()">Test</button> -->
           </CCardHeader>
           <CCardBody height="auto">
             <CListGroup>
+              <div class="form-check" style="">
+                
+                  <input class="form-check-input" type="radio" value="Đang bán" v-model="statusProduct" name="flexRadioDefault1" id="flexRadioDefault1">
+                  <p>Đang bán</p>
+                
+                  <input class="form-check-input" type="radio" value="Không kinh doanh" v-model="statusProduct" name="flexRadioDefault2" id="flexRadioDefault2">
+                  <p>Không kinh doanh</p>
+
+              </div>
               <table class="table">
                 <thead>
                   <tr>
@@ -231,7 +192,7 @@
                       <i
                         class="cil-trash"
                         style="color: red"
-                        @click="deleteProduct(index)"
+                        @click="deleteColor(index)"
                       ></i>
                     </td>
                   </tr>
@@ -255,9 +216,10 @@ export default {
         name: "",
         price: "",
         // status: "",
-        warranty: 0,
+        warranty: 24,
         productCategories: []
       },
+      statusProduct: "",
       orderDetails: [],
       productColor: [],
       showDetail: 0,
@@ -292,6 +254,12 @@ export default {
       // console.log(item)
       this.orderDetails.push(item);
     },
+    deleteProduct(index){
+this.orderDetails.splice(index, 1);
+    },
+    deleteColor(index){
+this.productColor.splice(index, 1);
+    },
     createNewColor(){
       let item = {
         colorId: "",
@@ -315,7 +283,7 @@ export default {
       console.log(this.formData);
       axios
         .post(
-          "http://150.95.105.29:8800/api/admin/products/newproduct",
+          this.$store.state.MainLink + "admin/products/newproduct",
           this.formData,{
             headers: {
               Authorization: this.$store.state.userToken,
@@ -336,7 +304,7 @@ export default {
       console.log(this.orderDetails)
       axios
         .post(
-          "http://150.95.105.29:8800/api/admin/products/newproductdetail/" + this.getIdProduct,
+          this.$store.state.MainLink + "admin/products/newproductdetail/" + this.getIdProduct,
           this.orderDetails,{
             headers: {
               Authorization: this.$store.state.userToken,
@@ -351,9 +319,11 @@ export default {
         });
     },
     updateProductColor(){
+      console.log(this.productColor)
+      console.log(this.statusProduct)
       axios
         .post(
-          "http://150.95.105.29:8800/api/admin/products/newproductcolor/" + this.getIdProduct,
+          this.$store.state.MainLink + "admin/products/newproductcolor/" + this.getIdProduct + "?statusProduct=" +this.statusProduct,
           this.productColor,{
             headers: {
               Authorization: this.$store.state.userToken,

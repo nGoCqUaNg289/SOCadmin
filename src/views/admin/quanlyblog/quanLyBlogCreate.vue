@@ -152,7 +152,7 @@
 </template>
 
 <script>
-// import axios from "axios"
+import axios from "axios"
 import { CToast } from '@coreui/vue'
 
 export default {
@@ -215,18 +215,18 @@ components: {
             blogDetails : this.blogDetails
         }
         console.log(item)
-        // axios.post(this.$store.state.MainLink + "admin/blog/new",item,
-        // {
-        //     headers: {
-        //       Authorization: this.$store.state.userToken,
-        //     },
-        // })
-        // .then(() => {
-        //     this.backList()
-        // })
-        // .catch(function(error) {
-        //   alert(error);
-        // });
+        axios.post(this.$store.state.MainLink + "admin/blog/new",item,
+        {
+            headers: {
+              Authorization: this.$store.state.userToken,
+            },
+        })
+        .then(() => {
+            this.backList()
+        })
+        .catch(function(error) {
+          alert(error);
+        });
     }
   },
 };

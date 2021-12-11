@@ -13,6 +13,7 @@
                     placeholder="Tài khoản"
                     autocomplete="username email"
                     v-model="username"
+                    required
                   >
                     <template #prepend-content
                       ><CIcon name="cil-user"
@@ -23,11 +24,13 @@
                     type="password"
                     autocomplete="curent-password"
                     v-model="password"
+                    required
                   >
                     <template #prepend-content
                       ><CIcon name="cil-lock-locked"
                     /></template>
                   </CInput>
+                  <div style="text-align: center; color: red">{{alertError}}</div>
                   <CRow style="margin: 10px 10px 10px 10px">
                     <CCol col="6" class="text-left">
                       <CButton
@@ -39,7 +42,7 @@
                       >
                     </CCol>
                     <CCol col="6" class="text-right text-center">
-                      <CButton color="link" class="px-0" style="text-decoration: none;margin-top: 10px;">Quên mật khẩu</CButton>
+                      <CButton color="link" class="px-0" style="text-decoration: none;margin-top: 10px;" to="/pages/register">Quên mật khẩu</CButton>
                       <!-- <CButton color="link" class="d-lg-none"
                         >Register now!</CButton
                       > -->
@@ -48,23 +51,6 @@
                 </CForm>
               </CCardBody>
             </CCard>
-            <!-- <CCard
-              color="primary"
-              text-color="white"
-              class="text-center py-5 d-md-down-none"
-              body-wrapper
-            >
-              <CCardBody>
-                <h2>Sign up</h2>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-                <CButton color="light" variant="outline" size="lg">
-                  Register Now!
-                </CButton>
-              </CCardBody>
-            </CCard> -->
           </CCardGroup>
         </CCol>
       </CRow>
@@ -81,47 +67,45 @@ export default {
     return {
       username: "",
       password: "",
+      alertError: "",
     };
   },
   methods: {
     LoginJWT() {
-      // console.log("username: " + this.username);
-      // console.log("password: " + this.password);
+      if(this.username == '' || this.password == ''){
+        this.alertError = "Không được để trống tài khoản và mật khẩu!"
+      }else{
       axios
         .post(this.$store.state.MainLink + "authentication/login", {
           username: this.username,
           password: this.password,
         })
         .then((response) => {
-          // console.log("username: " + this.username);
-          // console.log("password: " + this.password);
-
-          // console.log(response);
           localStorage.usertoken =
             response.data.tokenType + " " + response.data.accessToken;
           localStorage.username = response.data.username;
           this.$store.state.userToken =
             localStorage.usertoken
           this.$store.state.userName = localStorage.username;
-          // console.log(this.$store.state.userToken);
 
           if (response.data.roles[0] == "Director") {
             this.$router.push({
               path: "/dashboard",
             });
-            // console.log("Chuyển trang admin");
           } else if (response.data.roles[0] == "Staff") {
             this.$router.push({
               path: "/dashboard",
             });
-            // console.log("Chuyển trang admin");
           } else {
             console.log("Tài khoản hoặc mật khẩu không chính xác !");
           }
         })
         .catch((e) => {
+          this.alertError = "Sai tài khoản hoặc mật khẩu!"
           this.error.push(e);
         });
+      }
+
     },
 
     getDataUser() {},
