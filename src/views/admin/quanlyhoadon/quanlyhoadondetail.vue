@@ -21,10 +21,10 @@
                 <span class="Title-font-size">Thời gian mua hàng : </span>
                 <span>{{ getDateString(getData.dateCreated) }}</span>
               </CListGroupItem>
-              <CListGroupItem>
+              <!-- <CListGroupItem>
                 <span class="Title-font-size">username : </span>
                 <span>{{ getData.username }} </span>
-              </CListGroupItem>
+              </CListGroupItem> -->
               <CListGroupItem>
                 <span class="Title-font-size">Trạng thái : </span>
                 <span>{{ getData.status }} </span>

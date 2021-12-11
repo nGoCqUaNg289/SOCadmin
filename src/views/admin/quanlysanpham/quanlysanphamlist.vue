@@ -180,7 +180,7 @@ export default {
     },
     deleteProduct() {
       axios
-        .delete(
+        .put(
           this.$store.state.MainLink + "admin/products/delete/" + this.setIdProduct,
           {
             headers: {
@@ -196,8 +196,9 @@ export default {
         });
     },
     dontSell(){
+      // console.log(this.setIdProduct)
       axios
-        .delete(
+        .put(
           this.$store.state.MainLink + "admin/products/dontSell/" + this.setIdProduct,
           {
             headers: {
@@ -207,6 +208,7 @@ export default {
         )
         .then(() => {
           this.getAllProduct();
+          // console.log("123")
         })
         .catch((e) => {
           console.log(e);
