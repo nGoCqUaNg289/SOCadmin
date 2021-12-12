@@ -1,20 +1,9 @@
 <template>
   <CRow>
-    <CCol sm="6" lg="3">
-      <CWidgetDropdown color="primary" :header="countOrder" text="Tổng hóa đơn">
-        <!-- <template #default>
-          <CDropdown color="transparent p-0" placement="bottom-end">
-            <template #toggler-content>
-              <CIcon name="cil-settings" />
-            </template>
-            <CDropdownItem>Action {{ countOrder }}</CDropdownItem>
-            <CDropdownItem>Another action</CDropdownItem>
-            <CDropdownItem>Something else here...</CDropdownItem>
-            <CDropdownItem disabled>Disabled action</CDropdownItem>
-          </CDropdown>
-        </template> -->
+    <CCol sm="6" lg="4">
+      <CWidgetDropdown color="info" text="Tổng  đơn hàng tháng này">
         <template #footer>
-          <CChartLineSimple
+          <!-- <CChartLineSimple
             pointed
             class="mt-3 mx-3"
             style="height: 70px"
@@ -22,33 +11,18 @@
             point-hover-background-color="primary"
             label="Members"
             labels="months"
-          />
+          /> -->
+          <p style="font-size: 42px; font-weight;text-align:center">
+            {{ countOrder }}
+          </p>
         </template>
       </CWidgetDropdown>
-    </CCol>
-    <CCol sm="6" lg="3">
-      <CWidgetDropdown
-        color="info"
-        :header="ComfimCountOrder"
-        text="Tổng số đơn hoàn thành"
-      >
-        <!-- <template #default>
-          <CDropdown
-            color="transparent p-0"
-            placement="bottom-end"
-            :caret="false"
-          >
-            <template #toggler-content>
-              <CIcon name="cil-location-pin" />
-            </template>
-            <CDropdownItem>Action</CDropdownItem>
-            <CDropdownItem>Another action</CDropdownItem>
-            <CDropdownItem>Something else here...</CDropdownItem>
-            <CDropdownItem disabled>Disabled action</CDropdownItem>
-          </CDropdown>
-        </template> -->
+    </CCol> 
+    <CCol sm="6" lg="4">
+      <!-- <CWidgetDropdown color="info" :header="getSuccessComfimCountOrder" text="Tổng số đơn hoàn thành"> -->
+      <CWidgetDropdown color="success" text="Tổng số đơn hoàn thành">
         <template #footer>
-          <CChartLineSimple
+          <!-- <CChartLineSimple
             pointed
             class="mt-3 mx-3"
             style="height: 70px"
@@ -57,25 +31,35 @@
             :options="{ elements: { line: { tension: 0.00001 } } }"
             label="Members"
             labels="months"
-          />
+          /> -->
+          <p style="font-size: 42px; font-weight;text-align:center">
+            {{ getSuccessComfimCountOrder }}
+          </p>
         </template>
       </CWidgetDropdown>
     </CCol>
-    <CCol sm="6" lg="3">
-      <CWidgetDropdown color="warning" :header="CancerCountOrder" text="Số đơn bị hủy">
-        <!-- <template #default>
-          <CDropdown color="transparent p-0" placement="bottom-end">
-            <template #toggler-content>
-              <CIcon name="cil-settings" />
-            </template>
-            <CDropdownItem>Action</CDropdownItem>
-            <CDropdownItem>Another action</CDropdownItem>
-            <CDropdownItem>Something else here...</CDropdownItem>
-            <CDropdownItem disabled>Disabled action</CDropdownItem>
-          </CDropdown>
-        </template> -->
+    <CCol sm="6" lg="4">
+      <CWidgetDropdown color="warning" text="Số đơn chờ xác nhận">
+        <!-- <CWidgetDropdown color="danger" :header="unconfirm.length" text="Số đơn chưa hoàn thành"> -->
         <template #footer>
-          <CChartLineSimple
+          <!-- <CChartBarSimple
+            class="mt-3 mx-3"
+            style="height: 70px"
+            background-color="rgb(250, 152, 152)"
+            label="Members"
+            labels="months"
+          /> -->
+          <p style="font-size: 42px; font-weight;text-align:center">
+            {{ unconfirm.length }}
+          </p>
+        </template>
+      </CWidgetDropdown>
+    </CCol>
+    <CCol sm="6" lg="4">
+      <!-- <CWidgetDropdown color="warning" :header="ComfimCountOrder" text="Số đơn đã xác nhận"> -->
+      <CWidgetDropdown color="info" text="Số đơn đã xác nhận">
+        <template #footer>
+          <!-- <CChartLineSimple
             class="mt-3"
             style="height: 70px"
             background-color="rgba(255,255,255,.2)"
@@ -84,31 +68,49 @@
             point-hover-background-color="warning"
             label="Members"
             labels="months"
-          />
+          /> -->
+          <p style="font-size: 42px; font-weight;text-align:center">
+            {{ ComfimCountOrder }}
+          </p>
         </template>
       </CWidgetDropdown>
     </CCol>
-    <CCol sm="6" lg="3">
-      <CWidgetDropdown color="danger" :header="unconfirm.length" text="Số đơn chưa hoàn thành">
-        <!-- <template #default>
-          <CDropdown color="transparent p-0" placement="bottom-end">
-            <template #toggler-content>
-              <CIcon name="cil-settings" />
-            </template>
-            <CDropdownItem>Action</CDropdownItem>
-            <CDropdownItem>Another action</CDropdownItem>
-            <CDropdownItem>Something else here...</CDropdownItem>
-            <CDropdownItem disabled>Disabled action</CDropdownItem>
-          </CDropdown>
-        </template> -->
+    <CCol sm="6" lg="4">
+      <!-- <CWidgetDropdown color="primary" :header="getErrorCountOrder" text="Đơn lỗi"> -->
+      <CWidgetDropdown color="secondary" text="Đơn lỗi">
         <template #footer>
-          <CChartBarSimple
+          <!-- <CChartLineSimple
+            pointed
             class="mt-3 mx-3"
             style="height: 70px"
-            background-color="rgb(250, 152, 152)"
+            :data-points="[65, 59, 84, 84, 51, 55, 40]"
+            point-hover-background-color="primary"
             label="Members"
             labels="months"
-          />
+          /> -->
+          <p style="font-size: 42px; font-weight;text-align:center">
+            {{ getErrorCountOrder }}
+          </p>
+        </template>
+      </CWidgetDropdown>
+    </CCol>
+    <CCol sm="6" lg="4">
+      <!-- <CWidgetDropdown color="warning" :header="CancerCountOrder" text="Số đơn bị hủy"> -->
+      <CWidgetDropdown color="danger" text="Số đơn bị hủy">
+        <template #footer>
+          <!-- <CChartLineSimple
+            class="mt-3"
+            style="height: 70px"
+            background-color="rgba(255,255,255,.2)"
+            :data-points="[78, 81, 80, 45, 34, 12, 40]"
+            :options="{ elements: { line: { borderWidth: 2.5 } } }"
+            point-hover-background-color="warning"
+            label="Members"
+            labels="months"
+          /> -->
+          <p style="font-size: 42px; font-weight;text-align:center">
+            {{ CancerCountOrder }}
+          </p>
         </template>
       </CWidgetDropdown>
     </CCol>
@@ -125,16 +127,17 @@ export default {
     return {
       ComfimCountOrder: "",
       countOrder: "",
-      CancerCountOrder:"",
-      unconfirm:"",
+      CancerCountOrder: "",
+      unconfirm: "",
+      getErrorCountOrder: "",
+      getSuccessComfimCountOrder: "",
     };
   },
   mounted() {
     axios
-      .get("http://150.95.105.29:8800/api/admin/report/getComfimCountOrder", {
+      .get(this.$store.state.MainLink + "admin/report/getConfimCountOrder", {
         headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5oIiwiaWF0IjoxNjM4ODAzMDExLCJleHAiOjE2Mzg4ODk0MTF9.m5sAvi8Y66YQ_0GcaeMBChBukRUWKgcK-Nj4nKxh6gXkgKjVE9qYqjD-805vrKhpYnZWnK22fVQfYKmWIp3D6Q",
+          Authorization: this.$store.state.userToken,
         },
       })
       .then((response) => {
@@ -146,7 +149,7 @@ export default {
         console.log(e);
       });
     axios
-      .get("http://150.95.105.29:8800/api/admin/report/getCountOrder", {
+      .get(this.$store.state.MainLink + "admin/report/getCountOrder", {
         headers: {
           Authorization: this.$store.state.userToken,
         },
@@ -159,8 +162,8 @@ export default {
       .catch((e) => {
         console.log(e);
       });
-     axios
-      .get("http://150.95.105.29:8800/api/admin/report/getCancerCountOrder", {
+    axios
+      .get(this.$store.state.MainLink + "admin/report/getCancerCountOrder", {
         headers: {
           Authorization: this.$store.state.userToken,
         },
@@ -174,7 +177,7 @@ export default {
         console.log(e);
       });
     axios
-      .get("http://150.95.105.29:8800/api/admin/report/unconfirm", {
+      .get(this.$store.state.MainLink + "admin/report/unconfirm", {
         headers: {
           Authorization: this.$store.state.userToken,
         },
@@ -183,6 +186,37 @@ export default {
         this.getData = response.data.object;
         this.unconfirm = response.data.object;
         console.log(this.unconfirm);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    axios
+      .get(this.$store.state.MainLink + "admin/report/getErrorCountOrder", {
+        headers: {
+          Authorization: this.$store.state.userToken,
+        },
+      })
+      .then((response) => {
+        this.getData = response.data.object;
+        this.getErrorCountOrder = response.data.object;
+        console.log(this.getErrorCountOrder);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    axios
+      .get(
+        this.$store.state.MainLink + "admin/report/getSuccessComfimCountOrder",
+        {
+          headers: {
+            Authorization: this.$store.state.userToken,
+          },
+        }
+      )
+      .then((response) => {
+        this.getData = response.data.object;
+        this.getSuccessComfimCountOrder = response.data.object;
+        console.log(this.getSuccessComfimCountOrder);
       })
       .catch((e) => {
         console.log(e);
