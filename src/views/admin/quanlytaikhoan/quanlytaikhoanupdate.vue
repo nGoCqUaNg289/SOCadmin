@@ -7,7 +7,7 @@
           size="sm"
           color="danger"
           class="btn btn-custom-size"
-          @click="CancelUpdate()"
+          @click="backList()"
         >
           <i class="cil-x"></i>
           Huỷ
@@ -142,7 +142,7 @@ export default {
     validator(val) {
       return val ? val.length >= 4 : false;
     },
-    CancelCreate() {
+    backList() {
       this.$router.push("/account/quanlyaccount");
     },
     UpdateProduct() {

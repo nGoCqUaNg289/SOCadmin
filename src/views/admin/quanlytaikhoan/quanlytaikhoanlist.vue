@@ -2,8 +2,8 @@
   <div>
     <div class="col-12 col-title">
       <div class="col-md-6 float-left margin-left">
-        <p class="Text-tile">Danh sách account</p>
-        <p class="Text-tile-2">Trang chủ ● Sản phẩm</p>
+        <p class="Text-tile">Danh sách tài khoản</p>
+        <p class="Text-tile-2">Trang chủ ● Tài khoản</p>
       </div>
       <div class="col-md-6 float-right">
         <button

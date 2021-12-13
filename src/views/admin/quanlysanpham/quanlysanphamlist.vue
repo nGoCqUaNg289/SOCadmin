@@ -67,10 +67,10 @@
             {{ item.status }}
           </td>
           <td class="td-table td-action">
-            <CButton  @click="darkModal = true, setId(item.id), setTitle()" class="mr-1" v-if="item.status != 'Không kinh doanh' && item.status != 'Ngừng kinh doanh' && item.status != 'Hết hàng'">
+            <CButton  @click="darkModal = true, setId(item.id), setTitle()" data-toggle="tooltip" title="Ngừng kinh doanh" class="mr-1" v-if="item.status != 'Không kinh doanh' && item.status != 'Ngừng kinh doanh' && item.status != 'Hết hàng'">
               <i class="cil-reload"></i>
               </CButton>
-            <CButton  @click="darkModal = true, setId(item.id), setTitle1()" class="mr-1" v-if="item.status == 'Không kinh doanh' || item.status == 'Ngừng kinh doanh'">
+            <CButton  @click="darkModal = true, setId(item.id), setTitle1()" data-toggle="tooltip" title="Xóa sản phẩm" class="mr-1" v-if="item.status == 'Không kinh doanh' || item.status == 'Ngừng kinh doanh'">
                <i class="cil-trash" style="color: red; text-align: center;"></i>
               </CButton>
           </td>
@@ -80,6 +80,7 @@
     <!-- <div class="card-body"></div> -->
     <div class="pb-0 pt-3 text-center">
       <jw-pagination
+        :labels="customLabels"
         :maxPages="15"
         :items="getData"
         @changePage="onChangePage"
@@ -100,8 +101,8 @@
       </template>
       <template #footer>
         <CButton @click="darkModal = false" color="secondary">Hủy</CButton>
-        <CButton @click="darkModal = false, deleteProduct()" color="danger" v-if="setTitleModal == 'xóa'">{{AcctionButton}}</CButton>
-        <CButton @click="darkModal = false, dontSell()" color="danger" v-else-if="setTitleModal == 'ngừng kinh doanh'">{{AcctionButton}}</CButton>
+        <CButton @click="darkModal = false, deleteProduct()" color="danger" v-if="setTitleModal == 'xóa'">Xóa sản phẩm</CButton>
+        <CButton @click="darkModal = false, dontSell()" color="danger" v-else-if="setTitleModal == 'ngừng kinh doanh'">Ngừng kinh doanh</CButton>
       </template>
     </CModal>
   </div>
@@ -109,11 +110,17 @@
 
 <script>
 import axios from "axios";
-
+const customLabels = {
+    first: '<<',
+    last: '>>',
+    previous: '<',
+    next: '>'
+};
 export default {
   name: "QuanLySanPhamList",
   data() {
     return {
+      customLabels,
       darkModal: false,
       setIdProduct: "",
       pageOfItems: [],
@@ -188,7 +195,8 @@ export default {
             },
           }
         )
-        .then(() => {
+        .then((response) => {
+          console.log(response)
           this.getAllProduct();
         })
         .catch((e) => {
@@ -206,7 +214,8 @@ export default {
             },
           }
         )
-        .then(() => {
+        .then((response) => {
+          console.log(response);
           this.getAllProduct();
           // console.log("123")
         })

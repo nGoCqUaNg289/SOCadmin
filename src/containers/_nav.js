@@ -288,7 +288,7 @@ export default [{
             _name: 'CSidebarNavItem',
             name: 'Thùng rác',
             to: '/trash/trashlist',
-            icon: 'cil-layers',
+            icon: 'cil-cash',
             badge: {
                 color: 'danger',
                 shape: 'x'

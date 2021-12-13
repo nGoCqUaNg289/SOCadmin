@@ -70,6 +70,7 @@
     </table>
     <div class="pb-0 pt-3 text-center">
       <jw-pagination
+        :labels="customLabels"
         :maxPages="15"
         :items="getData"
         @changePage="onChangePage"
@@ -134,11 +135,18 @@
 
 <script>
 import axios from "axios";
+const customLabels = {
+    first: '<<',
+    last: '>>',
+    previous: '<',
+    next: '>'
+};
 
 export default {
   name: "QuanLySanPhamList",
   data() {
     return {
+      customLabels,
       pageOfItems: [],
       successModal: false,
       darkModal : false,
@@ -211,7 +219,7 @@ export default {
       let item = {
         note : this.note
       }
-      console.log(item);
+      // console.log(item);
       axios
         .post(this.$store.state.MainLink + "admin/orders/confimOrder?id=" + this.setIdOrder, 
           item,
@@ -220,9 +228,10 @@ export default {
               Authorization: this.$store.state.userToken,
             },
           })
-        .then(() => {
+        .then((response) => {
           this.getAllProduct()
           this.note = ""
+          console.log(response)
         })
         .catch((e) => {
           console.log(e);

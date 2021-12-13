@@ -16,7 +16,7 @@
       </CCol>
       <br/>
       <br/>
-      <CCol md="12" lg="5">
+      <CCol md="12" lg="6">
         <CCard>
           <CCardHeader>
             <CIcon name="cil-justify-center" />
@@ -63,8 +63,49 @@
                         required>
                     </CListGroupItem> 
             </CListGroup>
+
+
+            <CListGroup style="display: block">
+                <br>
+                  <strong>Blog sản phẩm </strong>
+                <br>
+                <input
+                  type="text"
+                  v-model="searchP"
+                  class="input-custom-border-none"
+                  placeholder="Nhập tên sản phẩm"
+                  style="width: 85%;border: none;padding: 9px;margin-right: 5%;"
+                />
+                <button class="btn btn-outline-success my-2 my-sm-0" style="border: none" type="button" @click="searchProduct()">
+                  <i class="cil-magnifying-glass"></i>
+                </button>
+                <table class="table">
+                  <thead>
+                      <th style="text-align: center;">STT</th>
+                      <th style="text-align: center;">Tên sản phẩm</th>
+                      
+                      <th></th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="text-align: center;">
+                        120
+                      </td>
+                      <td>
+                          Tên sản phẩm
+                      </td>
+                      <td>
+                          <i class="cil-check" style="color: blue; text-align: center;"></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </CListGroup>
+
             <CListGroup style="margin-top: 15px">
+                <br>
                 <strong>Nội dung của blog</strong>
+                <br>
                 <table class="table">
                   <thead>
                       <th>
@@ -102,7 +143,7 @@
           </CCardBody>
         </CCard>
       </CCol>
-      <CCol md="12" lg="7">
+      <CCol md="12" lg="6">
         <CCard>
           <CCardHeader>
             <CIcon name="cil-justify-center" />

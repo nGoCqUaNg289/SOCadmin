@@ -1,6 +1,30 @@
 <template>
   <div>
     <CRow>
+      <CCol md="12">
+        <CButton
+          type="reset"
+          size="sm"
+          color="danger"
+          class="btn btn-custom-size"
+          @click="CancelCreate()"
+        >
+          <i class="cil-x"></i>
+          Huỷ
+        </CButton>
+        <CButton
+          type="submit"
+          size="sm"
+          color="primary"
+          class="btn btn-custom-size"
+          @click="updateOrder(getData.id)"
+        >
+          <i class="cil-plus"></i>
+          Cập nhật
+        </CButton>
+      </CCol>
+      <br />
+      <br />
       <CCol md="12" lg="6">
         <CCard>
           <CCardHeader>
@@ -171,8 +195,13 @@ export default {
     CancelCreate() {
       this.$router.push("/quanlysanphamlist");
     },
-    UpdateProduct() {
-      this.$router.push("/quanlysanphamupdate");
+    updateOrder(id) {
+      this.$router.push(
+        {
+        name: "Chỉnh sửa nội dung hóa đơn",
+        params: { item: id },
+        }
+      );
     },
     getDetailProduct() {
       console.log(this.item)
@@ -186,6 +215,7 @@ export default {
           console.log(response)
           this.getData = response.data.object;
           this.getUser = this.getData.customer;
+          console.log(this.getData)
           console.log(this.getUser);
         })
         .catch((e) => {
@@ -199,5 +229,18 @@ export default {
 <style scoped>
 .Title-font-size {
   font-weight: 600;
+}
+.btn-custom-size {
+  width: 130px;
+  margin-left: 15px;
+  float: right;
+}
+.input-custom-border-none {
+  border: none;
+  box-shadow: none;
+  box-sizing: border-box;
+}
+.title-td {
+  width: 35%;
 }
 </style>

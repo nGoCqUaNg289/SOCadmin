@@ -1,6 +1,6 @@
 <template>
   <CRow>
-    <CCol sm="6" lg="4">
+    <CCol sm="6" lg="12">
       <CWidgetDropdown color="info" text="Tổng  đơn hàng tháng này">
         <template #footer>
           <!-- <CChartLineSimple
@@ -12,6 +12,16 @@
             label="Members"
             labels="months"
           /> -->
+          <CChartLineSimple
+            class="mt-12"
+            style="height: 70px"
+            background-color="rgba(255,255,255,.2)"
+            :data-points="[78, 81, 80, 45, 34, 12, 40]"
+            :options="{ elements: { line: { borderWidth: 2.5 } } }"
+            point-hover-background-color="warning"
+            label="Members"
+            labels="months"
+          />
           <p style="font-size: 42px; font-weight;text-align:center">
             {{ countOrder }}
           </p>
@@ -32,6 +42,16 @@
             label="Members"
             labels="months"
           /> -->
+          <CChartLineSimple
+            class="mt-3"
+            style="height: 70px"
+            background-color="rgba(255,255,255,.2)"
+            :data-points="[78, 81, 80, 45, 34, 12, 40]"
+            :options="{ elements: { line: { borderWidth: 2.5 } } }"
+            point-hover-background-color="warning"
+            label="Members"
+            labels="months"
+          />
           <p style="font-size: 42px; font-weight;text-align:center">
             {{ getSuccessComfimCountOrder }}
           </p>
@@ -49,17 +69,7 @@
             label="Members"
             labels="months"
           /> -->
-          <p style="font-size: 42px; font-weight;text-align:center">
-            {{ unconfirm.length }}
-          </p>
-        </template>
-      </CWidgetDropdown>
-    </CCol>
-    <CCol sm="6" lg="4">
-      <!-- <CWidgetDropdown color="warning" :header="ComfimCountOrder" text="Số đơn đã xác nhận"> -->
-      <CWidgetDropdown color="info" text="Số đơn đã xác nhận">
-        <template #footer>
-          <!-- <CChartLineSimple
+          <CChartLineSimple
             class="mt-3"
             style="height: 70px"
             background-color="rgba(255,255,255,.2)"
@@ -68,33 +78,54 @@
             point-hover-background-color="warning"
             label="Members"
             labels="months"
-          /> -->
+          />
+          <p style="font-size: 42px; font-weight;text-align:center">
+            {{ unconfirm.length }}
+          </p>
+        </template>
+      </CWidgetDropdown>
+    </CCol>
+    <CCol sm="6" lg="4">
+      <!-- <CWidgetDropdown color="warning" :header="ComfimCountOrder" text="Số đơn đã xác nhận"> -->
+      <CWidgetDropdown color="primary" text="Số đơn đã xác nhận">
+        <template #footer>
+          <CChartLineSimple
+            class="mt-3"
+            style="height: 70px"
+            background-color="rgba(255,255,255,.2)"
+            :data-points="[78, 81, 80, 45, 34, 12, 40]"
+            :options="{ elements: { line: { borderWidth: 2.5 } } }"
+            point-hover-background-color="warning"
+            label="Members"
+            labels="months"
+          />
           <p style="font-size: 42px; font-weight;text-align:center">
             {{ ComfimCountOrder }}
           </p>
         </template>
       </CWidgetDropdown>
     </CCol>
-    <CCol sm="6" lg="4">
+    <CCol sm="6" lg="6">
       <!-- <CWidgetDropdown color="primary" :header="getErrorCountOrder" text="Đơn lỗi"> -->
       <CWidgetDropdown color="secondary" text="Đơn lỗi">
         <template #footer>
-          <!-- <CChartLineSimple
-            pointed
-            class="mt-3 mx-3"
+          <CChartLineSimple
+            class="mt-3"
             style="height: 70px"
-            :data-points="[65, 59, 84, 84, 51, 55, 40]"
-            point-hover-background-color="primary"
+            background-color="rgba(255,255,255,.2)"
+            :data-points="[78, 81, 80, 45, 34, 12, 40]"
+            :options="{ elements: { line: { borderWidth: 2.5 } } }"
+            point-hover-background-color="warning"
             label="Members"
             labels="months"
-          /> -->
+          />
           <p style="font-size: 42px; font-weight;text-align:center">
             {{ getErrorCountOrder }}
           </p>
         </template>
       </CWidgetDropdown>
     </CCol>
-    <CCol sm="6" lg="4">
+    <CCol sm="6" lg="">
       <!-- <CWidgetDropdown color="warning" :header="CancerCountOrder" text="Số đơn bị hủy"> -->
       <CWidgetDropdown color="danger" text="Số đơn bị hủy">
         <template #footer>
@@ -108,6 +139,16 @@
             label="Members"
             labels="months"
           /> -->
+          <CChartLineSimple
+            class="mt-3"
+            style="height: 70px"
+            background-color="rgba(255,255,255,.2)"
+            :data-points="[78, 81, 80, 45, 34, 12, 40]"
+            :options="{ elements: { line: { borderWidth: 2.5 } } }"
+            point-hover-background-color="warning"
+            label="Members"
+            labels="months"
+          />
           <p style="font-size: 42px; font-weight;text-align:center">
             {{ CancerCountOrder }}
           </p>

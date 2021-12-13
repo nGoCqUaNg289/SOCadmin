@@ -5,32 +5,26 @@
         <p class="Text-tile">Danh sách Blog</p>
         <p class="Text-tile-2">Trang chủ ● Blog</p>
       </div>
-      <div class="col-md-6 float-right">
-        <button
+      <div class="col-md-6 float-right" style="margin-top: 10px;">
+        <!-- <button
           type="button"
           class="btn btn-primary float-right btn-add"
           @click="CreateNewProduct()"
         >
           <i class="cil-plus"></i>
           Thêm mới
-        </button>
+        </button> -->
+        <CButton type="submit" 
+                    size="sm" color="primary" 
+                    class="btn btn-custom-size"
+                    @click="CreateNewProduct()"
+                    style="float: right"
+                    >
+                    <i class="cil-plus"></i>
+                    Tạo tài khoản
+            </CButton>
       </div>
     </div>
-    <!-- <nav class="col-12 navbar justify-content-between">
-      <a class="navbar-brand"></a>
-      <form class="form-inline">
-        <input
-          class="form-control mr-sm-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-          style="box-shadow: none"
-        />
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-          <i class="cil-magnifying-glass"></i>
-        </button>
-      </form>
-    </nav> -->
     <table class="table table-hover">
       <thead>
         <tr class="text-center">
@@ -42,23 +36,21 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in pageOfItems" :key="item.id">
-          <th scope="row">{{ item.id + 1 }}</th>
-          <td>{{ item.title }}</td>
-          <td>{{ item.timeCreated }}</td>
+        <tr v-for="(item, index) in pageOfItems" :key="index">
+          <th scope="row">{{ index+ 1 }}</th>
+          <td @click="detailBlog(item.id)">{{ item.title }}</td>
+          <td @click="detailBlog(item.id)">{{ item.timeCreated }}</td>
           <td scope="row" class="td-table td-center" style="text-align:center">
                   <span class="badge rounded-pill bg-success" v-if="item.status == true">{{ item.status }}</span>
                   <span class="badge rounded-pill bg-danger" v-else-if="item.status == false">{{ item.status }}</span>
-                  <!-- {{item.status}} -->
           </td>
           <td>
             <CButton  @click="darkModal = true" class="mr-1" v-if="item.status == true">
-                <i class="cil-trash" style="color: red; text-align: center;" @click="setId(item.id,1)"></i>
-              </CButton>
+              <i class="cil-trash" style="color: red; text-align: center;" @click="setId(item.id,1)"></i>
+            </CButton>
             <CButton  @click="darkModal = true" class="mr-1" v-else-if="item.status == false">
               <i class="cil-reload" @click="setId(item.id,2)"></i>
-                <!-- <i class="cil-trash" style="color: red; text-align: center;" @click="setId(item.id)"></i> -->
-              </CButton>
+            </CButton>
           </td>
         </tr>
       </tbody>
@@ -155,7 +147,7 @@ export default {
         name: "Thêm mới Blog",
       });
     },
-    DetailProduct(id) {
+    detailBlog(id) {
       console.log(id);
       this.$router.push({
         name: "Thông tin chi tiết Blog",

@@ -7,13 +7,22 @@
             <CIcon name="cil-justify-center" />
             <strong> Thông tin người dùng </strong>
             <CButton type="submit" 
+                    size="sm" color="danger" 
+                    class="btn btn-custom-size"
+                    @click="backList()"
+                    style="float: right"
+                    >
+                    <i class="cil-arrow-left"></i>
+                    Trở lại
+            </CButton>
+            <CButton type="submit" 
                     size="sm" color="primary" 
                     class="btn btn-custom-size"
                     @click="updateAccount(getData.id)"
                     style="float: right"
                     >
-                    <i class="cil-plus"></i>
-                    Cập nhật thông tin
+                    <i class="cil-sync"></i>
+                    Cập nhật
             </CButton>
           </CCardHeader>
           
@@ -101,7 +110,7 @@ export default {
     validator(val) {
       return val ? val.length >= 4 : false;
     },
-    CancelCreate() {
+    backList() {
       this.$router.push("/account/quanlyaccount");
     },
     updateAccount(id) {

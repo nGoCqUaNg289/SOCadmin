@@ -373,7 +373,8 @@ function configRoutes() {
                         {
                             path: 'quanlyhoadonupdate',
                             name: 'Chỉnh sửa nội dung hóa đơn',
-                            component: quanlyhoadonupdate
+                            component: quanlyhoadonupdate,
+                            props: true
                         },
                         {
                             path: 'quanlyhoadondetail',

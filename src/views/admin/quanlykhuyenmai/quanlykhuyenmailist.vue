@@ -2,7 +2,7 @@
   <div>
     <div class="col-12 col-title">
       <div class="col-md-6 float-left margin-left">
-        <p class="Text-tile">Danh sách sale</p>
+        <p class="Text-tile">Danh sách khuyến mại</p>
         <p class="Text-tile-2">Trang chủ ● Khuyến mại</p>
       </div>
       <div class="col-md-6 float-right">
@@ -60,7 +60,7 @@
               <th scope="col" class="Title-table td-action" >
                 Trạng thái
               </th>
-              <th class="Title-table"></th>
+              <!-- <th class="Title-table"></th> -->
             </tr>
           </thead>
           <tbody>

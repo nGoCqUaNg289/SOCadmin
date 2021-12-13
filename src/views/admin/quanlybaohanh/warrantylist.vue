@@ -2,8 +2,8 @@
   <div>
     <div class="col-12 col-title">
       <div class="col-md-6 float-left margin-left">
-        <p class="Text-tile">Danh sách sản phẩm</p>
-        <p class="Text-tile-2">Trang chủ ● Sản phẩm</p>
+        <p class="Text-tile">Danh sách bảo hành</p>
+        <p class="Text-tile-2">Trang chủ ● Đơn bảo hành</p>
       </div>
       <div class="col-md-6 float-right">
         <button
@@ -59,7 +59,13 @@
           </div>  
         </th>
 
-        <tr v-for="item in pageOfItems" :key="item.id">
+        <th colspan="4" v-else-if="pageOfItems == 1">
+          <div class="text-center">
+            Không có đơn bảo hành !
+          </div>  
+        </th>
+
+        <tr v-for="item in pageOfItems" :key="item.id" v-else>
           <th>{{ item.id }}</th>
           <td scope="row" class="td-table"  @click="DetailProduct(item.id)">{{ item.name }}</td>
           <td :style="{ color: Status(item) }">
@@ -230,13 +236,30 @@ export default {
     },
     getAllProduct() {
       axios
-        .get(this.$store.state.MainLink + "customer/products")
+        .get(this.$store.state.MainLink + "admin/warranty/get",
+          {
+            headers: {
+              Authorization: this.$store.state.userToken,
+            },
+          }
+        )
         .then((response) => {
-          this.getData = response.data.object;
+          // console.log(response.data.object.length);
+          if(response.data.object.length == 0){
+              this.callFunction()
+          }else{
+              this.getData = response.data.object;
+          }
         })
         .catch((e) => {
           console.log(e);
         });
+    },
+    callFunction: function () {
+      var v = this;
+      setTimeout(function () {
+        v.pageOfItems = 1
+      }, 3000);
     },
   },
 };

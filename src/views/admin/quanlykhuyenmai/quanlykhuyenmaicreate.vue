@@ -9,8 +9,7 @@
             <CIcon name="cil-justify-center" />
             <strong> Sản phẩm khuyến mãi</strong>
           </CCardHeader>
-          <CListGroupItem
-            > 
+          <CListGroupItem> 
             <input
               type="text"
               v-model="searchP"
