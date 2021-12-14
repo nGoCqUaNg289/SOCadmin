@@ -16,7 +16,7 @@
         </button>
       </div>
     </div>
-    <table class="table table-hover" style="overflow-x: auto;display: inline-block;">
+    <table class="table table-hover">
       <thead>
         <tr>
           <th scope="col">Mã hóa đơn</th>

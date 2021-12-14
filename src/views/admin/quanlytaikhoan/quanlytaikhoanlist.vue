@@ -40,7 +40,7 @@
         />
       </form>
     </nav>
-    <table class="table table-hover" style="overflow-x: auto;display: inline-block;">
+    <table class="table table-hover">
       <thead>
         <tr>
           <th scope="col">STT</th>

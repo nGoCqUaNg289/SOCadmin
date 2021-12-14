@@ -10,7 +10,7 @@
           @click="backList()"
           v-if="checkUpdate == 0"
         >
-          <!-- <i class="cil-x"></i> -->
+          <i class="cil-arrow-left"></i>
           Trở lại
         </CButton>
         <CButton
