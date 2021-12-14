@@ -25,7 +25,7 @@
             </CButton>
       </div>
     </div>
-    <table class="table table-hover">
+    <table class="table table-hover" style="overflow-x: auto;display: inline-block;">
       <thead>
         <tr class="text-center">
           <th scope="col">#</th>

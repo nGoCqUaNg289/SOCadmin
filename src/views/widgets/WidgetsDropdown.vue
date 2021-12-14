@@ -159,11 +159,11 @@
 </template>
 
 <script>
-import { CChartLineSimple, CChartBarSimple } from "../charts/index.js";
+import { CChartLineSimple } from "../charts/index.js";
 import axios from "axios";
 export default {
   name: "WidgetsDropdown",
-  components: { CChartLineSimple, CChartBarSimple },
+  components: { CChartLineSimple },
   data() {
     return {
       ComfimCountOrder: "",

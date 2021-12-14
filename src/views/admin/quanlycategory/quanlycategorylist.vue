@@ -22,7 +22,7 @@
         />
       </form>
     </nav> -->
-    <table class="table">
+    <table class="table" style="overflow-x: auto;display: inline-block;">
       <thead>
         <tr @click="detailCategory()">
           <th scope="col">STT</th>
