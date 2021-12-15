@@ -2,10 +2,10 @@
   <div>
     <div class="col-12 col-title">
       <div class="col-md-6 float-left margin-left">
-        <p class="Text-tile">Danh sách sản phẩm</p>
-        <p class="Text-tile-2">Trang chủ ● Sản phẩm</p>
+        <p class="Text-tile">Danh sách các mục đã xóa</p>
+        <p class="Text-tile-2">Trang chủ ● Thông tin</p>
       </div>
-      <div class="col-md-6 float-right">
+      <!-- <div class="col-md-6 float-right">
         <button
           type="button"
           class="btn btn-primary float-right btn-add"
@@ -14,9 +14,9 @@
           <i class="cil-plus"></i>
           Thêm mới
         </button>
-      </div>
+      </div> -->
     </div>
-    <nav class="col-12 navbar justify-content-between">
+    <!-- <nav class="col-12 navbar justify-content-between">
       <a class="navbar-brand"></a>
       <form class="form-inline">
         <input
@@ -29,7 +29,7 @@
           v-model="searchString"
         />
       </form>
-    </nav>
+    </nav> -->
     <table class="table table-hover">
       <thead>
         <tr>
@@ -56,7 +56,13 @@
           </div>  
         </th>
 
-        <tr v-for="item in pageOfItems" :key="item.id" class="text-center">
+        <th colspan="4" v-else-if="pageOfItems == 1">
+          <div class="text-center">
+            Không có dữ liệu bị xóa !
+          </div>  
+        </th>
+
+        <tr v-for="item in pageOfItems" :key="item.id" class="text-center" v-else>
           <th>{{ item.id }}</th>
           <td scope="row" class="td-table"  @click="DetailProduct(item.id)">{{ item.name }}</td>
           <td :style="{ color: Status(item) }">
@@ -76,6 +82,7 @@
     <!-- <div class="card-body"></div> -->
     <div class="pb-0 pt-3 text-center">
       <jw-pagination
+        :labels="customLabels"
         :maxPages="15"
         :items="getData"
         @changePage="onChangePage"
@@ -105,11 +112,18 @@
 
 <script>
 import axios from "axios";
+const customLabels = {
+    first: '<<',
+    last: '>>',
+    previous: '<',
+    next: '>'
+};
 
 export default {
   name: "QuanLySanPhamList",
   data() {
     return {
+      customLabels,
       darkModal: false,
       setIdProduct: "",
       pageOfItems: [],
@@ -234,11 +248,21 @@ export default {
             },
           })
         .then((response) => {
-          this.getData = response.data.object;
+          if(response.data.object.length == 0){
+              this.callFunction()
+          }else{
+              this.getData = response.data.object;
+          }
         })
         .catch((e) => {
           console.log(e);
         });
+    },
+    callFunction: function () {
+      var v = this;
+      setTimeout(function () {
+        v.pageOfItems = 1
+      }, 3000);
     },
   },
 };

@@ -100,9 +100,19 @@
               v-for="(item, index) in getData.orderDetails"
               :key="index"
             >
-              <div style="font-weight: 700; margin: 5px 5px 5px 5px">
+              <div style="font-weight: 700; margin: 5px 5px 5px 5px; float: left">
                 {{ index + 1 }} - {{ item.productName }}
+                <CButton
+                  style="float: right"
+                  type="submit"
+                  size="sm"
+                  color="primary"
+                  class="btn btn-custom-size">
+                  <i class="cil-check-circle"></i>
+                  Tạo bảo hành
+                </CButton>
               </div>
+              
               <CListGroupItem>
                 <span class="Title-font-size">Giá tiền : </span>
                 <span>{{ formatPrice(item.price) }} đ</span>

@@ -36,9 +36,9 @@
     <table class="table table-hover">
       <thead>
         <tr>
-          <th scope="col">STT</th>
+          <th scope="col" class="text-center">STT</th>
           <th scope="col" class="Title-table" colspan="1">Tên sản phẩm</th>
-          <th scope="col" class="Title-table td-action" colspan="2">
+          <th scope="col" class="Title-table td-action" colspan="">
             Tình trạng sản phẩm
           </th>
           <th class="Title-table"></th>
@@ -65,9 +65,9 @@
           </div>  
         </th>
 
-        <tr v-for="item in pageOfItems" :key="item.id" v-else>
+        <tr v-for="item in pageOfItems" :key="item.id" v-else class="text-center">
           <th>{{ item.id }}</th>
-          <td scope="row" class="td-table"  @click="DetailProduct(item.id)">{{ item.name }}</td>
+          <td scope="row"  @click="DetailProduct(item.id)">{{ item.name }}</td>
           <td :style="{ color: Status(item) }">
             <!-- <span class="badge rounded-pill bg-light"></span> -->
             {{ item.status }}
@@ -86,6 +86,7 @@
     <!-- <div class="card-body"></div> -->
     <div class="pb-0 pt-3 text-center">
       <jw-pagination
+        :labels="customLabels"
         :maxPages="15"
         :items="getData"
         @changePage="onChangePage"
@@ -115,11 +116,19 @@
 
 <script>
 import axios from "axios";
+const customLabels = {
+    first: '<<',
+    last: '>>',
+    previous: '<',
+    next: '>'
+};
+
 
 export default {
   name: "QuanLyBaoHanhList",
   data() {
     return {
+      customLabels,
       darkModal: false,
       setIdProduct: "",
       pageOfItems: [],

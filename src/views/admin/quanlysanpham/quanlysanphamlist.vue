@@ -249,7 +249,7 @@ export default {
         })
         .then((response) => {
           this.getData = response.data.object;
-          // console.log(response)
+          console.log(response)
         })
         .catch((e) => {
           console.log(e);
