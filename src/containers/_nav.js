@@ -266,7 +266,7 @@ export default [{
         },
         {
             _name: 'CSidebarNavItem',
-            name: 'Quản lý category',
+            name: 'Quản lý thể loại',
             to: '/category/quanlycategory',
             icon: 'cil-calculator',
             badge: {
@@ -284,15 +284,30 @@ export default [{
                 shape: 'x'
             }
         },
+        // {
+        //     _name: 'CSidebarNavItem',
+        //     name: 'Thùng rác',
+        //     to: '/trash/trashlist',
+        //     icon: 'cil-cash',
+        //     badge: {
+        //         color: 'danger',
+        //         shape: 'x'
+        //     }
+        // },
         {
-            _name: 'CSidebarNavItem',
+            _name: 'CSidebarNavDropdown',
             name: 'Thùng rác',
-            to: '/trash/trashlist',
-            icon: 'cil-cash',
-            badge: {
-                color: 'danger',
-                shape: 'x'
-            }
+            route: '/trash',
+            icon: 'cil-room',
+            items: [{
+                    name: 'Sản phẩm đã xóa',
+                    to: '/trash/trashlist'
+                },
+                {
+                    name: 'Blog đã xóa',
+                    to: '/trash/trashlistblog'
+                }
+            ]
         },
 
         // {

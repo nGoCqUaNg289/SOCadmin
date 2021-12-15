@@ -14,29 +14,9 @@
           <i class="cil-plus"></i>
           Thêm mới
         </button>
-         <!-- <button
-          type="button"
-          class="btn btn-primary float-right btn-add"
-          @click="detail()"
-        >
-          <i class="cil-plus"></i>
-          Chi tiết
-        </button> -->
       </div>
     </div>
     <nav class="col-12 navbar justify-content-between">
-      <!-- <a class="navbar-brand"></a>
-      <form class="form-inline">
-        <input
-          @change="searchProduct()"
-          class="form-control mr-sm-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-          style="box-shadow: none"
-          v-model="searchString"
-        />
-      </form> -->
     </nav>
     
       <CCardBody>
@@ -66,7 +46,7 @@
           <tbody>
             <tr  v-for="item in pageOfItems" :key="item.id">
               <th>{{ item.id }}</th>
-              <th scope="row" class="td-table">{{ item.name }}</th>
+              <th scope="row" class="td-table" @click="detailSale(item.id)">{{ item.name }}</th>
               <td scope="row" class="td-table" style="text-align:center">{{ getDateString(item.startTime) }}</td>
               <td scope="row" class="td-table" style="text-align:center">{{ getDateString(item.endTime) }}</td>
               <td scope="row" class="td-table td-center" style="text-align:center">
@@ -156,9 +136,9 @@ export default {
     UpdateProduct() {
       this.$router.push("/admin/quanlysanphamcreatedetail");
     },
-    DetailSale(id) {
+    detailSale(id) {
       this.$router.push({
-        name: "Thông tin chi tiết sản phẩm",
+        name: "Sale detail",
         params: { item: id },
       });
     },

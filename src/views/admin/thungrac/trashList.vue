@@ -2,52 +2,23 @@
   <div>
     <div class="col-12 col-title">
       <div class="col-md-6 float-left margin-left">
-        <p class="Text-tile">Danh sách các mục đã xóa</p>
+        <p class="Text-tile">Danh sách các sản phẩm đã xóa</p>
         <p class="Text-tile-2">Trang chủ ● Thông tin</p>
       </div>
-      <!-- <div class="col-md-6 float-right">
-        <button
-          type="button"
-          class="btn btn-primary float-right btn-add"
-          @click="CreateNewProduct()"
-        >
-          <i class="cil-plus"></i>
-          Thêm mới
-        </button>
-      </div> -->
     </div>
-    <!-- <nav class="col-12 navbar justify-content-between">
-      <a class="navbar-brand"></a>
-      <form class="form-inline">
-        <input
-          @change="searchProduct()"
-          class="form-control mr-sm-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-          style="box-shadow: none"
-          v-model="searchString"
-        />
-      </form>
-    </nav> -->
+
     <table class="table table-hover">
       <thead>
-        <tr>
+        <tr style="vertical-align: middle;">
           <th scope="col">STT</th>
-          <th scope="col" class="Title-table" colspan="1">Tên sản phẩm</th>
-          <th scope="col" class="Title-table td-action" colspan="1">
-            Tình trạng sản phẩm
+          <th scope="col" class="Title-table" colspan="1" style="text-align: center;">Tên</th>
+          <th scope="col" class="Title-table td-action" style="text-align: center;" colspan="1">
+            Tình trạng
           </th>
           <th class="Title-table"></th>
         </tr>
       </thead>
       <tbody>
-        <!-- <div class="spinner-grow" role="status" >
-          <span class="visually-hidden">Loading...</span>
-        </div>
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div> -->
         <th colspan="4" v-if="pageOfItems == ''">
           <div class="text-center">
             <div class="spinner-grow" role="status">
@@ -62,13 +33,29 @@
           </div>  
         </th>
 
-        <tr v-for="item in pageOfItems" :key="item.id" class="text-center" v-else>
+        <tr v-for="item in pageOfItems" :key="item.id">
           <th>{{ item.id }}</th>
           <td scope="row" class="td-table"  @click="DetailProduct(item.id)">{{ item.name }}</td>
           <td :style="{ color: Status(item) }">
             {{ item.status }}
           </td>
           <td class="td-table td-action">
+            <CButton  @click="darkModal = true, setId(item.id), setTitle()" data-toggle="tooltip" title="Ngừng kinh doanh" class="mr-1" v-if="item.status != 'Không kinh doanh' && item.status != 'Ngừng kinh doanh' && item.status != 'Hết hàng'">
+              <i class="cil-reload"></i>
+              </CButton>
+            <CButton  @click="darkModal = true, setId(item.id), setTitle1()" data-toggle="tooltip" title="Xóa sản phẩm" class="mr-1" v-if="item.status == 'Không kinh doanh' || item.status == 'Ngừng kinh doanh'">
+               <i class="cil-trash" style="color: red; text-align: center;"></i>
+              </CButton>
+          </td>
+        </tr>
+
+        <!-- <tr v-for="item in pageOfItems" :key="item.id" v-else>
+          <th>{{ item.id }}</th>
+          <td scope="row" class="td-table text-center"  @click="DetailProduct(item.id)" >{{ item.name }}</td>
+          <td :style="{ color: Status(item) }" class="text-center">
+            {{ item.status }}
+          </td>
+          <td class="td-table td-action text-center" >
             <CButton  @click="darkModal = true, setId(item.id), setTitle()" class="mr-1" v-if="item.status != 'Không kinh doanh' && item.status != 'Ngừng kinh doanh'">
               <i class="cil-reload"></i>
               </CButton>
@@ -76,10 +63,9 @@
                <i class="cil-trash" style="color: red; text-align: center;"></i>
               </CButton>
           </td>
-        </tr>
+        </tr> -->
       </tbody>
     </table>
-    <!-- <div class="card-body"></div> -->
     <div class="pb-0 pt-3 text-center">
       <jw-pagination
         :labels="customLabels"
@@ -120,7 +106,7 @@ const customLabels = {
 };
 
 export default {
-  name: "QuanLySanPhamList",
+  name: "ProductList",
   data() {
     return {
       customLabels,
@@ -182,8 +168,9 @@ export default {
       this.$router.push("/admin/quanlysanphamcreatedetail");
     },
     DetailProduct(id) {
+      console.log(id)
       this.$router.push({
-        name: "Thông tin chi tiết sản phẩm",
+        name: "Chi tiết danh mục bị xóa bỏ",
         params: { item: id },
       });
     },
@@ -252,6 +239,7 @@ export default {
               this.callFunction()
           }else{
               this.getData = response.data.object;
+              console.log(response.data.object)
           }
         })
         .catch((e) => {

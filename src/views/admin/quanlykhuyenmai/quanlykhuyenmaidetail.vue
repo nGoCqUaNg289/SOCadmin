@@ -1,32 +1,30 @@
 <template>
   <div>
     <CRow>
-      <CCol md="12" lg="7">
-        <CCard>
-          <CCardHeader>
-            <CIcon name="cil-justify-center" />
-            <!-- <i class="cil-image"></i>  -->
-            <strong>Chi tiết nhóm</strong>
-          </CCardHeader>
-          <CCardBody>
-            <CCarousel arrows indicators animate height="auto">
-              <CCarouselItem
-                image="https://photocross.net/wp-content/uploads/2020/03/anh-chan-dung.jpg"
-                style="width: auto; height: auto;  center center no-repeat;"
-              />
-              <CCarouselItem
-                style="width: auto; height: auto;  center center no-repeat;"
-                image="https://photocross.net/wp-content/uploads/2020/03/anh-chan-dung.jpg"
-              />
-              <CCarouselItem
-                style="width: auto; height: auto;  center center no-repeat;"
-                image="https://photocross.net/wp-content/uploads/2020/03/anh-chan-dung.jpg"
-              />
-            </CCarousel>
-          </CCardBody>
-        </CCard>
+      <CCol md="12">
+        <CButton
+          type="reset"
+          size="sm"
+          color="danger"
+          class="btn btn-custom-size"
+          @click="CancelCreate()"
+        >
+          <i class="cil-arrow-left"></i>
+          Trở về
+        </CButton>
+        <CButton
+          type="submit"
+          size="sm"
+          color="primary"
+          class="btn btn-custom-size"
+          @click="createNewAccount()">
+          <i class="cil-sync"></i>
+          Cập nhật
+        </CButton>
       </CCol>
-      <CCol md="12" lg="5">
+      <br />
+      <br />
+      <CCol md="12" lg="12">
         <CCard>
           <CCardHeader>
             <CIcon name="cil-justify-center" />
@@ -36,55 +34,28 @@
             <CListGroup>
               <CListGroupItem>
                 <span class="Title-font-size">Mã khuyến mại : </span>
-                <span>{{ formData.saleId }}</span>
+                <span>1</span>
               </CListGroupItem>
-              <CListGroupItem>
+              <!-- <CListGroupItem>
                 <span class="Title-font-size">Mã sản phẩm : </span>
                 <span>{{ getDataG.name }}</span>
+              </CListGroupItem> -->
+              <CListGroupItem>
+                <span class="Title-font-size">Tên khuyến mại : </span>
+                <span>sale 8-3</span>
               </CListGroupItem>
               <CListGroupItem>
-                <span class="Title-font-size">Số lượng : </span>
-                <span>{{ getDataG.createdDate }}</span>
+                <span class="Title-font-size">Thời gian bắt đầu sale: </span>
+                <span>2021-4-26 23:41:24</span>
               </CListGroupItem>
-               <CListGroupItem>
-                <span class="Title-font-size">Số tiền được giảm: </span>
-                <span>{{ getDataG.createdDate }}</span>
-              </CListGroupItem>
-            </CListGroup>
-          </CCardBody>
-        </CCard>
-
-        <!-- themmoi -->
-        <CCard>
-          <CCardHeader>
-            <CIcon name="cil-justify-center" />
-            <strong> Thêm thành viên nhóm </strong>
-          </CCardHeader>
-          <CCardBody height="auto">
-            <CListGroup>
-              <CListGroupItem
-                >Chọn sản phẩm:
-                <select
-                  class="custom-select input-custom-border-none"
-                  id="inputGroupSelect01"
-                  style="width: 60%"
-                  v-model="formDataAddUtoG.userId"
-                  :required="true"
-                >
-                  <option selected disabled>Chọn User</option>
-                  <option
-                    id=""
-                    v-for="item in getAllUserId"
-                    :value="item.userId"
-                    :key="item.userId"
-                  >
-                    {{ item.userName }}
-                  </option>
-                </select>
+              <CListGroupItem>
+                <span class="Title-font-size">Thời gian kết thúc sale: </span>
+                <span>2021-8-3 23:41:31</span>
               </CListGroupItem>
             </CListGroup>
           </CCardBody>
         </CCard>
+<!-- 
         <CCol md="12">
           <CButton
             type="reset"
@@ -106,47 +77,120 @@
             <i class="cil-plus"></i>
             Lưu
           </CButton>
-        </CCol>
+        </CCol> -->
       </CCol>
+
+      
+      <!-- <CCol md="12">
       <div class="col-12 col-title">
         <div class="col-md-6 float-left margin-left">
-          <p class="Text-tile">Danh sách thành viên</p>
+          <p class="Text-tile">Danh sách sản phẩm tham gia</p>
         </div>
       </div>
       <table class="table">
         <thead>
           <tr>
             <th scope="col" colspan="1">STT</th>
-            <th scope="col" class="Title-table" colspan="2">Mã nhân viên</th>
-            <th scope="col" class="Title-table td-action" colspan="3">
-              Tên nhân viên
-            </th>
-            <th scope="col" class="Title-table td-action" colspan="4">
-              Hành động
-            </th>
+            <th scope="col" class="Title-table" colspan="">Tên sản phẩm</th>
+            <th scope="col" class="Title-table" colspan="">Tình trạng</th>
             <th class="Title-table"></th>
           </tr>
         </thead>
-        <tbody class="text-center">
-          <tr v-for="(item, index) in getAllMember" :key="item.id">
-            <th scope="row" colspan="1" class="td-table">{{ index + 1 }}</th>
+        <tbody>
+          <tr>
+            <th>1</th>
+            <td>Laptop Asus TUF FX505DY AL133T R5 3550H/8GB/512G SSD/15.6 FHD/WIN10</td>
+            <td style="color: blue"  class="text-center">Ngừng kinh doanh</td>
+          </tr>
+          <tr>
+            <th>2</th>
+            <td>Lenovo Thinkpad X1 CARBON Gen 7 i7-10510U</td>
+            <td style="color: green"  class="text-center">Đang bán</td>
+          </tr>
+          <tr>
+            <th>3</th>
+            <td>MacBook Pro 13" 2020 Touch Bar M1 256GB</td>
+            <td style="color: green"  class="text-center">Đang bán</td>
+          </tr>
+          <tr>
+            <th>4</th>
+            <td>Laptop Microsoft Surface Pro 7 i5 1035G4/8GB/128GB SSD/12.3" Touch/Win10</td>
+            <td style="color: green"  class="text-center">Đang bán</td>
+          </tr>
+          <tr>
+            <th>5</th>
+            <td>MacBook Pro 16" 2021 M1 Pro 512GB</td>
+            <td style="color: green"  class="text-center">Đang bán</td>
+          </tr>
+        </tbody>
+      </table>
+      </CCol> -->
 
-            <th scope="row" colspan="2" class="td-table">{{ item.staffID }}</th>
-            <th scope="row" colspan="3" class="td-table">
-              {{ item.userName }}
-            </th>
-            <th scope="row" colspan="4" class="td-table">
-              <button
-                type="button"
-                class="btn btn-danger btn-size"
-                @click="RemoveFromGroup(item.id)"
-              >
-                <i class="cil-trash"></i>
-              </button>
+      <CCol md="12">
+      <div class="col-12 col-title">
+        <div class="col-md-6 float-left margin-left">
+          <p class="Text-tile">Danh sách sản phẩm tham gia</p>
+        </div>
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col" colspan="1">STT</th>
+            <th scope="col" class="Title-table" colspan="">Tên sản phẩm</th>
+            <th scope="col" class="Title-table" colspan="">Tình trạng</th>
+            <th class="Title-table"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>1</th>
+            <td>Laptop Asus TUF FX505DY AL133T R5 3550H/8GB/512G SSD/15.6 FHD/WIN10</td>
+            <td style="color: blue"  class="text-center">Ngừng kinh doanh</td>
+            <td>
+              <i class="cil-trash" style="color: red; text-align: center;"></i>
+            </td>
+          </tr>
+          <tr>
+            <th>2</th>
+            <td>Lenovo Thinkpad X1 CARBON Gen 7 i7-10510U</td>
+            <td style="color: green"  class="text-center">Đang bán</td>
+            <td>
+              <i class="cil-trash" style="color: red; text-align: center;"></i>
+            </td>
+          </tr>
+          <tr>
+            <th>3</th>
+            <td>MacBook Pro 13" 2020 Touch Bar M1 256GB</td>
+            <td style="color: green"  class="text-center">Đang bán</td>
+            <td>
+              <i class="cil-trash" style="color: red; text-align: center;"></i>
+            </td>
+          </tr>
+          <tr>
+            <th>4</th>
+            <td>Laptop Microsoft Surface Pro 7 i5 1035G4/8GB/128GB SSD/12.3" Touch/Win10</td>
+            <td style="color: green"  class="text-center">Đang bán</td>
+            <td>
+              <i class="cil-trash" style="color: red; text-align: center;"></i>
+            </td>
+          </tr>
+          <tr>
+            <th>5</th>
+            <td>MacBook Pro 16" 2021 M1 Pro 512GB</td>
+            <td style="color: green"  class="text-center">Đang bán</td>
+            <td>
+              <i class="cil-trash" style="color: red; text-align: center;"></i>
+            </td>
+          </tr>
+          <tr>
+            <th colspan="4" class="text-center" style="">
+              <i class="cil-plus" style="color: red;"></i>
             </th>
           </tr>
         </tbody>
       </table>
+      </CCol>
+
     </CRow>
   </div>
 </template>

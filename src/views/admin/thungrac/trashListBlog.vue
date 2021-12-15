@@ -2,55 +2,29 @@
   <div>
     <div class="col-12 col-title">
       <div class="col-md-6 float-left margin-left">
-        <p class="Text-tile">Danh sách bảo hành</p>
-        <p class="Text-tile-2">Trang chủ ● Đơn bảo hành</p>
-      </div>
-      <div class="col-md-6 float-right">
-        <button
-          type="button"
-          class="btn btn-primary float-right btn-add"
-          @click="CreateNewProduct()"
-        >
-          <i class="cil-plus"></i>
-          Thêm mới
-        </button>
+        <p class="Text-tile">Danh sách các Blog đã xóa</p>
+        <p class="Text-tile-2">Trang chủ ● Thông tin</p>
       </div>
     </div>
-    <nav class="col-12 navbar justify-content-between">
-      <a class="navbar-brand"></a>
-      <div class="form-inline">
-        <input
-          class="form-control mr-sm-2"
-          type="text"
-          placeholder="Tìm kiếm sản phẩm ..."
-          aria-label="Search"
-          style="box-shadow: none"
-          v-model="searchString"
-        />
-        <!-- {{searchString}} -->
-        <button class="btn btn-outline-success my-2 my-sm-0" @click="searchProduct(searchString)">
-          <i class="cil-magnifying-glass"></i>
-        </button>
-      </div>
-    </nav>
+    <!-- <CCardBody>
+    <CNav justified variant="tabs">
+          <CNavItem active><p @click="getAllSale()" style="margin-bottom: 0">Tất cả</p></CNavItem>
+          <CNavItem><p @click="getSaleNow()" style="margin-bottom: 0">Đang diễn ra</p></CNavItem>
+    </CNav>
+    </CCardBody> -->
+
     <table class="table table-hover">
       <thead>
-        <tr>
-          <th scope="col" class="text-center">STT</th>
-          <th scope="col" class="Title-table" colspan="1">Tên sản phẩm</th>
-          <th scope="col" class="Title-table td-action" colspan="">
-            Tình trạng sản phẩm
+        <tr style="vertical-align: middle;">
+          <th scope="col">STT</th>
+          <th scope="col" class="Title-table" colspan="1" style="text-align: center;">Tên</th>
+          <th scope="col" class="Title-table td-action" style="text-align: center;" colspan="1">
+            Tình trạng
           </th>
           <th class="Title-table"></th>
         </tr>
       </thead>
       <tbody>
-        <!-- <div class="spinner-grow" role="status" >
-          <span class="visually-hidden">Loading...</span>
-        </div>
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div> -->
         <th colspan="4" v-if="pageOfItems == ''">
           <div class="text-center">
             <div class="spinner-grow" role="status">
@@ -61,18 +35,35 @@
 
         <th colspan="4" v-else-if="pageOfItems == 1">
           <div class="text-center">
-            Không có đơn bảo hành !
+            Không có dữ liệu bị xóa !
           </div>  
         </th>
 
-        <tr v-for="item in pageOfItems" :key="item.id" v-else class="text-center">
+        <tr v-for="(item, index) in pageOfItems" :key="index">
+          <th scope="row">{{ index+ 1 }}</th>
+          <td @click="detailBlog(item.id)">{{ item.title }}</td>
+          <!-- <td @click="detailBlog(item.id)">{{ item.timeCreated }}</td> -->
+          <td scope="row" class="td-table td-center" style="text-align:center">
+                  <span class="badge rounded-pill bg-success" v-if="item.status == true">{{ item.status }}</span>
+                  <span class="badge rounded-pill bg-danger" v-else-if="item.status == false">{{ item.status }}</span>
+          </td>
+          <td>
+            <CButton  @click="darkModal = true" class="mr-1" v-if="item.status == true">
+              <i class="cil-trash" style="color: red; text-align: center;" @click="setId(item.id,1)"></i>
+            </CButton>
+            <CButton  @click="darkModal = true" class="mr-1" v-else-if="item.status == false">
+              <i class="cil-reload" @click="setId(item.id,2)"></i>
+            </CButton>
+          </td>
+        </tr>
+
+        <!-- <tr v-for="item in pageOfItems" :key="item.id" v-else>
           <th>{{ item.id }}</th>
-          <td scope="row"  @click="DetailProduct(item.id)">{{ item.name }}</td>
-          <td :style="{ color: Status(item) }">
-            <!-- <span class="badge rounded-pill bg-light"></span> -->
+          <td scope="row" class="td-table text-center"  @click="DetailProduct(item.id)" >{{ item.name }}</td>
+          <td :style="{ color: Status(item) }" class="text-center">
             {{ item.status }}
           </td>
-          <td class="td-table td-action">
+          <td class="td-table td-action text-center" >
             <CButton  @click="darkModal = true, setId(item.id), setTitle()" class="mr-1" v-if="item.status != 'Không kinh doanh' && item.status != 'Ngừng kinh doanh'">
               <i class="cil-reload"></i>
               </CButton>
@@ -80,10 +71,9 @@
                <i class="cil-trash" style="color: red; text-align: center;"></i>
               </CButton>
           </td>
-        </tr>
+        </tr> -->
       </tbody>
     </table>
-    <!-- <div class="card-body"></div> -->
     <div class="pb-0 pt-3 text-center">
       <jw-pagination
         :labels="customLabels"
@@ -123,9 +113,8 @@ const customLabels = {
     next: '>'
 };
 
-
 export default {
-  name: "QuanLyBaoHanhList",
+  name: "BlogList",
   data() {
     return {
       customLabels,
@@ -171,11 +160,10 @@ export default {
     searchProduct() {
       axios
         .get(
-          this.$store.state.MainLink + "admin/products?find=" +this.searchString
+          this.$store.state.MainLink + "admin/products?find="
         )
         .then((response) => {
           this.getData = response.data.object;
-          console.log(this.getData)
         })
         .catch((e) => {
           console.log(e);
@@ -187,9 +175,9 @@ export default {
     UpdateProduct() {
       this.$router.push("/admin/quanlysanphamcreatedetail");
     },
-    DetailProduct(id) {
+    detailBlog(id) {
       this.$router.push({
-        name: "Chi tiết đơn bảo hành",
+        name: "Chi tiết Blog bị xóa bỏ",
         params: { item: id },
       });
     },
@@ -241,28 +229,45 @@ export default {
           return " red";
         case "Ngừng kinh doanh":
           return " blue";
+        case "Đã xóa":
+          return " red";
       }
     },
     getAllProduct() {
-      axios
-        .get(this.$store.state.MainLink + "admin/warranty/get",
-          {
-            headers: {
-              Authorization: this.$store.state.userToken,
-            },
-          }
-        )
+
+        axios
+        .get(this.$store.state.MainLink + "admin/blog", {
+          headers: {
+            Authorization: this.$store.state.userToken,
+          },
+        })
         .then((response) => {
-          // console.log(response.data.object.length);
-          if(response.data.object.length == 0){
-              this.callFunction()
-          }else{
-              this.getData = response.data.object;
-          }
+          this.getData = response.data.object;
+          // console.log(this.getData)
         })
         .catch((e) => {
           console.log(e);
         });
+
+
+      // axios
+      //   .get(this.$store.state.MainLink + "admin/products/getListDelete",
+      //     {
+      //       headers: {
+      //         Authorization: this.$store.state.userToken,
+      //       },
+      //     })
+      //   .then((response) => {
+      //     if(response.data.object.length == 0){
+      //         this.callFunction()
+      //     }else{
+      //         this.getData = response.data.object;
+      //         console.log(response.data.object)
+      //     }
+      //   })
+      //   .catch((e) => {
+      //     console.log(e);
+      //   });
     },
     callFunction: function () {
       var v = this;

@@ -6,14 +6,6 @@
         <p class="Text-tile-2">Trang chủ ● Blog</p>
       </div>
       <div class="col-md-6 float-right" style="margin-top: 10px;">
-        <!-- <button
-          type="button"
-          class="btn btn-primary float-right btn-add"
-          @click="CreateNewProduct()"
-        >
-          <i class="cil-plus"></i>
-          Thêm mới
-        </button> -->
         <CButton type="submit" 
                     size="sm" color="primary" 
                     class="btn btn-custom-size"
@@ -55,8 +47,6 @@
         </tr>
       </tbody>
     </table>
-    <!-- <CAlert :show.sync="success" color="success">Success Alert</CAlert>
-    <CAlert :show.sync="danger" color="danger">Danger Alert</CAlert> -->
     <div class="pb-0 pt-3 text-center">
       <jw-pagination
         :maxPages="15"

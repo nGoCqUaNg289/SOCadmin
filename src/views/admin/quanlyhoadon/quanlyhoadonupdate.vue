@@ -68,7 +68,7 @@
             <CListGroup>
               <CListGroupItem>
                 <span class="Title-font-size">Tên khách hàng : </span>
-                <input type="text" v-model="getUser.fullname" style="border: none;">
+                <input type="text" v-model="getUser.fullname" style="width: 100%; border-bottom: 1px solid gray">
               </CListGroupItem>
               <CListGroupItem>
                 <span class="Title-font-size">Email : </span>

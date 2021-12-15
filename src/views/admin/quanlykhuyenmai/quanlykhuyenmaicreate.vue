@@ -3,7 +3,7 @@
     <CRow>
       <br />
       <br />
-      <CCol md="12" lg="7">
+      <!-- <CCol md="12" lg="7">
         <CCard>
           <CCardHeader>
             <CIcon name="cil-justify-center" />
@@ -27,7 +27,6 @@
                 <th scope="col" class="text-center">STT</th>
                 <th scope="col" class="Title-table" colspan="1">Tên sản phẩm</th>
                 <th scope="col" class="Title-table" colspan=""></th>
-                <!-- <th class="Title-table"></th> -->
               </tr>
             </thead>
             <tbody class="text-center" v-if="getData.length > 0">
@@ -52,8 +51,8 @@
             </tbody>
           </table>
         </CCard>
-      </CCol>
-      <CCol md="12" lg="5">
+      </CCol> -->
+      <CCol md="12" lg="12">
         <CCard>
           <CCardHeader>
             <CIcon name="cil-justify-center" />

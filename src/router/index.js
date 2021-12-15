@@ -155,10 +155,18 @@ const quanlytaikhoanupdate = () =>
 //trash
 const trashList = () =>
     import ('@/views/admin/thungrac/trashList')
+const trashListBlog = () =>
+    import ('@/views/admin/thungrac/trashListBlog')
+const trashListProductDetail = () =>
+    import ('@/views/admin/thungrac/trashListProductDetail')
+const trashListBlogDetail = () =>
+    import ('@/views/admin/thungrac/trashListBlogDetail')
 
 //warranty
 const warrantylist = () =>
     import ('@/views/admin/quanlybaohanh/warrantylist')
+const BaoHanhDetail = () =>
+    import ('@/views/admin/quanlybaohanh/BaoHanhDetail')
 
 
 Vue.use(Router)
@@ -305,10 +313,28 @@ function configRoutes() {
                         render(c) { return c('router-view') }
                     },
                     children: [{
-                        path: 'trashlist',
-                        name: 'Danh sách các danh mục bị xóa bỏ',
-                        component: trashList
-                    }, ]
+                            path: 'trashlist',
+                            name: 'Danh sách các danh mục bị xóa bỏ',
+                            component: trashList,
+                        },
+                        {
+                            path: 'trashlistproduct',
+                            name: 'Chi tiết danh mục bị xóa bỏ',
+                            component: trashListProductDetail,
+                            props: true,
+                        },
+                        {
+                            path: 'trashlistblog',
+                            name: 'Danh sách các Blog bị xóa bỏ',
+                            component: trashListBlog,
+                        },
+                        {
+                            path: 'blogtrashlist',
+                            name: 'Chi tiết Blog bị xóa bỏ',
+                            component: trashListBlogDetail,
+                            props: true
+                        }
+                    ]
                 },
 
                 {
@@ -319,10 +345,17 @@ function configRoutes() {
                         render(c) { return c('router-view') }
                     },
                     children: [{
-                        path: 'warrantylist',
-                        name: 'Danh sách các đơn bảo hành',
-                        component: warrantylist
-                    }, ]
+                            path: 'warrantylist',
+                            name: 'Danh sách các đơn bảo hành',
+                            component: warrantylist
+                        },
+                        {
+                            path: 'baohanhdetail',
+                            name: 'Chi tiết đơn bảo hành',
+                            component: BaoHanhDetail,
+                            props: true
+                        },
+                    ]
                 },
 
                 {
