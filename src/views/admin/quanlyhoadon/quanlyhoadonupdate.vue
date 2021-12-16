@@ -17,10 +17,9 @@
           size="sm"
           color="primary"
           class="btn btn-custom-size"
-          style="width: 200px"
         >
-          <i class="cil-check"></i>
-          Xác nhận đơn hàng
+          <i class="cil-sync"></i>
+          Cập nhật
         </CButton>
       </CCol>
       <br />
@@ -68,23 +67,23 @@
             <CListGroup>
               <CListGroupItem>
                 <span class="Title-font-size">Tên khách hàng : </span>
-                <input type="text" v-model="getUser.fullname" style="width: 100%; border-bottom: 1px solid gray">
+                <input type="text" v-model="getUser.fullname" style="border: none; width: 100%; border-bottom: 1px solid gray">
               </CListGroupItem>
               <CListGroupItem>
                 <span class="Title-font-size">Email : </span>
-                <input type="text" v-model="getUser.email" style="border: none;">
+                <input type="text" v-model="getUser.email" style="border: none; width: 100%; border-bottom: 1px solid gray">
               </CListGroupItem>
               <CListGroupItem>
                 <span class="Title-font-size">Địa chỉ : </span>
-                <input type="text" v-model="getUser.address" style="border: none;">
+                <input type="text" v-model="getUser.address" style="border: none; width: 100%; border-bottom: 1px solid gray">
               </CListGroupItem>
               <CListGroupItem>
                 <span class="Title-font-size">Điện thoại : </span>
-                <input type="text" v-model="getUser.phone" style="border: none;">
+                <input type="text" v-model="getUser.phone" style="border: none; width: 100%; border-bottom: 1px solid gray">
               </CListGroupItem>
               <CListGroupItem>
                 <span class="Title-font-size">Ghi chú : </span>
-                <input type="text" v-model="getUser.note" style="border: none;">
+                <input type="text" v-model="getUser.note" style="border: none; width: 100%; border-bottom: 1px solid gray">
               </CListGroupItem>
             </CListGroup>
           </CCardBody>

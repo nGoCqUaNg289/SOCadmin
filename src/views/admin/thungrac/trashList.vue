@@ -36,7 +36,7 @@
         <tr v-for="item in pageOfItems" :key="item.id">
           <th>{{ item.id }}</th>
           <td scope="row" class="td-table"  @click="DetailProduct(item.id)">{{ item.name }}</td>
-          <td :style="{ color: Status(item) }">
+          <td :style="{ color: Status(item) }" class="text-center">
             {{ item.status }}
           </td>
           <td class="td-table td-action">

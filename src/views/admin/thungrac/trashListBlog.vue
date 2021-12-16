@@ -236,7 +236,7 @@ export default {
     getAllProduct() {
 
         axios
-        .get(this.$store.state.MainLink + "admin/blog", {
+        .get(this.$store.state.MainLink + "admin/blog/getLisDeleteAdmin", {
           headers: {
             Authorization: this.$store.state.userToken,
           },

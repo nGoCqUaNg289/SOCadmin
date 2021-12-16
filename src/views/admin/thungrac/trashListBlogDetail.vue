@@ -140,15 +140,21 @@ export default {
       getDetailBlog(){
           console.log(this.item)
         axios
-        .get(this.$store.state.MainLink + "customer/blog/" + this.item)
+        .get(this.$store.state.MainLink + "admin/blog/" + this.item, 
+        {
+          headers: {
+            Authorization: this.$store.state.userToken,
+          },
+        }
+        )
         .then((response) => {
           this.getData = response.data.object;
           this.getBlogDetail = response.data.object.blogDetails;
           // console.log(this.getBlogDetail);
-          console.log(this.getData)
+          // console.log(this.getData)
         })
-        .catch((e) => {
-          console.log(e);
+        .catch((response) => {
+          console.log(response);
         });
       },
       updateBlog(){

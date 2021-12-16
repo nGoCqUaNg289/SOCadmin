@@ -7,9 +7,9 @@
           size="sm"
           color="danger"
           class="btn btn-custom-size"
-          @click="CancelCreate()"
+          @click="backList()"
         >
-          <i class="cil-x"></i>
+          <i class="cil-arrow-left"></i>
           Huỷ
         </CButton>
         <CButton
@@ -19,7 +19,7 @@
           class="btn btn-custom-size"
           @click="updateOrder(getData.id)"
         >
-          <i class="cil-plus"></i>
+          <!-- <i class="cil-plus"></i> -->
           Cập nhật
         </CButton>
       </CCol>
@@ -202,8 +202,8 @@ export default {
     validator(val) {
       return val ? val.length >= 4 : false;
     },
-    CancelCreate() {
-      this.$router.push("/quanlysanphamlist");
+    backList() {
+      this.$router.push("/bill/quanlyhoadonlist");
     },
     updateOrder(id) {
       this.$router.push(

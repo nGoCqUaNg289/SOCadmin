@@ -29,7 +29,7 @@
       </thead>
       <tbody>
         <tr v-for="(item, index) in pageOfItems" :key="index">
-          <th scope="row">{{ index+ 1 }}</th>
+          <th scope="row">{{ index + 1 }}</th>
           <td @click="detailBlog(item.id)">{{ item.title }}</td>
           <td @click="detailBlog(item.id)">{{ item.timeCreated }}</td>
           <td scope="row" class="td-table td-center" style="text-align:center">
@@ -37,7 +37,7 @@
                   <span class="badge rounded-pill bg-danger" v-else-if="item.status == false">{{ item.status }}</span>
           </td>
           <td>
-            <CButton  @click="darkModal = true" class="mr-1" v-if="item.status == true">
+            <CButton  @click="darkModal = true" class="mr-1" v-if="!item.productId">
               <i class="cil-trash" style="color: red; text-align: center;" @click="setId(item.id,1)"></i>
             </CButton>
             <CButton  @click="darkModal = true" class="mr-1" v-else-if="item.status == false">
@@ -172,11 +172,11 @@ export default {
         })
         .then(() => {
           this.getAlBlog()
-          this.myModal = true
+          // this.myModal = true
           this.errorBlog = "Đã xóa blog"
         })
         .catch((e) => {
-          this.myModal = true
+          // this.myModal = true
           this.errorBlog = "Lỗi ! Vui lòng thử lại."
           console.log(e);
         });

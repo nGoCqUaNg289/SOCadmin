@@ -92,8 +92,7 @@
       :centered="true"
       title="Modal title 2"
       size="lg"
-      color="danger"
-    >
+      color="danger">
       Bạn có chắc muốn {{setTitleModal}} sản phẩm này ?
       <template #header>
         <h6 class="modal-title">Xác nhận</h6>
@@ -188,15 +187,15 @@ export default {
     deleteProduct() {
       axios
         .put(
-          this.$store.state.MainLink + "admin/products/delete/" + this.setIdProduct,
+          this.$store.state.MainLink + "admin/products/delete/" + this.setIdProduct, {},
           {
             headers: {
               Authorization: this.$store.state.userToken,
             },
           }
         )
-        .then((response) => {
-          console.log(response)
+        .then(() => {
+
           this.getAllProduct();
         })
         .catch((e) => {
@@ -205,17 +204,17 @@ export default {
     },
     dontSell(){
       // console.log(this.setIdProduct)
+      
       axios
         .put(
-          this.$store.state.MainLink + "admin/products/dontSell/" + this.setIdProduct,
+          this.$store.state.MainLink + "admin/products/dontSell/" + this.setIdProduct, {},
           {
             headers: {
               Authorization: this.$store.state.userToken,
             },
           }
         )
-        .then((response) => {
-          console.log(response);
+        .then(() => {
           this.getAllProduct();
           // console.log("123")
         })

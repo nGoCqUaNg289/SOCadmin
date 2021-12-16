@@ -45,23 +45,24 @@
           <td scope="row" class="td-table td-center" style="text-align:center">
                   <span class="badge rounded-pill bg-secondary" v-if="item.status == 'Chờ xác nhận'">{{ item.status }}</span>
                   <span class="badge rounded-pill bg-success" v-else-if="item.status == 'Giao hàng thành công'">{{ item.status }}</span>
+                  <span class="badge rounded-pill bg-info" v-else-if="item.status == 'Đang giao hàng'">{{ item.status }}</span>
                   <span class="badge rounded-pill bg-primary" v-else-if="item.status == 'Đã xác nhận'">{{ item.status }}</span>
                   <span class="badge rounded-pill bg-danger" v-else>{{ item.status }}</span>
           </td>
           <th class="text-center">
-              <CButton class="mr-1" v-if="item.status == 'Chờ xác nhận'" @click="successModal = true,setId(item.id)">
+              <CButton class="mr-1" v-if="item.status == 'Chờ xác nhận'" data-toggle="tooltip" title="Xác nhận đơn hàng" @click="primaryModal = true,setId(item.id)">
                <i class="cil-check-circle" style="color: green; text-align: center;"></i>
               </CButton>
-              <CButton class="mr-1" v-if="item.status == 'Đã xác nhận'" @click="successModal = true,setId(item.id)">
+              <CButton class="mr-1" v-if="item.status == 'Đã xác nhận'" data-toggle="tooltip" title="Giao hàng" @click="successModal = true,setId(item.id)">
                <i class="cil-car-alt" style="color: green; text-align: center;"></i>
               </CButton>
-              <CButton class="mr-1" v-if="item.status == 'Đã xác nhận'" @click="successModal = true,setId(item.id)">
-               <i class="cil-reload" style="color: red; text-align: center;"></i>
+              <CButton class="mr-1" v-if="item.status == 'Đang giao hàng'" data-toggle="tooltip" title="Giao hàng thành công" @click="infoModal = true,setId(item.id)">
+               <i class="cil-check" style="color: green; text-align: center;"></i>
               </CButton>
-              <CButton class="mr-1" v-if="item.status == 'Chờ xác nhận'" @click="successModal = true,setId(item.id)">
-               <i class="cil-reload" style="color: red; text-align: center;"></i>
+              <CButton class="mr-1" v-if="item.status == 'Đã xác nhận' || item.status == 'Chờ xác nhận' || item.status == 'Đang giao hàng' || item.status == 'Yêu cầu hủy'" data-toggle="tooltip" title="Cập nhật ghi chú" @click="warningModal = true,setId(item.id)">
+               <i class="cil-reload" style="color: blue; text-align: center;"></i>
               </CButton>
-              <CButton @click="darkModal = true,setId(item.id)" class="mr-1" v-if="item.status != 'Giao hàng thành công' && item.status != 'Đã hủy'">
+              <CButton @click="darkModal = true,setId(item.id)" class="mr-1" v-if="item.status != 'Giao hàng thành công' && item.status != 'Đã hủy'" data-toggle="tooltip" title="Hủy đơn">
                <i class="cil-x-circle" style="color: red; text-align: center;"></i>
               </CButton>
           </th>
@@ -104,32 +105,96 @@
     </CModal>
 
     <CModal
-      :show.sync="successModal"
+      :show.sync="primaryModal"
       :no-close-on-backdrop="true"
       :centered="true"
       title="Xác nhận đơn hàng"
       size="lg"
-      color="success"
-    >
+      color="primary">
       <CTextarea
                 label="Ghi chú"
                 placeholder="Nội dung ..."
                 horizontal
                 rows="9"
-                v-model="note"
-      />
-      
+                v-model="note"/>
+      <template #header>
+        <h6 class="modal-title">Xác nhận</h6>
+        <CButtonClose @click="primaryModal = false" class="text-white"/>
+      </template>
+      <template #footer>
+        <CButton @click="primaryModal = false" color="secondary">Hủy</CButton>
+        <CButton @click="primaryModal = false, confirmOrder()" color="primary">Xác nhận đơn hàng</CButton>
+      </template>
+    </CModal>
+
+    <CModal
+      :show.sync="successModal"
+      :no-close-on-backdrop="true"
+      :centered="true"
+      title="Xác nhận đơn hàng"
+      size="lg"
+      color="success">
+      <CTextarea
+                label="Ghi chú"
+                placeholder="Nội dung ..."
+                horizontal
+                rows="9"
+                v-model="note"/>
       <template #header>
         <h6 class="modal-title">Xác nhận</h6>
         <CButtonClose @click="successModal = false" class="text-white"/>
       </template>
       <template #footer>
         <CButton @click="successModal = false" color="secondary">Hủy</CButton>
-        <CButton @click="successModal = false, confirmOrder()" color="success">Xác nhận đơn hàng</CButton>
-        <!-- <CButton @click="darkModal = false, dontSell()" color="danger" v-else-if="setTitleModal == 'ngừng kinh doanh'">{{AcctionButton}}</CButton> -->
+        <CButton @click="successModal = false, confirmTranport()" color="success">Xác nhận chuyển đơn</CButton>
       </template>
     </CModal>
 
+    <CModal
+      :show.sync="infoModal"
+      :no-close-on-backdrop="true"
+      :centered="true"
+      title="Xác nhận đơn hàng"
+      size="lg"
+      color="info">
+      <CTextarea
+                label="Ghi chú"
+                placeholder="Nội dung ..."
+                horizontal
+                rows="9"
+                v-model="note"/>
+      <template #header>
+        <h6 class="modal-title">Xác nhận</h6>
+        <CButtonClose @click="infoModal = false" class="text-white"/>
+      </template>
+      <template #footer>
+        <CButton @click="infoModal = false" color="secondary">Hủy</CButton>
+        <CButton @click="infoModal = false, confirmDeli()" color="info" style="color: white">Giao hàng thành công</CButton>
+      </template>
+    </CModal>
+
+    <CModal
+      :show.sync="warningModal"
+      :no-close-on-backdrop="true"
+      :centered="true"
+      title="Xác nhận đơn hàng"
+      size="lg"
+      color="warning">
+      <CTextarea
+                label="Ghi chú"
+                placeholder="Nội dung ..."
+                horizontal
+                rows="9"
+                v-model="note"/>
+      <template #header>
+        <h6 class="modal-title">Ghi chú đơn hàng</h6>
+        <CButtonClose @click="warningModal = false" class="text-white"/>
+      </template>
+      <template #footer>
+        <CButton @click="warningModal = false" color="secondary">Hủy</CButton>
+        <CButton @click="warningModal = false, updateNote()" color="warning" style="color: white">Lưu ghi chú</CButton>
+      </template>
+    </CModal>
   </div>
 </template>
 
@@ -150,6 +215,9 @@ export default {
       pageOfItems: [],
       successModal: false,
       darkModal : false,
+      primaryModal: false,
+      infoModal: false,
+      warningModal: false,
       setIdOrder: "",
       getData: "",
       note: "",
@@ -178,7 +246,7 @@ export default {
       let val = (value / 1).toFixed(0).replace(".", ",");
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
-     onChangePage(pageOfItems) {
+    onChangePage(pageOfItems) {
       this.pageOfItems = pageOfItems;
     },
     getDateString(date) {
@@ -219,7 +287,6 @@ export default {
       let item = {
         note : this.note
       }
-      // console.log(item);
       axios
         .post(this.$store.state.MainLink + "admin/orders/confimOrder?id=" + this.setIdOrder, 
           item,
@@ -251,6 +318,69 @@ export default {
         .then(() => {
           this.getAllProduct()
           this.note = ""
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    confirmTranport(){
+      let item = {
+        note : this.note
+      }
+      axios
+        .post(this.$store.state.MainLink + "admin/orders/confimTransport?id=" + this.setIdOrder, 
+          item,
+         {
+            headers: {
+              Authorization: this.$store.state.userToken,
+            },
+          })
+        .then((response) => {
+          this.getAllProduct()
+          this.note = ""
+          console.log(response)
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    confirmDeli(){
+      let item = {
+        note : this.note
+      }
+      axios
+        .post(this.$store.state.MainLink + "admin/orders/confimSell?id=" + this.setIdOrder, 
+          item,
+         {
+            headers: {
+              Authorization: this.$store.state.userToken,
+            },
+          })
+        .then((response) => {
+          this.getAllProduct()
+          this.note = ""
+          console.log(response)
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    updateNote(){
+      let item = {
+        note : this.note
+      }
+      axios
+        .post(this.$store.state.MainLink + "admin/orders/updateNote?id=" + this.setIdOrder, 
+          item,
+         {
+            headers: {
+              Authorization: this.$store.state.userToken,
+            },
+          })
+        .then((response) => {
+          this.getAllProduct()
+          this.note = ""
+          console.log(response)
         })
         .catch((e) => {
           console.log(e);
