@@ -67,7 +67,7 @@
 
             <CListGroup style="display: block">
                 <br>
-                  <strong>Blog sản phẩm </strong>
+                  <strong>Thêm blog vào sản phẩm </strong>
                 <br>
                 <input
                   type="text"
@@ -87,15 +87,19 @@
                       <th></th>
                   </thead>
                   <tbody>
-                    <tr>
+                    <tr v-for="(item, index) in getData" :key="index">
                       <td style="text-align: center;">
-                        120
+                        {{item.id}}
                       </td>
                       <td>
-                          Tên sản phẩm
+                        {{item.name}}
                       </td>
                       <td>
-                          <i class="cil-check" style="color: blue; text-align: center;"></i>
+                        <button style="border: none; background: none" >
+                          <i class="cil-check" style="color: blue; text-align: center;" v-if="item.id != productId" @click="choseProduct(item.id, item.name)"></i>
+                          <i class="cil-x" style="color: red; text-align: center;" v-else @click="cancelChoser()"></i>
+                        </button>
+                          
                       </td>
                     </tr>
                   </tbody>
@@ -158,6 +162,7 @@
                 </CCarousel>
                 <h3>{{title}}</h3>
                 <p>{{shortText}}</p>
+                <p v-if="productName">Được thêm cho sản phẩm : {{productName}}</p>
             </CListGroup>
           </CCardBody>
         </CCard>
@@ -210,8 +215,10 @@ components: {
       shortText: "",
       photo: "",
       valueType: 0,
-
-      // formCollapsed: true,
+      searchP: "",
+      getData: "",
+      productId: "",
+      productName: "",
     };
   },
   created(){
@@ -222,13 +229,20 @@ components: {
     validator(val) {
       return val ? val.length >= 4 : false;
     },
+    choseProduct(id, name){
+      this.productId = id
+      this.productName = name
+      // console.log(this.productId)
+    },
+    cancelChoser(){
+      this.productId = this.productName = ""
+    },
     saveCategory(item){
       console.log(item)
       let items = {
         categoryId : item
       }
       this.formData.productCategories.push(items);
-      // console.log(this.formData.productCategories)
     },
     createDetailBlog(){
         this.valueType += 1
@@ -237,9 +251,7 @@ components: {
         ordinal : this.valueType,
         content : ""
       }
-    //   console.log(item)
       this.blogDetails.push(item);
-    //   console.log(this.blogDetails)
     },
     deleteRow(index){
         this.valueType  = this.valueType - 1
@@ -253,7 +265,8 @@ components: {
             title: this.title,
             shortText : this.shortText,
             photo: this.photo,
-            blogDetails : this.blogDetails
+            blogDetails : this.blogDetails,
+            productId : this.productId,
         }
         console.log(item)
         axios.post(this.$store.state.MainLink + "admin/blog/new",item,
@@ -264,6 +277,22 @@ components: {
         })
         .then(() => {
             this.backList()
+        })
+        .catch(function(error) {
+          alert(error);
+        });
+    },
+    searchProduct(){
+      axios
+      .get(this.$store.state.MainLink + "admin/products?find=" +this.searchP,
+        {
+            headers: {
+              Authorization: this.$store.state.userToken,
+            },
+        })
+        .then((response) => {
+            // console.log(response.data.object);
+            this.getData = response.data.object
         })
         .catch(function(error) {
           alert(error);

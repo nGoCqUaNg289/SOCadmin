@@ -162,7 +162,12 @@ export default {
     searchProduct() {
       axios
         .get(
-          this.$store.state.MainLink + "admin/products?find=" +this.searchString
+          this.$store.state.MainLink + "admin/products?find=" +this.searchString,
+          {
+          headers: {
+              Authorization: this.$store.state.userToken,
+          }
+        }
         )
         .then((response) => {
           this.getData = response.data.object;

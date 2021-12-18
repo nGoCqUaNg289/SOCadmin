@@ -34,104 +34,74 @@
             <CListGroup>
               <CListGroupItem>
                 <span class="Title-font-size">Mã khuyến mại : </span>
-                <span>1</span>
+                <span>{{getData.id}}</span>
               </CListGroupItem>
-              <!-- <CListGroupItem>
-                <span class="Title-font-size">Mã sản phẩm : </span>
-                <span>{{ getDataG.name }}</span>
-              </CListGroupItem> -->
               <CListGroupItem>
                 <span class="Title-font-size">Tên khuyến mại : </span>
-                <span>sale 8-3</span>
+                <span>{{getData.name}}</span>
               </CListGroupItem>
               <CListGroupItem>
                 <span class="Title-font-size">Thời gian bắt đầu sale: </span>
-                <span>2021-4-26 23:41:24</span>
+                <span>{{getDateString(getData.startTime)}}</span>
               </CListGroupItem>
               <CListGroupItem>
                 <span class="Title-font-size">Thời gian kết thúc sale: </span>
-                <span>2021-8-3 23:41:31</span>
+                <span>{{getDateString(getData.endTime)}}</span>
               </CListGroupItem>
             </CListGroup>
           </CCardBody>
         </CCard>
-<!-- 
-        <CCol md="12">
-          <CButton
-            type="reset"
-            size="sm"
-            color="danger"
-            class="btn btn-custom-size"
-            @click="CancelCreate()"
-          >
-            <i class="cil-x"></i>
-            Huỷ
-          </CButton>
-          <CButton
-            type="submit"
-            size="sm"
-            color="primary"
-            class="btn btn-custom-size"
-            @click="addMemberinGroup()"
-          >
-            <i class="cil-plus"></i>
-            Lưu
-          </CButton>
-        </CCol> -->
       </CCol>
+      <!-- <CCol md="12" lg="6">
+        <CCard>
+          <CCardHeader>
+            <CIcon name="cil-justify-center" />
+            <strong> Danh sách sản phẩm tham gia khuyến mại </strong>
+          </CCardHeader>
+          <CCardBody height="auto">
+            <CListGroup v-if="productSale.length == 0">
+              <CListGroupItem class="text-center">
+                <span class="Title-font-size text-center">Không có sản phẩm ! </span>
+              </CListGroupItem>
+            </CListGroup>
 
-      
-      <!-- <CCol md="12">
-      <div class="col-12 col-title">
-        <div class="col-md-6 float-left margin-left">
-          <p class="Text-tile">Danh sách sản phẩm tham gia</p>
-        </div>
-      </div>
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col" colspan="1">STT</th>
-            <th scope="col" class="Title-table" colspan="">Tên sản phẩm</th>
-            <th scope="col" class="Title-table" colspan="">Tình trạng</th>
-            <th class="Title-table"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th>1</th>
-            <td>Laptop Asus TUF FX505DY AL133T R5 3550H/8GB/512G SSD/15.6 FHD/WIN10</td>
-            <td style="color: blue"  class="text-center">Ngừng kinh doanh</td>
-          </tr>
-          <tr>
-            <th>2</th>
-            <td>Lenovo Thinkpad X1 CARBON Gen 7 i7-10510U</td>
-            <td style="color: green"  class="text-center">Đang bán</td>
-          </tr>
-          <tr>
-            <th>3</th>
-            <td>MacBook Pro 13" 2020 Touch Bar M1 256GB</td>
-            <td style="color: green"  class="text-center">Đang bán</td>
-          </tr>
-          <tr>
-            <th>4</th>
-            <td>Laptop Microsoft Surface Pro 7 i5 1035G4/8GB/128GB SSD/12.3" Touch/Win10</td>
-            <td style="color: green"  class="text-center">Đang bán</td>
-          </tr>
-          <tr>
-            <th>5</th>
-            <td>MacBook Pro 16" 2021 M1 Pro 512GB</td>
-            <td style="color: green"  class="text-center">Đang bán</td>
-          </tr>
-        </tbody>
-      </table>
+            <CListGroup v-else>
+              <CListGroupItem>
+                <span class="Title-font-size">Mã khuyến mại : </span>
+                <span>{{getData.id}}</span>
+              </CListGroupItem>
+            </CListGroup>
+          </CCardBody>
+        </CCard>
       </CCol> -->
 
       <CCol md="12">
       <div class="col-12 col-title">
-        <div class="col-md-6 float-left margin-left">
-          <p class="Text-tile">Danh sách sản phẩm tham gia</p>
+        <div class="col-md-6 float-left margin-left" style="margin-top: 10px">
+          <p class="Text-tile">Thêm sản phẩm tham gia khuyến mại</p>
         </div>
+        <div class="col-md-6 float-left margin-right" style="margin-left: 30px">
+          <nav class="col-12 navbar justify-content-between">
+            <a class="navbar-brand"></a>
+            <div class="form-inline">
+              <input
+                class="form-control mr-sm-2"
+                type="text"
+                placeholder="Tìm kiếm sản phẩm ..."
+                aria-label="Search"
+                style="box-shadow: none"
+                v-model="searchString"
+              />
+              <button class="btn btn-outline-success my-2 my-sm-0" @click="searchProduct()">
+                <i class="cil-magnifying-glass"></i>
+              </button>
+            </div>
+          </nav>
+        </div>
+
+        
       </div>
+
       <table class="table">
         <thead>
           <tr>
@@ -141,57 +111,79 @@
             <th class="Title-table"></th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <th>1</th>
-            <td>Laptop Asus TUF FX505DY AL133T R5 3550H/8GB/512G SSD/15.6 FHD/WIN10</td>
-            <td style="color: blue"  class="text-center">Ngừng kinh doanh</td>
-            <td>
-              <i class="cil-trash" style="color: red; text-align: center;"></i>
-            </td>
+        <tbody v-if="getDataProduct.length == 0">
+          <tr class="text-center">
+            <th  colspan="4">Không có dữ liệu!</th>
           </tr>
-          <tr>
-            <th>2</th>
-            <td>Lenovo Thinkpad X1 CARBON Gen 7 i7-10510U</td>
-            <td style="color: green"  class="text-center">Đang bán</td>
+        </tbody>
+        <tbody v-else>
+          <tr v-for="(item, index) in getDataProduct" :key="index">
+            <th>{{index + 1}}</th>
+            <td>{{item.name}}</td>
+            <td v-if="item.discount == 0" style="color: red;">Chưa tham gia</td>
+            <td v-else style="color: green;">Đã tham gia</td>
             <td>
-              <i class="cil-trash" style="color: red; text-align: center;"></i>
+              <i v-if="item.discount == 0" class="cil-check-circle" style="color: green; text-align: center;" @click="darkModal = true, setProductId(item.id,getData.id)"></i>
+              <i v-else class="cil-x-circle" style="color: red; text-align: center;" @click="dangerModal = true, setProductId(item.id,getData.id)"></i>
             </td>
-          </tr>
-          <tr>
-            <th>3</th>
-            <td>MacBook Pro 13" 2020 Touch Bar M1 256GB</td>
-            <td style="color: green"  class="text-center">Đang bán</td>
-            <td>
-              <i class="cil-trash" style="color: red; text-align: center;"></i>
-            </td>
-          </tr>
-          <tr>
-            <th>4</th>
-            <td>Laptop Microsoft Surface Pro 7 i5 1035G4/8GB/128GB SSD/12.3" Touch/Win10</td>
-            <td style="color: green"  class="text-center">Đang bán</td>
-            <td>
-              <i class="cil-trash" style="color: red; text-align: center;"></i>
-            </td>
-          </tr>
-          <tr>
-            <th>5</th>
-            <td>MacBook Pro 16" 2021 M1 Pro 512GB</td>
-            <td style="color: green"  class="text-center">Đang bán</td>
-            <td>
-              <i class="cil-trash" style="color: red; text-align: center;"></i>
-            </td>
-          </tr>
-          <tr>
-            <th colspan="4" class="text-center" style="">
-              <i class="cil-plus" style="color: red;"></i>
-            </th>
           </tr>
         </tbody>
       </table>
       </CCol>
 
     </CRow>
+
+    <CModal
+      :show.sync="darkModal"
+      :no-close-on-backdrop="true"
+      :centered="true"
+      title="Modal title 2"
+      size="lg"
+      color="success">
+
+      <CInput label="Mã hóa đơn" v-model="getData.id" disabled horizontal/>
+      <br>
+      <CInput label="Mã sản phẩm" v-model="productId"  disabled horizontal/>
+      <br>
+      <CInput label="Giảm giá *" type="number" placeholder="Giảm giá trừ thẳng" v-model="discount" horizontal/>
+      <br>
+      <CInput label="Số lượng *" type="number" placeholder="Số lượng sản phẩm giảm giá" v-model="quantity" horizontal/>
+
+      <template #header>
+        <h6 class="modal-title">Xác nhận</h6>
+        <CButtonClose @click="darkModal = false" class="text-white"/>
+      </template>
+      <template #footer>
+        <CButton @click="darkModal = false" color="secondary">Hủy</CButton>
+        <CButton @click="darkModal = false, createNew()" color="success">Thêm khuyến mại sản phẩm</CButton>
+      </template>
+    </CModal>
+
+    <CModal
+      :show.sync="dangerModal"
+      :no-close-on-backdrop="true"
+      :centered="true"
+      title="Modal title 2"
+      size="lg"
+      color="danger">
+
+      <CInput label="Mã hóa đơn" v-model="getData.id" disabled horizontal/>
+      <br>
+      <CInput label="Mã sản phẩm" v-model="productId"  disabled horizontal/>
+      <br>
+      <CInput label="Giảm giá *" type="number" placeholder="Giảm giá trừ thẳng" v-model="discount" horizontal/>
+      <br>
+      <CInput label="Số lượng *" type="number" placeholder="Số lượng sản phẩm giảm giá" v-model="quantity" horizontal/>
+
+      <template #header>
+        <h6 class="modal-title">Xác nhận</h6>
+        <CButtonClose @click="dangerModal = false" class="text-white"/>
+      </template>
+      <template #footer>
+        <CButton @click="dangerModal = false" color="secondary">Hủy</CButton>
+        <CButton @click="dangerModal = false, createNew()" color="dangerModal">Xóa khuyến mại sản phẩm</CButton>
+      </template>
+    </CModal>
   </div>
 </template>
 
@@ -200,142 +192,137 @@ import axios from "axios";
 
 export default {
   name: "quanlyluongnhanviendetail",
-//   props: {
-//     idG:"" ,
-//   },
+  props: {
+    item: Number ,
+  },
   data() {
     return {
-      getDataG: "",
-      formData: {
-        saleId: parseInt(this.$route.params.id),
-        discount: "",
-        productId:"",
-        quantity:""
-      },
-      getAllMember: "",
-
-      formCollapsed: true,
-      getAllUserId: "",
-      formAllUserId: {
-        userId: "",
-        username: "",
-      },
-      formDataAddUtoG: {
-        groupId: this.idG,
-        userId: "",
-      },
-      getUnewtoGr: "",
+      darkModal: false,
+      dangerModal: false,
+      getData: "",
+      searchString: "",
+      getDataProduct: "",
+      idOrder: "",
+      productId: "",
+      discount: "",
+      quantity: "",
     };
   },
   created() {
-    this.getInfoGr();
-    this.getAllMemberinGr();
-    this.getAllUserIdnoGroup();
+    // console.log(this.item)
+    this.getDetailSale()
   },
   methods: {
-    CancelCreate() {},
-
-    getInfoGr() {
-      // console.log(this.idG);
-      axios
-        .get(
-          "http://localhost:8080/security/api/v2/guest/groups/get/" + this.idG
-        )
-        .then((response) => {
-          this.getDataG = response.data;
-          console.log(response.data);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    },
-
-    getAllMemberinGr() {
-      axios
-        .get(
-          "http://localhost:8080/security/api/v2/guest/groups/allmember/get/" +
-            this.idG
-        )
-        .then((response) => {
-          this.getAllMember = response.data;
-
-          console.log(response.data);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    },
-
-    getAllUserIdnoGroup() {
-      axios
-        .get("http://localhost:8080/security/api/v2/guest/groups/getuserid")
-        .then((response) => {
-          this.getAllUserId = response.data;
-          // console.log("data allUnoGr: " + response.data);
-        })
-        .catch((e) => {
-          console.log("Lỗi catch: " + e);
-        });
-    },
-
-    addMemberinGroup() {
-      console.log("idGroup: " + this.idG);
-      console.log("idUser: " + this.formDataAddUtoG.userId);
+    createNew(){
+      let item = {
+        productId: this.productId,
+        saleId: this.idOrder,
+        discount: this.discount,
+        quantity: this.quantity
+      }
       axios
         .post(
-          "http://localhost:8080/security/api/v2/guest/groups/addmember",
-          this.formDataAddUtoG
+          this.$store.state.MainLink + "admin/sale/newProductSale",
+          item,{
+            headers: {
+              Authorization: this.$store.state.userToken,
+            },
+          }
         )
-        .then((response) => {
-          this.getUnewtoGr = response.data;
-          console.log(this.getUnewtoGr);
-          this.$toasted.success("Thêm thành công", {
-            duration: 2000,
-          });
-          this.getAllMemberinGr();
-          this.getAllUserIdnoGroup();
+        .then(() => {
+        // console.log(response)
+        // this.getIdProduct = response.data.object.id;
+        // console.log(this.getIdProduct)
+        // this.showDetail = 1
+        this.searchProduct();
         })
-        .catch((e) => {
-          console.log("Lỗi catch: " + e);
-          this.$toasted.error("Thêm thất bại", {
-            duration: 2000,
-          });
+        .catch(function(error) {
+          alert(error);
         });
     },
-
-    RemoveFromGroup(id) {
+    setProductId(id, idOrder){
+      this.productId = id
+      this.idOrder = idOrder
+    },
+    CancelCreate() {
+      this.$router.push("/sale/quanlysale");
+    },
+    getDetailSale(){
       axios
-        .delete(
-          "http://localhost:8080/security/api/v2/guest/groups/removemember/" +
-            id
-        )
+        .get( this.$store.state.MainLink + "admin/sale/get/" + this.item,
+         {
+            headers: {
+              Authorization: this.$store.state.userToken,
+            },
+          })
         .then((response) => {
-          if (response.status == 200) {
-            this.$toasted.success("Xoá thành công", {
-              duration: 2000,
-            });
-            this.getAllMemberinGr();
-            this.getAllUserIdnoGroup();
-          } else {
-            console.log("res-Xoá thất bại: " + response.status);
-            this.$toasted.error("Xoá thất bại, id không tồn tại", {
-              duration: 2000,
-            });
-          }
+          this.getData = response.data.object;
+          console.log(this.getData)
         })
         .catch((e) => {
-          console.log("Lỗi catch: " + e);
-          this.$toasted.error("Xoá thất bại", {
-            duration: 2000,
-          });
+          console.log(e);
         });
+    },
+    getDateString(date) {
+      return `${new Date(date).getFullYear()}-${
+        new Date(date).getMonth() + 1
+      }-${new Date(date).getDate()} ${new Date(date).getHours()}:${new Date(
+        date
+      ).getMinutes()}:${new Date(date).getSeconds()}`;
+    },
+    searchProduct() {
+      console.log(this.searchString)
+      axios
+        .get(
+          this.$store.state.MainLink + "admin/products?find=" + this.searchString,
+          {
+            headers: {
+                Authorization: this.$store.state.userToken,
+            }
+          })
+        .then((response) => {
+          this.getDataProduct = response.data.object;
+          console.log(this.getDataProduct)
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    Status(products) {
+      switch (products.status) {
+        case "Đang bán":
+          return "green";
+        case "Không kinh doanh":
+          return " gray";
+        case "Hàng sắp về":
+          return "black";
+        case "Chưa có":
+          return " orange";
+        case "Hết hàng":
+          return " red";
+        case "Ngừng kinh doanh":
+          return " blue";
+      }
     },
   },
 };
 </script>
 
 <style>
-.Title-table {
-  text-align: center;
+.Title-font-size {
+  font-weight: 600;
+}
+.btn-custom-size {
+  width: 130px;
+  margin-left: 15px;
+  float: right;
+}
+.input-custom-border-none {
+  border: none;
+  box-shadow: none;
+  box-sizing: border-box;
+}
+.title-td {
+  width: 35%;
 }
 </style>

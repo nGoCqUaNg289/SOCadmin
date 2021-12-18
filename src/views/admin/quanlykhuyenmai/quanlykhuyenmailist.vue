@@ -40,7 +40,7 @@
               <th scope="col" class="Title-table td-action" >
                 Trạng thái
               </th>
-              <!-- <th class="Title-table"></th> -->
+              <th class="Title-table"></th>
             </tr>
           </thead>
           <tbody>
@@ -54,6 +54,12 @@
                   <span class="badge rounded-pill bg-danger" v-else-if="item.status == 'Đã dừng'">{{ item.status }}</span>
                   <span class="badge rounded-pill bg-success" v-else>{{ item.status }}</span>
               </td>
+              <td>
+              <CButton v-if="item.status != 'Đã dừng'" @click="setItemId(item.id),darkModal = true">
+               <!-- <i class="cil-dash" style="color: red; text-align: center;"></i> -->
+               <b-icon icon="dash-circle" style="color: red; text-align: center;"></b-icon>
+              </CButton>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -66,13 +72,23 @@
       ></jw-pagination>
     </div>
       </CCardBody>
-    <!-- <div class="pb-0 pt-0" style="text-align: center">
-      <jw-pagination
-        :maxPages="15"
-        :items="getData"
-        @changePage="onChangePage"
-      ></jw-pagination>
-    </div> -->
+        <CModal
+          :show.sync="darkModal"
+          :no-close-on-backdrop="true"
+          :centered="true"
+          title="Modal title 2"
+          size="lg"
+          color="danger">
+          Bạn có chắc muốn dừng khuyến mại này ?
+          <template #header>
+            <h6 class="modal-title">Xác nhận</h6>
+            <CButtonClose @click="darkModal = false" class="text-white"/>
+          </template>
+          <template #footer>
+            <CButton @click="darkModal = false" color="secondary">Hủy</CButton>
+            <CButton @click="darkModal = false, stopSale()" color="danger">Dừng chương trình</CButton>
+          </template>
+        </CModal>
   </div>
 </template>
 
@@ -89,6 +105,7 @@ export default {
   name: "QuanLySanPhamList",
   data() {
     return {
+      darkModal: false,
       customLabels,
       pageOfItems: [],
       getData: "",
@@ -99,6 +116,7 @@ export default {
         status: "",
       },
       searchString: "",
+      ItemId: "",
     };
   },
   created() {
@@ -106,26 +124,24 @@ export default {
 
   },
   methods: {
-    // onChangePage(pageOfItems) {
-    //   this.pageOfItems = pageOfItems;
-    // },
-    searchProduct() {
+    stopSale(){
       axios
-        .get(
-          this.$store.state.MainLink + "admin/products?find="
-        )
-        .then((response) => {
-          this.getData = response.data.object;
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+        .put(
+            this.$store.state.MainLink + "admin/sale/stopSale?id=" + this.ItemId, {},
+            {
+              headers: {
+                Authorization: this.$store.state.userToken,
+              },
+            })
+          .then(() => {
+            this.getAllSale();
+          })
+          .catch((e) => {
+            console.log(e);
+          });
     },
-    SaleEnd() {
-      this.$router.push("/sale/quanlysaleEnd");
-    },
-    SaleNow() {
-      this.$router.push("/sale/quanlysaleEnd");
+    setItemId(id){
+      this.ItemId = id
     },
      onChangePage(pageOfItems) {
       this.pageOfItems = pageOfItems;
@@ -133,40 +149,11 @@ export default {
      create() {
       this.$router.push("/sale/quanlysaleCreate");
     },
-    UpdateProduct() {
-      this.$router.push("/admin/quanlysanphamcreatedetail");
-    },
     detailSale(id) {
       this.$router.push({
         name: "Sale detail",
         params: { item: id },
       });
-    },
-    detail(){
-      this.$router.push("/sale/quanlysaleDetail");
-    },
-    deleteProduct(item) {
-      console.log(this.$store.state.tokenUser);
-      axios
-        .delete(
-          this.$store.state.MainLink + "admin/products/delete/" + item.id,
-          {
-            headers: {
-              Authorization: this.$store.state.tokenUser,
-            },
-          }
-        )
-
-        .then((response) => {
-          if (response.data.object) {
-            alert("Delete thành công.");
-          } else {
-            alert("Delete thất bại.");
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
     },
     getAllSale() {
       axios

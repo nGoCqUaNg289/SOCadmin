@@ -119,7 +119,7 @@
                 v-else-if="checkUpdate == 1"
                 >
               </CListGroupItem>
-              <CListGroupItem>
+              <!-- <CListGroupItem>
                 <span class="Title-font-size">Giảm giá : </span>
                 <span v-if="checkUpdate == 0">{{ getData.discount }}</span>
                 <input 
@@ -130,7 +130,7 @@
                 style="width: 100%; border-bottom: 1px solid gray"
                 v-else-if="checkUpdate == 1"
                 >
-              </CListGroupItem>
+              </CListGroupItem> -->
               <CListGroupItem>
                 <span class="Title-font-size">Trạng thái : </span>
                 <span>{{ getData.status }}</span>

@@ -30,10 +30,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr
-          v-for="item in pageOfItems"
-          :key="item.id"
-        >
+        <th colspan="6" v-if="pageOfItems == ''">
+          <div class="text-center">
+            <div class="spinner-grow" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>  
+        </th>
+        <tr v-for="item in pageOfItems" :key="item.id" v-else>
           <th>{{ item.id }}</th>
           <th scope="row" class="td-table-custom" @click="detailOrder(item.id)">{{ item.username }}</th>
           <td class="td-table status-color-out td-action">
@@ -62,7 +66,7 @@
               <CButton class="mr-1" v-if="item.status == 'Đã xác nhận' || item.status == 'Chờ xác nhận' || item.status == 'Đang giao hàng' || item.status == 'Yêu cầu hủy'" data-toggle="tooltip" title="Cập nhật ghi chú" @click="warningModal = true,setId(item.id)">
                <i class="cil-reload" style="color: blue; text-align: center;"></i>
               </CButton>
-              <CButton @click="darkModal = true,setId(item.id)" class="mr-1" v-if="item.status != 'Giao hàng thành công' && item.status != 'Đã hủy'" data-toggle="tooltip" title="Hủy đơn">
+              <CButton @click="darkModal = true,setId(item.id)" class="mr-1" v-if="item.status == 'Đã xác nhận' || item.status == 'Chờ xác nhận' || item.status == 'Yêu cầu hủy'" data-toggle="tooltip" title="Hủy đơn">
                <i class="cil-x-circle" style="color: red; text-align: center;"></i>
               </CButton>
           </th>

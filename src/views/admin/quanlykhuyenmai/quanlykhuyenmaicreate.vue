@@ -3,55 +3,6 @@
     <CRow>
       <br />
       <br />
-      <!-- <CCol md="12" lg="7">
-        <CCard>
-          <CCardHeader>
-            <CIcon name="cil-justify-center" />
-            <strong> Sản phẩm khuyến mãi</strong>
-          </CCardHeader>
-          <CListGroupItem> 
-            <input
-              type="text"
-              v-model="searchP"
-              class="input-custom-border-none"
-              placeholder="Nhập tên sản phẩm"
-              style="width: 85%;border-bottom: 1px solid gray;padding: 9px;margin-right: 5%;"
-            />
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" @click="searchProduct()">
-              <i class="cil-magnifying-glass"></i>
-            </button>
-          </CListGroupItem>
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col" class="text-center">STT</th>
-                <th scope="col" class="Title-table" colspan="1">Tên sản phẩm</th>
-                <th scope="col" class="Title-table" colspan=""></th>
-              </tr>
-            </thead>
-            <tbody class="text-center" v-if="getData.length > 0">
-              <tr v-for="item in getData" :key="item.id">
-                <th>{{ item.id }}</th>
-                <th scope="row" class="td-table" colspan="1">
-                  {{ item.name.substr(6,25) }} ...
-                </th>
-                <td class="td-table td-action" colspan="">
-                  <button
-                    type="button"
-                    class="btn btn-primary btn-size"
-                    @click="selectUser(item.userId)"
-                  >
-                    <i class="cil-check-circle">Chọn</i>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-            <tbody v-else>
-              <th scope="row" class="td-table" colspan="1">Không có dữ liệu</th>
-            </tbody>
-          </table>
-        </CCard>
-      </CCol> -->
       <CCol md="12" lg="12">
         <CCard>
           <CCardHeader>
@@ -75,26 +26,28 @@
               <div class="form-group">
                 <label for="">Thời gian bắt đầu:</label>
                 <input
-                  type="date"
+                  type="datetime-local"
                   class="form-control"
                   name=""
                   id=""
                   aria-describedby="helpId"
                   placeholder=""
                   v-model="formData.startTime"
+                  step="1"
                 />
-              
+                <!-- <input type="datetime-local"> -->
               </div>
               <div class="form-group">
                 <label for="">Thời gian kết thúc:</label>
                 <input
-                  type="date"
+                  type="datetime-local"
                   class="form-control"
                   name=""
                   id=""
                   aria-describedby="helpId"
                   placeholder=""
                   v-model="formData.endTime"
+                  step="1"
                 />
               
               </div>
@@ -121,7 +74,7 @@
           size="sm"
           color="danger"
           class="btn btn-custom-size"
-          @click="CancelCreate()"
+          @click="cancelCreate()"
         >
           <i class="cil-x"></i>
           Huỷ
@@ -165,6 +118,9 @@ export default {
     this.getAllProduct()
   },
   methods: {
+    cancelCreate(){
+      this.$router.push("/sale/quanlysale");
+    },
     creatSale() {
       // console.log("abc");
       const formData = new FormData();
@@ -183,7 +139,6 @@ export default {
         )
         .then((response) => {
           console.log(response);
-          // this.$router.push(`/admin/quanlysanphamcreatedetail/${response.data.object.id}`);
           console.log("Thêm mới thành công!");
         })
         .catch(function (error) {

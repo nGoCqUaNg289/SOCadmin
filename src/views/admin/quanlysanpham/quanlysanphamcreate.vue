@@ -94,7 +94,7 @@
                           <div v-for="items in item.categories" :key="items.id" style="margin-left: 15%">
                             <input class="form-check-input" type="checkbox" :value="items.id" id="flexCheckDefault" @click="saveCategory(items.id)">
                             <label class="form-check-label" for="flexCheckDefault" style="margin-left : 15px">
-                              {{items.name}} {{items.id}}
+                              {{items.name}}
                             </label>
                           </div>
                       </td>

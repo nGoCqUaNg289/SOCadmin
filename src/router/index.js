@@ -286,7 +286,8 @@ function configRoutes() {
                         {
                             path: 'quanlysaleDetail',
                             name: 'Sale detail',
-                            component: quanlykhuyenmaidetail
+                            component: quanlykhuyenmaidetail,
+                            props: true
                         },
                     ]
                 },

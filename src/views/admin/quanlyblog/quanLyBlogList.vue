@@ -13,7 +13,7 @@
                     style="float: right"
                     >
                     <i class="cil-plus"></i>
-                    Tạo tài khoản
+                    Tạo Blog
             </CButton>
       </div>
     </div>

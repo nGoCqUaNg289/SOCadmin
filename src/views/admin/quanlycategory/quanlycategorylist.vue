@@ -8,30 +8,12 @@
       <div class="col-md-6 float-right">
       </div>
     </div>
-    <!-- <nav class="col-12 navbar justify-content-between">
-      <a class="navbar-brand"></a>
-      <form class="form-inline">
-        <input
-          @change="searchProduct()"
-          class="form-control mr-sm-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-          style="box-shadow: none"
-          v-model="searchString"
-        />
-      </form>
-    </nav> -->
     <table class="table">
       <thead>
         <tr @click="detailCategory()">
           <th scope="col">STT</th>
-          <!-- <th scope="col" class="Title-table">Tên sale</th> -->
           <th scope="col" class="Title-table td-action" style="text-align:center" >
-             Tên
-          </th>
-          <th scope="col" class="Title-table td-action" >
-            Loại
+            Thể loại
           </th>
           <th scope="col" class="Title-table td-action" >
            Trạng thái
@@ -39,33 +21,65 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in getData" :key="index">
-          <th>{{ index + 1 }}</th>
+        <tr>
+          <th>1</th>
           <td scope="row" class="td-table" style="width: 35%;">
-                  <a class="custom-a" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                   - {{ item.name }}
-                  </a>  
-                <div class="collapse" id="collapseExample">
-                  <div class="">
-                    <div v-for="items in item.categories" :key="items.id" style="margin-left: 15%">+ {{items.name}}</div>
+                <a class="custom-a" data-bs-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1">
+                    Loại máy
+                </a>  
+                <div class="collapse" id="collapseExample1">
+                  <div v-for="(item, index) in typeProduct.categories" :key="index">
+                    <a style="margin-left: 15%" @click="detailCate(item.id)">
+                      - {{item.name}}
+                    </a>
                   </div>
                 </div>
           </td>
-          <td scope="row" class="td-table td-center">{{ item.type }}</td>
           <td scope="row" class="td-table td-center">
-              <span class="badge rounded-pill bg-success" v-if="item.status == true">{{ item.status }}</span>
-              <span class="badge rounded-pill bg-danger" v-else>{{ item.status }}</span>
+               <span class="badge rounded-pill bg-success" v-if="typeProduct.status == true">{{typeProduct.status}}</span>
+              <span class="badge rounded-pill bg-danger" v-else>{{typeProduct.status}}</span>
+          </td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td scope="row" class="td-table" style="width: 35%;">
+                <a class="custom-a" data-bs-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    Thương hiệu
+                </a>  
+                <div class="collapse" id="collapseExample2">
+                  <div v-for="(item, index) in brands.categories" :key="index">
+                    <a style="margin-left: 15%" @click="detailCate(item.id)">
+                      - {{item.name}}
+                    </a>
+                  </div>
+                </div>
+          </td>
+          <td scope="row" class="td-table td-center">
+              <span class="badge rounded-pill bg-success" v-if="brands.status == true">{{brands.status}}</span>
+              <span class="badge rounded-pill bg-danger" v-else>{{brands.status}}</span>
+          </td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td scope="row" class="td-table" style="width: 35%;">
+                <a class="custom-a" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    Nhu cầu
+                </a>  
+                <div class="collapse" id="collapseExample">
+                  <div v-for="(item, index) in demand.categories" :key="index">
+                    <a style="margin-left: 15%" @click="detailCate(item.id)">
+                      - {{item.name}}
+                    </a>
+                  </div>
+                </div>
+          </td>
+          <td scope="row" class="td-table td-center">
+               <span class="badge rounded-pill bg-success" v-if="demand.status == true">{{demand.status}}</span>
+              <span class="badge rounded-pill bg-danger" v-else>{{demand.status}}</span>
           </td>
         </tr>
       </tbody>
     </table>
-    <!-- <div class="pb-0 pt-3" style="text-align: center">
-      <jw-pagination
-        :maxPages="15"
-        :items="getData"
-        @changePage="onChangePage"
-      ></jw-pagination>
-    </div> -->
   </div>
 </template>
 
@@ -78,6 +92,9 @@ export default {
     return {
       pageOfItems: [],
       getData: "",
+      typeProduct:"",
+      brands: "",
+      demand: "",
       formData: {
        name: "",
         type: "",
@@ -138,12 +155,20 @@ export default {
           })
         .then((response) => {
           this.getData = response.data.object;
-          console.log(this.getData)
+          this.typeProduct = response.data.object[0]
+          this.brands = response.data.object[1]
+          this.demand = response.data.object[2]
+          console.log(this.typeProduct)
+          // console.log(this.typeProduct, this.brands, this.demand)
+          // console.log(this.getData)
         })
         .catch((e) => {
           console.log(e);
         });
     },
+    detailCate(id){
+      console.log(id)
+    }
   },
 };
 </script>
