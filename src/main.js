@@ -18,7 +18,11 @@ import JwPagination from 'jw-vue-pagination';
 // Vue.use(Toasted)
 
 // Vue.use(Toasted, Options)
+import VueSimpleAlert from "vue-simple-alert";
+import SweetAlertIcons from 'vue-sweetalert-icons';
 
+Vue.use(SweetAlertIcons);
+Vue.use(VueSimpleAlert);
 Vue.component('jw-pagination', JwPagination);
 Vue.use(BootstrapVue);
 Vue.use(VueAxios, axios)

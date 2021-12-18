@@ -8,7 +8,6 @@
           color="danger"
           class="btn btn-custom-size"
           @click="backList()"
-          v-if="checkUpdate == 0"
         >
           <i class="cil-arrow-left"></i>
           Trở lại
@@ -18,10 +17,9 @@
           size="sm"
           color="primary"
           class="btn btn-custom-size"
-          @click="updateProduct()"
-          v-if="checkUpdate == 0"
+          @click="updateWarr()"
         >
-          <!-- <i class="cil-plus"></i> -->
+          <i class="cil-check-circle" v-if="checkUpdate == 1"></i>
           Tạo phiếu bảo hành
         </CButton>
       </CCol>
@@ -132,12 +130,6 @@ export default {
     validator(val) {
       return val ? val.length >= 4 : false;
     },
-    CancelCreate() {
-      this.$router.push("/quanlysanphamlist");
-    },
-    UpdateProduct() {
-      this.$router.push("/quanlysanphamupdate");
-    },
     getDetailWarry() {
       axios
         .get(this.$store.state.MainLink + "admin/warranty/get/" + this.item,
@@ -155,7 +147,7 @@ export default {
           console.log(e);
         });
     },
-    updateProduct(){
+    updateWarr(){
       this.checkUpdate = 1
     },
     cancelUpdate(){

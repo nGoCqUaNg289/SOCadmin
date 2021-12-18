@@ -37,11 +37,11 @@
       <thead>
         <tr>
           <th scope="col" class="text-center">STT</th>
-          <th scope="col" class="Title-table" colspan="1">Tên sản phẩm</th>
+          <th scope="col" class="Title-table" colspan="1">Tên khách hàng</th>
           <th scope="col" class="Title-table td-action" colspan="">
-            Tình trạng sản phẩm
+            Ngày tạo đơn
           </th>
-          <th class="Title-table"></th>
+          <!-- <th class="Title-table"></th> -->
         </tr>
       </thead>
       <tbody>
@@ -70,16 +70,16 @@
           <td scope="row"  @click="DetailProduct(item.id)">{{ item.name }}</td>
           <td :style="{ color: Status(item) }">
             <!-- <span class="badge rounded-pill bg-light"></span> -->
-            {{ item.status }}
+            {{ item.expiredDate }}
           </td>
-          <td class="td-table td-action">
+          <!-- <td class="td-table td-action">
             <CButton  @click="darkModal = true, setId(item.id), setTitle()" class="mr-1" v-if="item.status != 'Không kinh doanh' && item.status != 'Ngừng kinh doanh'">
               <i class="cil-reload"></i>
               </CButton>
             <CButton  @click="darkModal = true, setId(item.id), setTitle1()" class="mr-1" v-if="item.status == 'Không kinh doanh' || item.status == 'Ngừng kinh doanh'">
                <i class="cil-trash" style="color: red; text-align: center;"></i>
               </CButton>
-          </td>
+          </td> -->
         </tr>
       </tbody>
     </table>
@@ -258,6 +258,7 @@ export default {
               this.callFunction()
           }else{
               this.getData = response.data.object;
+              console.log(response.data.object)
           }
         })
         .catch((e) => {

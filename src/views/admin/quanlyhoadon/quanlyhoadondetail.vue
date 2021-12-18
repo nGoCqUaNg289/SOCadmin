@@ -103,7 +103,7 @@
               <div style="font-weight: 700; margin: 5px 5px 5px 5px; float: left">
                 {{ index + 1 }} - {{ item.productName }}
                 <CButton
-                  v-if="getData.status == 'Đã xác nhận' && item.statusWarranty != true"
+                  v-if="getData.status == 'Đã xác nhận' && item.statusWarranty == false"
                   style="float: right"
                   type="submit"
                   size="sm"
@@ -113,7 +113,7 @@
                   <i class="cil-check-circle"></i>
                   Tạo bảo hành
                 </CButton>
-                <i style="float: right; color: red" v-else>
+                <i style="float: right; color: red" v-else-if="item.statusWarranty == true">
                   Đã tạo hóa đơn bảo hành
                 </i>
               </div>
@@ -164,7 +164,8 @@
                 v-model="orderWarry.expiredDate"
               />
             </div>
-            
+            <br>
+            <i style="color: red">Vui lòng kiểm tra lại trước khi tạo hóa đơn bảo hành! Hóa đơn bảo hành sẽ không thế cập nhật sau khi tạo!</i>
           </div>
           <template #header>
             <h6 class="modal-title">Xác nhận</h6>

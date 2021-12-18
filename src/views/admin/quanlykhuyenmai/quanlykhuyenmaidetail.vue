@@ -48,32 +48,37 @@
                 <span class="Title-font-size">Thời gian kết thúc sale: </span>
                 <span>{{getDateString(getData.endTime)}}</span>
               </CListGroupItem>
+              <CListGroupItem>
+                <span class="Title-font-size">Danh sách sản phẩm đã tham gia: </span>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col" colspan="1">Mã sản phẩm</th>
+                      <th scope="col" class="Title-table" colspan="">Tên sản phẩm</th>
+                      <th scope="col" class="Title-table" colspan="">Giảm giá</th>
+                      <th scope="col" class="Title-table" colspan="">Số lượng</th>
+                      <!-- <th class="Title-table"></th> -->
+                    </tr>
+                  </thead>
+                  <tbody v-if="getData.productSaleVO.length == 0">
+                    <tr class="text-center">
+                      <th  colspan="4">Không có dữ liệu!</th>
+                    </tr>
+                  </tbody>
+                  <tbody v-else>
+                    <tr v-for="(item, index) in getData.productSaleVO" :key="index">
+                      <th>{{index + 1}}</th>
+                      <td>{{item.productVO.name}}</td>
+                      <td class="text-center">{{formatPrice(item.discount)}} đ</td>
+                      <td class="text-center">{{item.quantity}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </CListGroupItem>
             </CListGroup>
           </CCardBody>
         </CCard>
       </CCol>
-      <!-- <CCol md="12" lg="6">
-        <CCard>
-          <CCardHeader>
-            <CIcon name="cil-justify-center" />
-            <strong> Danh sách sản phẩm tham gia khuyến mại </strong>
-          </CCardHeader>
-          <CCardBody height="auto">
-            <CListGroup v-if="productSale.length == 0">
-              <CListGroupItem class="text-center">
-                <span class="Title-font-size text-center">Không có sản phẩm ! </span>
-              </CListGroupItem>
-            </CListGroup>
-
-            <CListGroup v-else>
-              <CListGroupItem>
-                <span class="Title-font-size">Mã khuyến mại : </span>
-                <span>{{getData.id}}</span>
-              </CListGroupItem>
-            </CListGroup>
-          </CCardBody>
-        </CCard>
-      </CCol> -->
 
       <CCol md="12">
       <div class="col-12 col-title">
@@ -120,7 +125,8 @@
           <tr v-for="(item, index) in getDataProduct" :key="index">
             <th>{{index + 1}}</th>
             <td>{{item.name}}</td>
-            <td v-if="item.discount == 0" style="color: red;">Chưa tham gia</td>
+            <td v-if="!checkSale(item.id)" style="color: orange">Chưa tham gia</td>
+            <td v-else-if="item.discount == 0" style="color: red;">Đã tạm dừng</td>
             <td v-else style="color: green;">Đã tham gia</td>
             <td>
               <i v-if="item.discount == 0" class="cil-check-circle" style="color: green; text-align: center;" @click="darkModal = true, setProductId(item.id,getData.id)"></i>
@@ -132,6 +138,8 @@
       </CCol>
 
     </CRow>
+
+
 
     <CModal
       :show.sync="darkModal"
@@ -167,28 +175,46 @@
       size="lg"
       color="danger">
 
-      <CInput label="Mã hóa đơn" v-model="getData.id" disabled horizontal/>
-      <br>
-      <CInput label="Mã sản phẩm" v-model="productId"  disabled horizontal/>
-      <br>
-      <CInput label="Giảm giá *" type="number" placeholder="Giảm giá trừ thẳng" v-model="discount" horizontal/>
-      <br>
-      <CInput label="Số lượng *" type="number" placeholder="Số lượng sản phẩm giảm giá" v-model="quantity" horizontal/>
-
       <template #header>
         <h6 class="modal-title">Xác nhận</h6>
         <CButtonClose @click="dangerModal = false" class="text-white"/>
       </template>
+      Bạn có chắc muốn dừng khuyến mại cho sản phẩm này ?
       <template #footer>
         <CButton @click="dangerModal = false" color="secondary">Hủy</CButton>
-        <CButton @click="dangerModal = false, createNew()" color="dangerModal">Xóa khuyến mại sản phẩm</CButton>
+        <CButton @click="dangerModal = false, deleteSaleProduct()" color="danger">Xóa khuyến mại sản phẩm</CButton>
       </template>
     </CModal>
+
+
+    <CModal
+      :show.sync="myModal"
+      :no-close-on-backdrop="true"
+      :centered="true"
+      title="Modal title 2"
+      size="sm"
+      color="danger">
+
+      <template #header>
+        <h6 class="modal-title">Lỗi phát sinh</h6>
+        <CButtonClose @click="myModal = false" class="text-white"/>
+      </template>
+      <div class="text-center">
+      <sweetalert-icon icon="error" />
+            {{errorMessage}}
+      </div>
+      
+      <template #footer class="text-center; display: none" style="display: none">
+        <CButton class="text-center" @click="myModal = false" color="danger">Xác nhận</CButton>
+      </template>
+    </CModal>
+
   </div>
 </template>
 
 <script>
 import axios from "axios";
+
 
 export default {
   name: "quanlyluongnhanviendetail",
@@ -199,6 +225,7 @@ export default {
     return {
       darkModal: false,
       dangerModal: false,
+      myModal: false,
       getData: "",
       searchString: "",
       getDataProduct: "",
@@ -206,13 +233,22 @@ export default {
       productId: "",
       discount: "",
       quantity: "",
+      errorMessage: "",
     };
   },
   created() {
     // console.log(this.item)
     this.getDetailSale()
+    // this.testEx();
   },
   methods: {
+    formatPrice(value) {
+      let val = (value / 1).toFixed(0).replace(".", ",");
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
+    checkSale(productId){
+      return  this.getData.productSaleVO.filter((product) => product.productId == productId).length > 0
+    },
     createNew(){
       let item = {
         productId: this.productId,
@@ -220,9 +256,13 @@ export default {
         discount: this.discount,
         quantity: this.quantity
       }
+      let checkUrl = this.$store.state.MainLink + "admin/sale/updateProductSale"
+      if(!this.checkSale(item.productId)){
+        checkUrl = this.$store.state.MainLink + "admin/sale/newProductSale"
+      }
       axios
         .post(
-          this.$store.state.MainLink + "admin/sale/newProductSale",
+          checkUrl,
           item,{
             headers: {
               Authorization: this.$store.state.userToken,
@@ -230,15 +270,42 @@ export default {
           }
         )
         .then(() => {
-        // console.log(response)
-        // this.getIdProduct = response.data.object.id;
-        // console.log(this.getIdProduct)
-        // this.showDetail = 1
         this.searchProduct();
+        this.getDetailSale();
         })
-        .catch(function(error) {
-          alert(error);
-        });
+        .catch((error) => {
+          if (error.response) {
+            console.log(error.response.data);
+            this.myModal = true,
+            this.errorMessage = error.response.data.errorMsg
+          }
+        })
+    },
+    deleteSaleProduct(){
+      let item = {
+        productId: this.productId,
+        saleId: this.idOrder
+      }
+      axios
+        .post(
+          this.$store.state.MainLink + "admin/sale/stopProductSale",
+          item,{
+            headers: {
+              Authorization: this.$store.state.userToken,
+            },
+          }
+        )
+        .then(() => {
+        this.searchProduct();
+        this.getDetailSale();
+        })
+        .catch((error) => {
+          if (error.response) {
+            console.log(error.response.data);
+            this.myModal = true,
+            this.errorMessage = error.response.data.errorMsg
+          }
+        })
     },
     setProductId(id, idOrder){
       this.productId = id
@@ -274,7 +341,7 @@ export default {
       console.log(this.searchString)
       axios
         .get(
-          this.$store.state.MainLink + "admin/products?find=" + this.searchString,
+          this.$store.state.MainLink + "customer/products?find=" + this.searchString,
           {
             headers: {
                 Authorization: this.$store.state.userToken,
@@ -304,6 +371,33 @@ export default {
           return " blue";
       }
     },
+    testEx(){
+      let item = {
+        name: "sale tết",
+        startTime: "2021-12-28T16:41:24",
+        endTime: "2021-12-28T16:41:24"
+      }
+      axios
+        .post(
+          "http://150.95.105.29:8800/api/admin/sale/newSale", item,
+          {
+            headers: {
+                Authorization: this.$store.state.userToken,
+            }
+          })
+        .then((response) => {
+          this.getDataProduct = response.data.object;
+          console.log(this.getDataProduct)
+        })
+        .catch((error) => {
+          if (error.response) {
+            console.log(error.response.data);
+            this.myModal = true,
+            this.errorMessage = error.response.data.errorMsg
+          }
+        })
+        
+    }
   },
 };
 </script>
