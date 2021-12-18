@@ -216,7 +216,7 @@ export default [{
         // },
         {
             _name: 'CSidebarNavItem',
-            name: 'Quản lý Blog',
+            name: 'Quản lý bài viết',
             to: '/blog',
             icon: 'cil-star',
             badge: {
