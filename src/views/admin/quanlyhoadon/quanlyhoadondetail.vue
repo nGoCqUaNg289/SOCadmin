@@ -155,15 +155,15 @@
                 v-model="orderWarry.productSeri"
               />
             </div>
-            <div style="margin-top: 10px">
+            <!-- <div style="margin-top: 10px"> -->
               <!-- <p>Ngày hết hạn</p> -->
-              <CInput
+              <!-- <CInput
                 label="Ngày hết hạn"
                 type="date"
                 horizontal
                 v-model="orderWarry.expiredDate"
               />
-            </div>
+            </div> -->
             <br>
             <i style="color: red">Vui lòng kiểm tra lại trước khi tạo hóa đơn bảo hành! Hóa đơn bảo hành sẽ không thế cập nhật sau khi tạo!</i>
           </div>
@@ -199,8 +199,8 @@ export default {
         orderId: "",
         productId: "",
         colorId: "",
-        productSeri : "",
-        expiredDate: ""
+        productSeri : ""//,
+        //expiredDate: ""
       }
     };
   },
@@ -260,7 +260,7 @@ export default {
       console.log(this.orderWarry)
     },
     createwarranty(){
-      this.orderWarry.expiredDate = this.orderWarry.expiredDate + "T00:00:00.0000"
+      //this.orderWarry.expiredDate = this.orderWarry.expiredDate + "T00:00:00.0000"
       console.log(this.orderWarry)
       axios
         .post("http://150.95.105.29:8800/api/admin/warranty/new",
