@@ -167,7 +167,8 @@ const warrantylist = () =>
     import ('@/views/admin/quanlybaohanh/warrantylist')
 const BaoHanhDetail = () =>
     import ('@/views/admin/quanlybaohanh/BaoHanhDetail')
-
+const BaoHanhCreate = () =>
+    import ('@/views/admin/quanlybaohanh/BaoHanhCreate')
 
 Vue.use(Router)
 
@@ -354,6 +355,12 @@ function configRoutes() {
                             path: 'baohanhdetail',
                             name: 'Chi tiết đơn bảo hành',
                             component: BaoHanhDetail,
+                            props: true
+                        },
+                        {
+                            path: 'baohanhcreate',
+                            name: 'Thêm mới đơn bảo hành',
+                            component: BaoHanhCreate,
                             props: true
                         },
                     ]

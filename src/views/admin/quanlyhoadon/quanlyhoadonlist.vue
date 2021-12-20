@@ -5,15 +5,16 @@
         <p class="Text-tile">Danh sách hóa đơn</p>
         <p class="Text-tile-2">Trang chủ ● Hóa đơn</p>
       </div>
-      <div class="col-md-6 float-right">
-        <button
-          type="button"
-          class="btn btn-primary float-right btn-add"
-          @click="CreateNewProduct()"
-        >
-          <i class="cil-plus"></i>
-          Thêm mới
-        </button>
+      <div class="col-md-6 float-right" style="margin-top: 10px;">
+        <CButton type="submit" 
+                    size="sm" color="primary" 
+                    class="btn btn-custom-size"
+                    @click="CreateNewProduct()"
+                    style="float: right; width: 200px"
+                    >
+                    <i class="cil-plus"></i>
+                    Tạo hóa đơn
+            </CButton>
       </div>
     </div>
     <table class="table table-hover">
@@ -48,13 +49,17 @@
           </td>
           <td scope="row" class="td-table td-center" style="text-align:center">
                   <span class="badge rounded-pill bg-secondary" v-if="item.status == 'Chờ xác nhận'">{{ item.status }}</span>
-                  <span class="badge rounded-pill bg-success" v-else-if="item.status == 'Giao hàng thành công'">{{ item.status }}</span>
+                  <span class="badge rounded-pill bg-success" v-else-if="item.status == 'Giao hàng thành công' || item.status == 'Đã nhận lại hàng hoàn về'">{{ item.status }}</span>
                   <span class="badge rounded-pill bg-info" v-else-if="item.status == 'Đang giao hàng'">{{ item.status }}</span>
+                  <span class="badge rounded-pill bg-warning" v-else-if="item.status == 'Đang hoàn hàng'">{{ item.status }}</span>
                   <span class="badge rounded-pill bg-primary" v-else-if="item.status == 'Đã xác nhận'">{{ item.status }}</span>
                   <span class="badge rounded-pill bg-danger" v-else>{{ item.status }}</span>
           </td>
           <th class="text-center">
               <CButton class="mr-1" v-if="item.status == 'Chờ xác nhận'" data-toggle="tooltip" title="Xác nhận đơn hàng" @click="primaryModal = true,setId(item.id)">
+               <i class="cil-check-circle" style="color: green; text-align: center;"></i>
+              </CButton>
+              <CButton class="mr-1" v-if="item.status == 'Yêu cầu trả hàng'" data-toggle="tooltip" title="Chập nhận trả hàng" @click="returnOrderUser = true,setId(item.id)">
                <i class="cil-check-circle" style="color: green; text-align: center;"></i>
               </CButton>
               <CButton class="mr-1" v-if="item.status == 'Đã xác nhận'" data-toggle="tooltip" title="Giao hàng" @click="successModal = true,setId(item.id)">
@@ -63,10 +68,16 @@
               <CButton class="mr-1" v-if="item.status == 'Đang giao hàng'" data-toggle="tooltip" title="Giao hàng thành công" @click="infoModal = true,setId(item.id)">
                <i class="cil-check" style="color: green; text-align: center;"></i>
               </CButton>
+              <CButton class="mr-1" v-if="item.status == 'Đang giao hàng'" data-toggle="tooltip" title="Gửi đơn hàng quay lại" @click="returnProduct = true,setId(item.id)">
+               <i class="cil-chevron-left" style="color: red; text-align: center;"></i>
+              </CButton>
               <CButton class="mr-1" v-if="item.status == 'Đã xác nhận' || item.status == 'Chờ xác nhận' || item.status == 'Đang giao hàng' || item.status == 'Yêu cầu hủy'" data-toggle="tooltip" title="Cập nhật ghi chú" @click="warningModal = true,setId(item.id)">
                <i class="cil-reload" style="color: blue; text-align: center;"></i>
               </CButton>
               <CButton @click="darkModal = true,setId(item.id)" class="mr-1" v-if="item.status == 'Đã xác nhận' || item.status == 'Chờ xác nhận' || item.status == 'Yêu cầu hủy'" data-toggle="tooltip" title="Hủy đơn">
+               <i class="cil-x-circle" style="color: red; text-align: center;"></i>
+              </CButton>
+              <CButton @click="darkModal = true,setId(item.id)" class="mr-1" v-if="item.status == 'Yêu cầu trả hàng'" data-toggle="tooltip" title="Từ chối trả hàng">
                <i class="cil-x-circle" style="color: red; text-align: center;"></i>
               </CButton>
           </th>
@@ -93,7 +104,7 @@
                 label="Lý do hủy đơn"
                 placeholder="Nội dung ..."
                 horizontal
-                rows="9"
+                rows="4"
                 v-model="note"
       />
       
@@ -119,7 +130,7 @@
                 label="Ghi chú"
                 placeholder="Nội dung ..."
                 horizontal
-                rows="9"
+                rows="4"
                 v-model="note"/>
       <template #header>
         <h6 class="modal-title">Xác nhận</h6>
@@ -142,7 +153,7 @@
                 label="Ghi chú"
                 placeholder="Nội dung ..."
                 horizontal
-                rows="9"
+                rows="4"
                 v-model="note"/>
       <template #header>
         <h6 class="modal-title">Xác nhận</h6>
@@ -165,7 +176,7 @@
                 label="Ghi chú"
                 placeholder="Nội dung ..."
                 horizontal
-                rows="9"
+                rows="4"
                 v-model="note"/>
       <template #header>
         <h6 class="modal-title">Xác nhận</h6>
@@ -188,7 +199,7 @@
                 label="Ghi chú"
                 placeholder="Nội dung ..."
                 horizontal
-                rows="9"
+                rows="4"
                 v-model="note"/>
       <template #header>
         <h6 class="modal-title">Ghi chú đơn hàng</h6>
@@ -197,6 +208,52 @@
       <template #footer>
         <CButton @click="warningModal = false" color="secondary">Hủy</CButton>
         <CButton @click="warningModal = false, updateNote()" color="warning" style="color: white">Lưu ghi chú</CButton>
+      </template>
+    </CModal>
+
+    <CModal
+      :show.sync="returnOrderUser"
+      :no-close-on-backdrop="true"
+      :centered="true"
+      title="Xác nhận đơn hàng"
+      size="lg"
+      color="danger">
+      <CTextarea
+                label="Ghi chú"
+                placeholder="Nội dung ..."
+                horizontal
+                rows="4"
+                v-model="note"/>
+      <template #header>
+        <h6 class="modal-title">Xác nhận hoàn đơn</h6>
+        <CButtonClose @click="returnOrderUser = false" class="text-white"/>
+      </template>
+      <template #footer>
+        <CButton @click="returnOrderUser = false" color="secondary">Hủy</CButton>
+        <CButton @click="returnOrderUser = false, confirmReturn()" color="danger" style="color: white">Chấp nhận hoàn đơn</CButton>
+      </template>
+    </CModal>
+
+    <CModal
+      :show.sync="returnProduct"
+      :no-close-on-backdrop="true"
+      :centered="true"
+      title="Xác nhận hoàn hàng"
+      size="lg"
+      color="danger">
+      <CTextarea
+                label="Ghi chú"
+                placeholder="Nội dung ..."
+                horizontal
+                rows="4"
+                v-model="note"/>
+      <template #header>
+        <h6 class="modal-title">Xác nhận hoàn đơn</h6>
+        <CButtonClose @click="returnProduct = false" class="text-white"/>
+      </template>
+      <template #footer>
+        <CButton @click="returnProduct = false" color="secondary">Hủy</CButton>
+        <CButton @click="returnProduct = false, confirmProduct()" color="danger" style="color: white">Xác nhận hoàn đơn</CButton>
       </template>
     </CModal>
   </div>
@@ -222,6 +279,8 @@ export default {
       primaryModal: false,
       infoModal: false,
       warningModal: false,
+      returnOrderUser: false,
+      returnProduct: false,
       setIdOrder: "",
       getData: "",
       note: "",
@@ -385,6 +444,44 @@ export default {
           this.getAllProduct()
           this.note = ""
           console.log(response)
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    confirmReturn(){
+      let item = {
+        note : this.note
+      }
+      axios
+        .post(this.$store.state.MainLink + "admin/orders/comfimReturns?id=" + this.setIdOrder, item,
+         {
+            headers: {
+              Authorization: this.$store.state.userToken,
+            },
+          })
+        .then(() => {
+          this.getAllProduct()
+          this.note = ""
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    confirmProduct(){
+      let item = {
+        note : this.note
+      }
+      axios
+        .post(this.$store.state.MainLink + "admin/orders/requestReturns?id=" + this.setIdOrder, item,
+         {
+            headers: {
+              Authorization: this.$store.state.userToken,
+            },
+          })
+        .then(() => {
+          this.getAllProduct()
+          this.note = ""
         })
         .catch((e) => {
           console.log(e);

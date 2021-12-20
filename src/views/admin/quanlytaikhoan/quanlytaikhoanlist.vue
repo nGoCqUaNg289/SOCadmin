@@ -80,14 +80,14 @@
           <td scope="row" class="td-table" @click="detailAccount(item.id)">{{ item.phone }}</td>
           <td scope="row" class="td-table" @click="detailAccount(item.id)">{{ item.address }}</td>
           <td scope="row" class="td-table td-center" style="text-align:center">
-                  <span class="badge rounded-pill bg-success" v-if="item.status = true">{{ item.status }}</span>
-                  <span class="badge rounded-pill bg-danger" v-else>{{ item.status }}</span>
+                  <span class="badge rounded-pill bg-success" v-if="item.userStatus = true">{{ item.userStatus }}</span>
+                  <span class="badge rounded-pill bg-danger" v-else>{{ item.userStatus }}</span>
           </td>
           <td scope="row" class="td-table td-center" style="text-align:center">
-            <CButton  @click="darkModal = true, setId(item.id), setTitle()" class="mr-1" v-if="item.status == true">
+            <CButton  @click="darkModal = true, setId(item.id), setTitle()" class="mr-1" v-if="item.userStatus == true && item.roles[0] != 'Director'">
               <i class="cil-trash" style="color: red; text-align: center;"></i>
               </CButton>
-            <CButton  @click="darkModal = true, setId(item.id), setTitle1()" class="mr-1" v-else>
+            <CButton  @click="darkModal = true, setId(item.id), setTitle1()" class="mr-1" v-else-if="item.roles[0] != 'Director'">
                <i class="cil-reload"></i>
               </CButton>
           </td>
@@ -117,8 +117,52 @@
       </template>
       <template #footer>
         <CButton @click="darkModal = false" color="secondary">Hủy</CButton>
-        <CButton @click="darkModal = false, deleteProduct()" color="danger" v-if="setTitleModal == 'xóa'">Xóa tài khoản</CButton>
-        <CButton @click="darkModal = false, dontSell()" color="success" v-else-if="setTitleModal == 'khôi phục'">Khôi phục</CButton>
+        <CButton @click="darkModal = false, deleteAccount()" color="danger" v-if="setTitleModal == 'xóa'">Xóa tài khoản</CButton>
+      </template>
+    </CModal>
+
+
+    <CModal
+      :show.sync="myModalFail"
+      :no-close-on-backdrop="true"
+      :centered="true"
+      title="Modal title 2"
+      size="sm"
+      color="danger">
+
+      <template #header>
+        <h6 class="modal-title">Lỗi phát sinh</h6>
+        <CButtonClose @click="myModalFail = false" class="text-white"/>
+      </template>
+      <div class="text-center">
+      <sweetalert-icon icon="error" />
+            {{errorMessage}}
+      </div>
+      
+      <template #footer class="text-center; display: none" style="display: none">
+        <CButton class="text-center" @click="myModalFail = false" color="danger">Xác nhận</CButton>
+      </template>
+    </CModal>
+
+    <CModal
+      :show.sync="myModalSuccess"
+      :no-close-on-backdrop="true"
+      :centered="true"
+      title="Modal title 2"
+      size="sm"
+      color="success">
+
+      <template #header>
+        <h6 class="modal-title">Thành công</h6>
+        <CButtonClose @click="myModalSuccess = false" class="text-white"/>
+      </template>
+      <div class="text-center">
+      <sweetalert-icon icon="success" />
+            {{errorMessage}}
+      </div>
+      
+      <template #footer class="text-center; display: none" style="display: none">
+        <CButton class="text-center" @click="myModalSuccess = false" color="success">Xác nhận</CButton>
       </template>
     </CModal>
   </div>
@@ -139,6 +183,9 @@ export default {
     return {
       customLabels,
       darkModal: false,
+      myModalFail: false,
+      myModalSuccess: false,
+      errorMessage: "",
       pageOfItems: [],
       getData: "",
       formData: {
@@ -199,27 +246,26 @@ export default {
         params: { item: id },
       });
     },
-    deleteAccount(item) {
-      console.log(this.$store.state.tokenUser);
+    deleteAccount() {
+      console.log(this.$store.state.userToken);
       axios
         .put(
-          this.$store.state.MainLink + "customer/account/update/" + item.id,
+          this.$store.state.MainLink + "admin/account/lockAccount?id=" + this.setIdAccount,{},
           {
             headers: {
-              Authorization: this.$store.state.tokenUser,
+              Authorization: this.$store.state.userToken,
             },
           }
         )
-
-        .then((response) => {
-          if (response.data.object) {
-            alert("Delete thành công.");
-          } else {
-            alert("Delete thất bại.");
-          }
+        .then(() => {
+          this.errorMessage = "Vô hiệu hóa tài khoản thành công!"
+          this.myModalSuccess = true;
+          this.getAllAccount()
         })
         .catch((e) => {
-          console.log(e);
+          console.log(e.response.data);
+           this.errorMessage = "Vô hiệu hóa tài khoản thất bại!"
+          this.myModalFail = true;
         });
     },
   
@@ -228,7 +274,7 @@ export default {
     },
     getAllAccount() {
       axios
-        .get( this.$store.state.MainLink + "customer/account/findAll",
+        .get( "http://150.95.105.29:8800/api/customer/account/findAll?active=true",
          {
             headers: {
               Authorization: this.$store.state.userToken,
@@ -236,12 +282,13 @@ export default {
           })
         .then((response) => {
           this.getData = response.data.object;
-          // console.log(response)
+          console.log(response.data.object)
         })
         .catch((e) => {
           console.log(e);
         });
     },
+
   },
 };
 </script>

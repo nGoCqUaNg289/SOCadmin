@@ -22,8 +22,8 @@
         <tr class="text-center">
           <th scope="col">#</th>
           <th scope="col">Tên Blog</th>
-          <th scope="col">Thời gian tạo</th>
-          <th scope="col">Trạng thái</th>
+          <th scope="col" style="min-width: 200px;">Thời gian tạo</th>
+          <th scope="col" style="min-width: 100px;">Trạng thái</th>
           <th></th>
         </tr>
       </thead>

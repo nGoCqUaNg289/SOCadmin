@@ -81,60 +81,60 @@
       </CCol>
 
       <CCol md="12">
-      <div class="col-12 col-title">
-        <div class="col-md-6 float-left margin-left" style="margin-top: 10px">
-          <p class="Text-tile">Thêm sản phẩm tham gia khuyến mại</p>
-        </div>
-        <div class="col-md-6 float-left margin-right" style="margin-left: 30px">
-          <nav class="col-12 navbar justify-content-between">
-            <a class="navbar-brand"></a>
-            <div class="form-inline">
-              <input
-                class="form-control mr-sm-2"
-                type="text"
-                placeholder="Tìm kiếm sản phẩm ..."
-                aria-label="Search"
-                style="box-shadow: none"
-                v-model="searchString"
-              />
-              <button class="btn btn-outline-success my-2 my-sm-0" @click="searchProduct()">
-                <i class="cil-magnifying-glass"></i>
-              </button>
+          <div class="col-12 col-title">
+            <div class="col-md-6 float-left margin-left" style="margin-top: 10px">
+              <p class="Text-tile">Thêm sản phẩm tham gia khuyến mại</p>
             </div>
-          </nav>
-        </div>
+            <div class="col-md-6 float-left margin-right" style="margin-left: 30px">
+              <nav class="col-12 navbar justify-content-between">
+                <a class="navbar-brand"></a>
+                <div class="form-inline">
+                  <input
+                    class="form-control mr-sm-2"
+                    type="text"
+                    placeholder="Tìm kiếm sản phẩm ..."
+                    aria-label="Search"
+                    style="box-shadow: none"
+                    v-model="searchString"
+                  />
+                  <button class="btn btn-outline-success my-2 my-sm-0" @click="searchProduct()">
+                    <i class="cil-magnifying-glass"></i>
+                  </button>
+                </div>
+              </nav>
+            </div>
 
-        
-      </div>
+            
+          </div>
 
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col" colspan="1">STT</th>
-            <th scope="col" class="Title-table" colspan="">Tên sản phẩm</th>
-            <th scope="col" class="Title-table" colspan="">Tình trạng</th>
-            <th class="Title-table"></th>
-          </tr>
-        </thead>
-        <tbody v-if="getDataProduct.length == 0">
-          <tr class="text-center">
-            <th  colspan="4">Không có dữ liệu!</th>
-          </tr>
-        </tbody>
-        <tbody v-else>
-          <tr v-for="(item, index) in getDataProduct" :key="index">
-            <th>{{index + 1}}</th>
-            <td>{{item.name}}</td>
-            <td v-if="!checkSale(item.id)" style="color: orange">Chưa tham gia</td>
-            <td v-else-if="item.discount == 0" style="color: red;">Đã tạm dừng</td>
-            <td v-else style="color: green;">Đã tham gia</td>
-            <td>
-              <i v-if="item.discount == 0" class="cil-check-circle" style="color: green; text-align: center;" @click="darkModal = true, setProductId(item.id,getData.id)"></i>
-              <i v-else class="cil-x-circle" style="color: red; text-align: center;" @click="dangerModal = true, setProductId(item.id,getData.id)"></i>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col" colspan="1">STT</th>
+                <th scope="col" class="Title-table" colspan="">Tên sản phẩm</th>
+                <th scope="col" class="Title-table" colspan="">Tình trạng</th>
+                <th class="Title-table"></th>
+              </tr>
+            </thead>
+            <tbody v-if="getDataProduct.length == 0">
+              <tr class="text-center">
+                <th  colspan="4">Không có dữ liệu!</th>
+              </tr>
+            </tbody>
+            <tbody v-else>
+              <tr v-for="(item, index) in getDataProduct" :key="index">
+                <th>{{index + 1}}</th>
+                <td>{{item.name}}</td>
+                <td v-if="!checkSale(item.id)" style="color: orange">Chưa tham gia</td>
+                <td v-else-if="item.discount == 0" style="color: red;">Đã tạm dừng</td>
+                <td v-else style="color: green;">Đã tham gia</td>
+                <td>
+                  <i v-if="item.discount == 0" class="cil-check-circle" style="color: green; text-align: center;" @click="darkModal = true, setProductId(item.id,getData.id)"></i>
+                  <i v-else class="cil-x-circle" style="color: red; text-align: center;" @click="dangerModal = true, setProductId(item.id,getData.id)"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
       </CCol>
 
     </CRow>
@@ -338,7 +338,7 @@ export default {
       ).getMinutes()}:${new Date(date).getSeconds()}`;
     },
     searchProduct() {
-      console.log(this.searchString)
+      // console.log(this.searchString)
       axios
         .get(
           this.$store.state.MainLink + "customer/products?find=" + this.searchString,

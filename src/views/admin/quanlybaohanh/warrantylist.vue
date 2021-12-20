@@ -5,16 +5,17 @@
         <p class="Text-tile">Danh sách bảo hành</p>
         <p class="Text-tile-2">Trang chủ ● Đơn bảo hành</p>
       </div>
-      <div class="col-md-6 float-right">
-        <button
-          type="button"
-          class="btn btn-primary float-right btn-add"
-          @click="CreateNewProduct()"
-        >
-          <i class="cil-plus"></i>
-          Thêm mới
-        </button>
-      </div>
+      <!-- <div class="col-md-6 float-right" style="margin-top: 10px;">
+        <CButton type="submit" 
+                    size="sm" color="primary" 
+                    class="btn btn-custom-size"
+                    @click="CreateNewWarry()"
+                    style="float: right; width: 200px"
+                    >
+                    <i class="cil-plus"></i>
+                    Tạo phiếu bảo hành
+            </CButton>
+      </div> -->
     </div>
     <nav class="col-12 navbar justify-content-between">
       <a class="navbar-brand"></a>
@@ -68,9 +69,9 @@
         <tr v-for="item in pageOfItems" :key="item.id" v-else class="text-center">
           <th>{{ item.id }}</th>
           <td scope="row"  @click="DetailProduct(item.id)">{{ item.name }}</td>
-          <td :style="{ color: Status(item) }">
+          <td>
             <!-- <span class="badge rounded-pill bg-light"></span> -->
-            {{ item.expiredDate }}
+            {{ getDateString(item.expiredDate) }}
           </td>
           <!-- <td class="td-table td-action">
             <CButton  @click="darkModal = true, setId(item.id), setTitle()" class="mr-1" v-if="item.status != 'Không kinh doanh' && item.status != 'Ngừng kinh doanh'">
@@ -181,8 +182,8 @@ export default {
           console.log(e);
         });
     },
-    CreateNewProduct() {
-      this.$router.push("/admin/quanlysanphamcreate");
+    CreateNewWarry() {
+      this.$router.push("warranty/baohanhcreate");
     },
     UpdateProduct() {
       this.$router.push("/admin/quanlysanphamcreatedetail");
@@ -270,6 +271,13 @@ export default {
       setTimeout(function () {
         v.pageOfItems = 1
       }, 3000);
+    },
+    getDateString(date) {
+      return `${new Date(date).getFullYear()}-${
+        new Date(date).getMonth() + 1
+      }-${new Date(date).getDate()} ${new Date(date).getHours()}:${new Date(
+        date
+      ).getMinutes()}:${new Date(date).getSeconds()}`;
     },
   },
 };

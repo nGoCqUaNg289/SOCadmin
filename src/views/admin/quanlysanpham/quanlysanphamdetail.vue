@@ -152,7 +152,6 @@
         </CCard>
       </CCol>
       <CCol md="12">
-        <!-- <strong> Thông tin cấu hình sản phẩm </strong> -->
         <table class="table" style="background: white">
           <tbody v-if="checkUpdate == 0">
             <thead>
@@ -165,36 +164,20 @@
               <td>{{item.quantity}}</td>
             </tr>      
           </tbody>
-          <!-- <tbody v-else-if="checkUpdate == 1">
+          <tbody v-else-if="checkUpdate == 1">
             <thead>
               <tr>
-                <th scope="col">Thông tin cấu hình sản phẩm</th>
+                <th scope="col" colspan="2">Màu và số lượng sản phẩm</th>
               </tr>
             </thead>
-                <tr v-for="(item, index) in productProperties" :key="index">
-                    <td>
-                      <input type="text" v-model="item.propertyName" style="width: 100%;border: none;border-bottom: 1px dashed;"/>
-                    </td>
-                    <td><input type="text" v-model="item.propertyValue" style="width: 100%;border: none;border-bottom: 1px dashed;"/></td>
-                    <td class="text-center">
-                      <button @click="deleteValue(index)" style="border: none; color: red; background-color: white">
-                        <i class="cil-trash" style="color: red"></i>
-                      </button>
-                      
-                    </td>
-                </tr>  
-                <tr>
-                  <td class="text-center" colspan="3">
-                    <button style="border: none; color: red; background-color: white" @click="createNewValue()">
-                      <i class="cil-plus"></i>
-                    </button>
-                  </td>
-                </tr>       
-          </tbody> -->
+            <tr v-for="(item, index2) in getData.productColors" :key="index2">
+              <td style="width: 35%">{{item.color.colorName}}</td>
+              <td>{{item.quantity}}</td>
+            </tr>      
+          </tbody>
         </table>
       </CCol>
       <CCol md="12">
-        <!-- <strong> Thông tin cấu hình sản phẩm </strong> -->
         <table class="table" style="background: white">
           <tbody v-if="checkUpdate == 0">
             <thead>

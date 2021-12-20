@@ -20,7 +20,7 @@
           @click="createNewAccount()"
         >
           <i class="cil-plus"></i>
-          Thêm mới
+          Tạo tài khoản
         </CButton>
       </CCol>
       <br />
@@ -44,18 +44,6 @@
                   placeholder="Nhập tên đăng nhập"
                   style="width: 70%"
                   v-model="username"
-                />
-              </CListGroupItem>
-              <CListGroupItem>
-                <div style="width: 15%; float: left; font-weight: 600">
-                  Mật khẩu <span style="color: red">*</span>
-                </div>
-                <input
-                  type="password"
-                  class="input-custom-border-none"
-                  placeholder="Nhập mật khẩu"
-                  style="width: 70%"
-                  v-model="password"
                 />
               </CListGroupItem>
               <CListGroupItem>
@@ -85,7 +73,7 @@
               </CListGroupItem>
               <CListGroupItem>
                 <div style="width: 15%; float: left; font-weight: 600">
-                  Điện thoại
+                  Điện thoại <span style="color: red">*</span>
                 </div>
 
                 <input
@@ -97,7 +85,7 @@
               /></CListGroupItem>
               <CListGroupItem>
                 <div style="width: 15%; float: left; font-weight: 600">
-                  Địa chỉ
+                  Địa chỉ <span style="color: red">*</span>
                 </div>
                 <input
                   type="text"
@@ -111,6 +99,49 @@
         </CCard>
       </CCol>
     </CRow>
+    <CModal
+      :show.sync="myModalFail"
+      :no-close-on-backdrop="true"
+      :centered="true"
+      title="Modal title 2"
+      size="sm"
+      color="danger">
+
+      <template #header>
+        <h6 class="modal-title">{{resultCreate}} !</h6>
+        <CButtonClose @click="myModalFail = false" class="text-white"/>
+      </template>
+      <div class="text-center">
+      <sweetalert-icon icon="error" />
+            {{resultCreate}}
+      </div>
+      
+      <template #footer class="text-center; display: none" style="display: none">
+        <CButton class="text-center" @click="myModalFail = false" color="danger">Xác nhận</CButton>
+      </template>
+    </CModal>
+
+    <CModal
+      :show.sync="myModal"
+      :no-close-on-backdrop="true"
+      :centered="true"
+      title="Modal title 2"
+      size="sm"
+      color="success">
+
+      <template #header>
+        <h6 class="modal-title">{{resultCreate}} !</h6>
+        <CButtonClose @click="myModal = false" class="text-white"/>
+      </template>
+      <div class="text-center">
+      <sweetalert-icon icon="error" />
+            {{resultCreate}}
+      </div>
+      
+      <template #footer class="text-center; display: none" style="display: none">
+        <CButton class="text-center" @click="myModal = false, backList()" color="success">Xác nhận</CButton>
+      </template>
+    </CModal>
   </div>
 </template>
 
@@ -122,20 +153,14 @@ export default {
 
   data() {
     return {
-      //   selected: [], // Must be an array reference!
-      //   show: true,
-      //   horizontal: { label: "col-3", input: "col-9" },
-      //   selectedOption: "some value",
-
-      //   orderDetails: [],
-
-      //   formCollapsed: true,
       username: "",
-      password: "",
       fullname: "",
       email: "",
       address: "",
       phone: "",
+      myModalFail: false,
+      resultCreate: "",
+      myModal: false
     };
   },
   created() {
@@ -148,13 +173,14 @@ export default {
     CancelCreate() {
       this.$router.push("/account/quanlyaccount");
     },
-    UpdateProduct() {
-      this.$router.push("/quanlysanphamupdate");
+    backList() {
+      this.$router.push({
+            name: "Danh sách tài khoản",
+      });
     },
     createNewAccount() {
       let item = {
         username: this.username,
-        password: this.password,
         fullname: this.fullname,
         email: this.email,
         address: this.address,
@@ -162,15 +188,21 @@ export default {
       };
       console.log(item)
       axios
-        .put(this.$store.state.MainLink + "customer/account/create", item)
+        .post(this.$store.state.MainLink + "admin/account/newAccount", item,
+          {
+            headers: {
+              Authorization: this.$store.state.tokenUser,
+            },
+          })
         .then((response) => {
           console.log(response);
-          this.$router.push({
-            name: "Danh sách tài khoản",
-          });
+          this.resultCreate = "Tạo tài khoản thành công!"
+          this.myModal = true
         })
         .catch((e) => {
-          console.log(e);
+          console.log(e.response.data);
+          this.resultCreate = e.response.data.errorMsg
+          this.myModalFail = true
         });
     },
   },

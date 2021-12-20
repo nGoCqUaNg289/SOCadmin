@@ -18,15 +18,26 @@
           color="primary"
           class="btn btn-custom-size"
           @click="updateWarr()"
+          v-if="checkUpdate == 0"
         >
-          <i class="cil-check-circle" v-if="checkUpdate == 1"></i>
+          Tạo phiếu bảo hành
+        </CButton>
+        <CButton
+          type="submit"
+          size="sm"
+          color="primary"
+          class="btn btn-custom-size"
+          @click="createWarry()"
+          v-else-if="checkUpdate == 1"
+        >
+          <i class="cil-check-circle" ></i>
           Tạo phiếu bảo hành
         </CButton>
       </CCol>
       <br />
       <br />
 
-      <CCol md="12" lg="12">
+      <CCol md="12" lg="12" v-if="checkCreate == 0">
         <CCard>
           <CCardHeader>
             <CIcon name="cil-justify-center" />
@@ -35,53 +46,268 @@
           <CCardBody height="auto">
             <CListGroup>
               <CListGroupItem>
-                <span class="Title-font-size">Mã hóa đơn : </span>
+                <span class="Title-font-size size-title">Mã hóa đơn : </span>
                 <span>{{ getData.id }}</span>
               </CListGroupItem>
               <CListGroupItem>
-                <span class="Title-font-size">Tên khách hàng : </span>
+                <span class="Title-font-size size-title">Tên khách hàng : </span>
                 <span>{{ getData.name }}</span>
               </CListGroupItem>
               <CListGroupItem>
-                <span class="Title-font-size">Điện thoại : </span>
+                <span class="Title-font-size size-title">Điện thoại : </span>
                 <span>{{ getData.phone }}</span>
               </CListGroupItem>
               <CListGroupItem>
-                <span class="Title-font-size">Địa chỉ : </span>
+                <span class="Title-font-size size-title">Địa chỉ : </span>
                 <span >{{ (getData.address) }}</span>
               </CListGroupItem>
               <CListGroupItem>
-                <span class="Title-font-size">Số lần bảo hành : </span>
+                <span class="Title-font-size size-title">Số lần bảo hành : </span>
                 <span>{{ getData.countWarranty }}</span>
               </CListGroupItem>
               <CListGroupItem>
-                <span class="Title-font-size">Mã số máy bảo hành : </span>
+                <span class="Title-font-size size-title">Mã số máy bảo hành : </span>
                 <span>{{ getData.productId }}</span>
               </CListGroupItem>
               <CListGroupItem>
-                <span class="Title-font-size">Mã seri : </span>
+                <span class="Title-font-size size-title">Mã seri : </span>
                 <span>{{ getData.productSeri }}</span>
               </CListGroupItem>
             </CListGroup>
           </CCardBody>
         </CCard>
       </CCol>
-      <CCol md="12" v-if="getData.warrantyInvoiceVOS.length">
-        <table class="table" style="background: white">
-          <tbody>
-            <thead>
-              <tr>
-                <th scope="col" colspan="2">Phiếu bảo hành</th>
-              </tr>
-            </thead>
-            <tr v-for="(item, index2) in getData.productColors" :key="index2">
-              <td style="width: 35%">{{item.color.colorName}}</td>
-              <td>{{item.quantity}}</td>
-            </tr>      
-          </tbody>
-        </table>
+
+      <CCol md="12" lg="12" v-if="checkCreate == 0 && getData.warrantyInvoiceVOS.length != 0">
+        <CCard>
+          <CCardHeader>
+            <CIcon name="cil-justify-center" />
+            <strong> Hóa đơn bảo hành sản phẩm </strong>
+          </CCardHeader>
+          <CCardBody height="auto">
+            <CListGroup>
+              <CListGroupItem>
+                <table class="table" style="border-top: none" v-for="(item, index) in getData.warrantyInvoiceVOS" :key="index">
+                  <thead style="border-top: none">
+                    <tr>
+                      <th scope="col" style="border-top: none; max-width: 40%"># {{index + 1}} - Ngày tiếp nhận : <i>{{item.expiredDate}}</i></th>
+                      <th scope="col" style="border-top: none">Được tạo bởi: <i>{{item.createBy}}</i></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td scope="row">Tên khách hàng</td>
+                      <td>{{item.name}}</td>
+                    </tr>
+                    <tr>
+                      <td scope="row">Số điện thoại</td>
+                      <td>{{item.phone}}</td>
+                    </tr>
+                    <tr>
+                      <td scope="row">Địa chỉ</td>
+                      <td>{{item.address}}</td>
+                    </tr>
+                    <tr>
+                      <td scope="row">Mã sản phẩm</td>
+                      <td>{{item.productId}}</td>
+                    </tr>
+                    <tr>
+                      <td scope="row">Số seri sản phẩm</td>
+                      <td>{{item.productSeri}}</td>
+                    </tr>
+                    <tr>
+                      <td scope="row">Giá dịch vụ</td>
+                      <td>{{formatPrice(item.price)}} đ</td>
+                    </tr>
+                    <tr>
+                      <td scope="row">Tình trạng tiếp nhận</td>
+                      <td>{{item.productState}}</td>
+                    </tr>
+                    <tr>
+                      <td scope="row">Loại hình dịch vụ</td>
+                      <td>{{item.type}}</td>
+                    </tr>
+                    <tr>
+                      <td scope="row">Đơn vị tiếp nhận bảo hành</td>
+                      <td>{{item.warrantyUnit}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+              </CListGroupItem>
+            </CListGroup>
+          </CCardBody>
+        </CCard>
+      </CCol>
+
+      <CCol md="12" lg="12" v-else-if="checkCreate == 1">
+        <CCard>
+          <CCardHeader>
+            <CIcon name="cil-justify-center" />
+            <strong> Thông tin phiếu bảo hành </strong>
+          </CCardHeader>
+          <CCardBody height="auto">
+            <CListGroup>
+              <CListGroupItem>
+                <div class="size-title">
+                  Mã hóa đơn: 
+                </div>
+                <p>{{getData.id}}</p>
+              </CListGroupItem>
+              <CListGroupItem>
+                <div class="size-title" >
+                  Họ và tên:
+                </div>
+
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Nhập họ tên khách hàng"
+                  style="width: 70%"
+                  v-model="formData.name"
+                />
+                <div v-if="checkName">
+                  <i style="color: red; margin-left: 25%">{{checkName}}</i>
+                </div>
+                
+              </CListGroupItem>
+              <CListGroupItem>
+                <div class="size-title">
+                  Phí bảo hành:
+                </div>
+
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Số tiền thỏa thuận"
+                  style="width: 70%"
+                  v-model="formData.price"
+                />
+                <div v-if="checkPrice">
+                  <i style="color: red; margin-left: 25%">{{checkPrice}}</i>
+                </div>
+              </CListGroupItem>
+              <CListGroupItem>
+                <div class="size-title">
+                  Số điện thoại:
+                </div>
+
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="09xxxxxxxx"
+                  style="width: 70%"
+                  v-model="formData.phone"
+                />
+                <div v-if="checkPhone">
+                  <i style="color: red; margin-left: 25%">{{checkPhone}}</i>
+                </div>
+              </CListGroupItem>
+              <CListGroupItem>
+                <div class="size-title">
+                  Địa chỉ:
+                </div>
+
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Phú Đô, Mỹ Đình, Nam Từ Liêm, Hà Nội"
+                  style="width: 70%"
+                  v-model="formData.address"
+                />
+                <div v-if="checkAddress">
+                  <i style="color: red; margin-left: 25%">{{checkAddress}}</i>
+                </div>
+              </CListGroupItem>
+              <CListGroupItem>
+                <div class="size-title">
+                  Đơn vị bảo hành:
+                </div>
+
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Đơn vị tiếp nhận bảo hành của hãng"
+                  style="width: 70%"
+                  v-model="formData.warrantyUnit"
+                />
+                <div v-if="checkWarry">
+                  <i style="color: red; margin-left: 25%">{{checkWarry}}</i>
+                </div>
+              </CListGroupItem>
+              <CListGroupItem>
+                <div class="size-title">
+                  Tình trạng sản phẩm:
+                </div>
+
+                <input
+                  type="text"
+                  class="input-custom-border-none"
+                  placeholder="Tình trạng khi nhận máy"
+                  style="width: 70%"
+                  v-model="formData.productState"
+                />
+              </CListGroupItem>
+              <CListGroupItem>
+                <div class="size-title">
+                  Loại dịch vụ:
+                </div>
+
+                <select class="form-select" aria-label="Default select example" style="width: 70%" v-model="formData.type">
+                  <option selected disabled>-- Loại dịch vụ --</option>
+                  <option value="Sửa bảo hành">Sửa bảo hành</option>
+                  <option value="Sửa dịch vụ">Sửa dịch vụ</option>
+                </select>
+              </CListGroupItem>
+            </CListGroup>
+          </CCardBody>
+        </CCard>
       </CCol>
     </CRow>
+
+    <CModal
+      :show.sync="myModal"
+      :no-close-on-backdrop="true"
+      :centered="true"
+      title="Modal title 2"
+      size="sm"
+      color="success">
+
+      <template #header>
+        <h6 class="modal-title">Thành công!</h6>
+        <CButtonClose @click="myModal = false" class="text-white"/>
+      </template>
+      <div class="text-center">
+      <sweetalert-icon icon="success" />
+            {{resultCreate}}
+      </div>
+      
+      <template #footer class="text-center; display: none" style="display: none">
+        <CButton class="text-center" @click="myModal = false, backList()" color="success">Xác nhận</CButton>
+      </template>
+    </CModal>
+
+    <CModal
+      :show.sync="myModalFail"
+      :no-close-on-backdrop="true"
+      :centered="true"
+      title="Modal title 2"
+      size="sm"
+      color="danger">
+
+      <template #header>
+        <h6 class="modal-title">{{resultCreate}} !</h6>
+        <CButtonClose @click="myModalFail = false" class="text-white"/>
+      </template>
+      <div class="text-center">
+      <sweetalert-icon icon="error" />
+            {{resultCreate}}
+      </div>
+      
+      <template #footer class="text-center; display: none" style="display: none">
+        <CButton class="text-center" @click="myModalFail = false" color="danger">Xác nhận</CButton>
+      </template>
+    </CModal>
   </div>
 </template>
 
@@ -96,18 +322,37 @@ export default {
   data() {
     return {
       getData: "",
+      myModal: false,
+      myModalFail: false,
+      resultCreate: "",
       selected: [], // Must be an array reference!
       show: true,
       horizontal: { label: "col-3", input: "col-9" },
       selectedOption: "some value",
       checkUpdate: 0,
       formCollapsed: true,
-      productProperties: []
+      productProperties: [],
+      checkCreate: 0,
+      formData: {
+        warrantyId : "",
+        price : "",
+        name : "",
+        phone : "",
+        address : "",
+        warrantyUnit: "",
+        productState: "",
+        type : "",
+      },
+      checkName: "",
+      checkPhone: "",
+      checkPrice: "",
+      checkAddress: "",
+      checkWarry : "",
     };
   },
   created() {
     this.getDetailWarry();
-    console.log(this.item)
+    // console.log(this.item)
   },
   methods: {
     createNewValue(){
@@ -149,6 +394,38 @@ export default {
     },
     updateWarr(){
       this.checkUpdate = 1
+      this.checkCreate = 1
+      // console.log(this.getData.id)
+    },
+    createWarry(){
+      this.formData.warrantyId = this.getData.id
+      // console.log(this.formData)
+      axios
+        .post(this.$store.state.MainLink + "admin/invoice/new" ,this.formData,
+        {
+          headers: {
+            Authorization: this.$store.state.userToken,
+          },
+        })
+        .then(() => {
+          // this.getData = response.data.object;
+          // console.log(response.data.object);
+          this.resultCreate = "Tạo hóa đơn bảo hành thành công!"
+          this.myModal = true
+          // this.productProperties = response.data.object.productDetails
+        })
+        .catch((e) => {
+          // console.log(Object.values(e.response.data.validateDetails).join(", "));
+          // console.log(e.response.data)
+          this.resultCreate = e.response.data.errorMsg
+                this.checkName = e.response.data.validateDetails.name,
+                this.checkPhone = e.response.data.validateDetails.phone,
+                this.checkPrice = e.response.data.validateDetails.price,
+                this.checkAddress = e.response.data.validateDetails.address,
+                this.checkWarry = e.response.data.validateDetails.warrantyUnit
+
+          // this.myModalFail = true
+        });
     },
     cancelUpdate(){
       this.checkUpdate = 0
@@ -173,5 +450,8 @@ export default {
 }
 .title-td {
   width: 35%;
+}
+.size-title{
+  width: 25%; float: left; font-weight: 600
 }
 </style>
