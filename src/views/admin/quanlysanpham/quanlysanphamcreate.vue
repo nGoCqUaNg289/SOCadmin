@@ -220,7 +220,6 @@ export default {
       formData: {
         name: "",
         price: "",
-        // status: "",
         warranty: 24,
         productCategories: []
       },
@@ -231,8 +230,6 @@ export default {
       getDataCategory: "",
       getDataColor: "",
       getIdProduct: ""
-
-      // formCollapsed: true,
     };
   },
   created(){
@@ -249,21 +246,19 @@ export default {
         categoryId : item
       }
       this.formData.productCategories.push(items);
-      // console.log(this.formData.productCategories)
     },
     createNewValue(){
       let item = {
         propertyName: "",
         propertyValue: ""
       }
-      // console.log(item)
       this.orderDetails.push(item);
     },
     deleteProduct(index){
-this.orderDetails.splice(index, 1);
+      this.orderDetails.splice(index, 1);
     },
     deleteColor(index){
-this.productColor.splice(index, 1);
+      this.productColor.splice(index, 1);
     },
     createNewColor(){
       let item = {

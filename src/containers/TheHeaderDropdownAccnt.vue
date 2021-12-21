@@ -19,8 +19,8 @@
     <CDropdownItem>
       <CIcon name="cil-user" /> Thông tin tài khoản
     </CDropdownItem>
-    <CDropdownItem> <CIcon name="cil-settings" /> Cài đặt </CDropdownItem>
-    <CDropdownItem>
+    <!-- <CDropdownItem> <CIcon name="cil-settings" /> Cài đặt </CDropdownItem> -->
+    <!-- <CDropdownItem>
       <CIcon name="cil-dollar" /> Payments
       <CBadge color="secondary" class="mfs-auto">{{ itemsCount }}</CBadge>
     </CDropdownItem>
@@ -28,7 +28,7 @@
       <CIcon name="cil-file" /> Projects
       <CBadge color="primary" class="mfs-auto">{{ itemsCount }}</CBadge>
     </CDropdownItem>
-    <CDropdownDivider />
+    <CDropdownDivider /> -->
     <!-- <CDropdownItem>
       <CIcon name="cil-shield-alt" /> Lock Account
     </CDropdownItem> -->

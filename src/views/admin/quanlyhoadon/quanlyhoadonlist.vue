@@ -71,10 +71,16 @@
               <CButton class="mr-1" v-if="item.status == 'Đang giao hàng'" data-toggle="tooltip" title="Gửi đơn hàng quay lại" @click="returnProduct = true,setId(item.id)">
                <i class="cil-chevron-left" style="color: red; text-align: center;"></i>
               </CButton>
-              <CButton class="mr-1" v-if="item.status == 'Đã xác nhận' || item.status == 'Chờ xác nhận' || item.status == 'Đang giao hàng' || item.status == 'Yêu cầu hủy'" data-toggle="tooltip" title="Cập nhật ghi chú" @click="warningModal = true,setId(item.id)">
+              <CButton class="mr-1" v-if="item.status == 'Đã xác nhận' || item.status == 'Chờ xác nhận' || item.status == 'Đang giao hàng'" data-toggle="tooltip" title="Cập nhật ghi chú" @click="warningModal = true,setId(item.id)">
                <i class="cil-reload" style="color: blue; text-align: center;"></i>
               </CButton>
-              <CButton @click="darkModal = true,setId(item.id)" class="mr-1" v-if="item.status == 'Đã xác nhận' || item.status == 'Chờ xác nhận' || item.status == 'Yêu cầu hủy'" data-toggle="tooltip" title="Hủy đơn">
+              <CButton @click="darkModal = true,setId(item.id)" class="mr-1" v-if="item.status == 'Đã xác nhận' || item.status == 'Chờ xác nhận'" data-toggle="tooltip" title="Hủy đơn">
+               <i class="cil-x-circle" style="color: red; text-align: center;"></i>
+              </CButton>
+              <CButton @click="darkModal = true,setId(item.id)" class="mr-1" v-if="item.status == 'Đang hoàn hàng' || item.status == 'Yêu cầu hủy'" data-toggle="tooltip" title="Chấp nhận yêu cầu">
+               <i class="cil-check" style="color: green; text-align: center;"></i>
+              </CButton>
+              <CButton @click="cancelReturn = true,setId(item.id)" class="mr-1" v-if="item.status == 'Đang hoàn hàng' || item.status == 'Yêu cầu hủy'" data-toggle="tooltip" title="Từ chối yêu cầu">
                <i class="cil-x-circle" style="color: red; text-align: center;"></i>
               </CButton>
               <CButton @click="darkModal = true,setId(item.id)" class="mr-1" v-if="item.status == 'Yêu cầu trả hàng'" data-toggle="tooltip" title="Từ chối trả hàng">
@@ -92,6 +98,7 @@
         @changePage="onChangePage"
       ></jw-pagination>
     </div>
+
     <CModal
       :show.sync="darkModal"
       :no-close-on-backdrop="true"
@@ -256,6 +263,29 @@
         <CButton @click="returnProduct = false, confirmProduct()" color="danger" style="color: white">Xác nhận hoàn đơn</CButton>
       </template>
     </CModal>
+
+    <CModal
+      :show.sync="cancelReturn"
+      :no-close-on-backdrop="true"
+      :centered="true"
+      title="Xác nhận hoàn hàng"
+      size="lg"
+      color="danger">
+      <CTextarea
+                label="Ghi chú"
+                placeholder="Nội dung ..."
+                horizontal
+                rows="4"
+                v-model="note"/>
+      <template #header>
+        <h6 class="modal-title">Xác nhận từ chối</h6>
+        <CButtonClose @click="cancelReturn = false" class="text-white"/>
+      </template>
+      <template #footer>
+        <CButton @click="cancelReturn = false" color="secondary">Hủy</CButton>
+        <CButton @click="cancelReturn = false, cancelReturnOrder()" color="danger" style="color: white">Từ chối đơn hàng</CButton>
+      </template>
+    </CModal>
   </div>
 </template>
 
@@ -281,6 +311,7 @@ export default {
       warningModal: false,
       returnOrderUser: false,
       returnProduct: false,
+      cancelReturn: false,
       setIdOrder: "",
       getData: "",
       note: "",
@@ -486,7 +517,26 @@ export default {
         .catch((e) => {
           console.log(e);
         });
-    }
+    },
+    cancelReturnOrder(){
+      let item = {
+        note : this.note
+      }
+      axios
+        .post(this.$store.state.MainLink + "admin/orders/unCancerOrder?id=" + this.setIdOrder, item,
+         {
+            headers: {
+              Authorization: this.$store.state.userToken,
+            },
+          })
+        .then(() => {
+          this.getAllProduct()
+          this.note = ""
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } 
   },
 };
 </script>

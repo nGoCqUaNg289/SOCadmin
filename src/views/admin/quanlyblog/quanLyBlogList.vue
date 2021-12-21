@@ -144,7 +144,7 @@ export default {
         params: { item: id },
       });
     },
-     onChangePage(pageOfItems) {
+    onChangePage(pageOfItems) {
       this.pageOfItems = pageOfItems;
     },
     getAlBlog() {
@@ -156,7 +156,6 @@ export default {
         })
         .then((response) => {
           this.getData = response.data.object;
-          // console.log(this.getData)
         })
         .catch((e) => {
           console.log(e);
@@ -172,14 +171,15 @@ export default {
         })
         .then(() => {
           this.getAlBlog()
-          // this.myModal = true
           this.errorBlog = "Đã xóa blog"
         })
         .catch((e) => {
-          // this.myModal = true
           this.errorBlog = "Lỗi ! Vui lòng thử lại."
           console.log(e);
         });
+    },
+    searchBlog(){
+
     }
   },
 };
