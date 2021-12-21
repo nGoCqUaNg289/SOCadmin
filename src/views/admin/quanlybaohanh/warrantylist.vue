@@ -23,7 +23,7 @@
         <input
           class="form-control mr-sm-2"
           type="text"
-          placeholder="Tìm kiếm sản phẩm ..."
+          placeholder="Tìm kiếm hóa đơn ..."
           aria-label="Search"
           style="box-shadow: none"
           v-model="searchString"

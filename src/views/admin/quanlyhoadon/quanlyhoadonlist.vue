@@ -53,7 +53,7 @@
           <th scope="col" class="Title-table">Username</th>
           <th scope="col" class="Title-table">Số điện thoại</th>
           <th scope="col" class="Title-table td-action">Tổng tiền</th>
-          <th class="Title-table">Thời gian thanh toán</th>
+          <th class="Title-table">Thời gian đặt hàng</th>
           <th class="Title-table">Trạng thái</th>
           <th>
 
@@ -372,7 +372,7 @@ export default {
     searchOrder(list){
       // console.log(this.searchString)
       // console.log(this.searchStatus)
-      console.log(list)
+      // console.log(list)
       if(list.length > 0){
         this.checkData = list.filter(data => {
             if(this.searchString == "" && this.searchStatus == ""){
