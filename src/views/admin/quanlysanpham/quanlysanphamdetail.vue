@@ -61,9 +61,10 @@
                 <div class="row row-cols-3">
                   <div
                     class="col"
-                    v-for="itemPhoto in getData.photos"
+                    v-for="itemPhoto in productPhoto"
                     :key="itemPhoto"
                   >
+                  <!-- {{itemPhoto}} -->
                     <img :src="itemPhoto" class="d-block w-100" alt="..." />
                   </div>
                 </div>
@@ -244,6 +245,46 @@
       </CCol>
       <CCol md="12">
         <table class="table" style="background: white">
+          <tbody v-if="checkUpdate == 1">
+            <thead>
+              <tr>
+                <th scope="col">Ảnh sản phẩm</th>
+              </tr>
+            </thead>
+
+            <tr v-for="(photo, index) in productPhoto" :key="index + 1000">
+              <td>
+                <!-- {{item}} -->
+                <input
+                  :value="photo"
+                  type="text"
+                  :v-model="photo"
+                  style="width: 100%; border: none; border-bottom: 1px dashed"
+                />
+              </td>
+              <td class="text-center">
+                <i
+                  class="cil-trash"
+                  style="color: red"
+                  @click="deletePhoto(index)"
+                ></i>
+              </td>
+            </tr>
+            <tr>
+              <td class="text-center" colspan="3">
+                <button
+                  style="border: none; color: red; background-color: white"
+                  @click="createNewPhoto()"
+                >
+                  <i class="cil-plus"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </CCol>
+      <CCol md="12">
+        <table class="table" style="background: white">
           <tbody v-if="checkUpdate == 0">
             <thead>
               <tr>
@@ -299,6 +340,48 @@
         </table>
       </CCol>
     </CRow>
+
+    <CModal
+      :show.sync="successModal"
+      :no-close-on-backdrop="true"
+      :centered="true"
+      title="Xác nhận hoàn hàng"
+      size="lg"
+      color="success">
+      <template #header>
+        <h6 class="modal-title">Xác nhận</h6>
+        <CButtonClose @click="successModal = false" class="text-white"/>
+      </template>
+            <div class="text-center">
+      <sweetalert-icon icon="success" />
+            Cập nhật sản phẩm thành công !
+      </div>
+      <template #footer>
+        <CButton @click="successModal = false" color="secondary">Hủy</CButton>
+        <CButton @click="successModal = false, backList()" color="success" style="color: white">Trở về danh sách</CButton>
+      </template>
+    </CModal>
+
+    <CModal
+      :show.sync="failModal"
+      :no-close-on-backdrop="true"
+      :centered="true"
+      title="Xác nhận hoàn hàng"
+      size="lg"
+      color="danger">
+      <template #header>
+        <h6 class="modal-title">Xác nhận</h6>
+        <CButtonClose @click="failModal = false" class="text-white"/>
+      </template>
+            <div class="text-center">
+      <sweetalert-icon icon="error" />
+            {{errorMessage}} !
+      </div>
+      <template #footer>
+        <CButton @click="failModal = false" color="secondary">Hủy</CButton>
+        <CButton @click="failModal = false" color="danger" style="color: white">OK</CButton>
+      </template>
+    </CModal>
   </div>
 </template>
 
@@ -312,18 +395,18 @@ export default {
   },
   data() {
     return {
+      failModal: false,
+      successModal: false,
       getData: "",
-      selected: [], // Must be an array reference!
-      show: true,
-      horizontal: { label: "col-3", input: "col-9" },
-      selectedOption: "some value",
       checkUpdate: 0,
       formCollapsed: true,
       productProperties: [],
       productColor: [],
       productCategory: [],
+      productPhoto: [],
       getDataCategory: "",
       getDataColor: "",
+      errorMessage: "",
     };
   },
   created() {
@@ -333,30 +416,10 @@ export default {
   },
   methods: {
     saveCategory(item) {
-      // console.log(item)
       let items = {
         categoryId: item,
       };
-      // var index = this.productCategory.length
-      // if(this.productCategory.length > 0){
-      //   for (let i = 0; i < this.productCategory.length; i++){
-      //   if(i != (this.productCategory.length-1)){
-      //       if(item == this.productCategory[i].categoryId){
-      //       this.productCategory.splice(i, 1)
-      //       break;
-      //       }
-      //     }else{
-      //         if(item == this.productCategory[i].categoryId){
-      //           this.productCategory.splice(i, 1)
-      //           break;
-      //         }else{
-      //           this.productCategory.push(items);
-      //         }
-      //       }
-      //   }
-      // }else{
-      //   this.productCategory.push(items);
-      // }
+
       let idx = -1;
       if (
         this.productCategory.filter((prc, i) => {
@@ -369,11 +432,7 @@ export default {
         this.productCategory.push(items);
       }
 
-      // if(index == this.productCategory.length){
-      //   this.productCategory.push(items);
-      // }
-      console.log(this.productCategory);
-      // this.checkCategory(item)
+      // console.log(this.productCategory);
     },
     createNewColor() {
       let item = {
@@ -381,6 +440,11 @@ export default {
         quantity: 0,
       };
       this.productColor.push(item);
+    },
+    createNewPhoto() {
+      let item = "";
+      this.productPhoto.push(item);
+      console.log(this.productPhoto)
     },
     createNewValue() {
       let item = {
@@ -391,6 +455,9 @@ export default {
     },
     deleteValue(index) {
       this.productProperties.splice(index, 1);
+    },
+    deletePhoto(index) {
+      this.productPhoto.splice(index, 1);
     },
     deleteColor(index) {
       this.productColor.splice(index, 1);
@@ -409,6 +476,8 @@ export default {
       this.$router.push("/quanlysanphamlist");
     },
     UpdateProduct() {
+      this.productProperties.push(this.getData.photos)
+
       let item = {
         id: this.getData.id,
         photos: this.getData.photos,
@@ -418,27 +487,30 @@ export default {
         blogs: this.getData.blogs,
         productColors: this.productColor,
         productDetails: this.productProperties,
-        productCategories: this.getData.productCategories,
+        productCategories: this.productCategory,
         status: this.getData.status,
         warranty: this.getData.warranty,
       };
 
       console.log(item);
-      axios
-        .put(this.$store.state.MainLink + "admin/products/update", item, {
-          headers: {
-            Authorization: this.$store.state.userToken,
-          },
-        })
-        .then((response) => {
-          this.getData = response.data.object;
-          console.log(this.getData);
-          this.productProperties = response.data.object.productDetails;
-          this.productColor = response.data.object.productColors;
-        })
-        .catch((e) => {
-          console.log(e.response.data);
-        });
+      // axios
+      //   .put(this.$store.state.MainLink + "admin/products/update", item, {
+      //     headers: {
+      //       Authorization: this.$store.state.userToken,
+      //     },
+      //   })
+      //   .then((response) => {
+      //     this.getData = response.data.object;
+      //     console.log(this.getData);
+      //     this.productProperties = response.data.object.productDetails;
+      //     this.productColor = response.data.object.productColors;
+      //     this.successModal = true
+      //   })
+      //   .catch((e) => {
+      //     console.log(e.response.data);
+      //     this.errorMessage = e.response.data.errorMsg
+      //     this.failModal = true
+      //   });
     },
     getDetailProduct() {
       axios
@@ -448,6 +520,7 @@ export default {
           console.log(this.getData);
           this.productProperties = response.data.object.productDetails;
           this.productColor = response.data.object.productColors;
+          this.productPhoto = response.data.object.photos;
         })
         .catch((e) => {
           console.log(e);

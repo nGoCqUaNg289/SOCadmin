@@ -17,11 +17,41 @@
             </CButton>
       </div>
     </div>
+    <nav class="col-12 navbar justify-content-between">
+      <a class="navbar-brand">
+        <select class="form-select" aria-label="Default select example" v-model="searchStatus" @change="searchOrder(getData)">
+          <option value="" selected>Tất cả hóa đơn</option>
+          <option value="Chờ xác nhận">Chờ xác nhận</option>
+          <option value="Đã xác nhận">Đã xác nhận</option>
+          <option value="Đang giao hàng">Đang giao hàng</option>
+          <option value="Giao hàng thành công">Giao hàng thành công</option>
+          <option value="Đã hủy">Đã hủy</option>
+          <option value="Yêu cầu hủy">Yêu cầu hủy</option>
+          <option value="Đơn hàng lỗi">Đơn hàng lỗi</option>
+          <option value="Đã nhận hàng hoàn về">Đã nhận hàng hoàn về</option>
+          <!-- <option value="3">Yêu cầu hủy</option> -->
+        </select>
+      </a>
+      <div class="form-inline">
+        <input
+          class="form-control mr-sm-2"
+          type="text"
+          placeholder="Tìm kiếm hóa đơn theo số điện thoại ..."
+          aria-label="Search"
+          style="box-shadow: none;width: 350px;"
+          v-model="searchString"
+        />
+        <button class="btn btn-outline-success my-2 my-sm-0" @click="searchOrder(getData)">
+          <i class="cil-magnifying-glass"></i>
+        </button>
+      </div>
+    </nav>
     <table class="table table-hover">
       <thead>
         <tr>
           <th scope="col">Mã hóa đơn</th>
           <th scope="col" class="Title-table">Username</th>
+          <th scope="col" class="Title-table">Số điện thoại</th>
           <th scope="col" class="Title-table td-action">Tổng tiền</th>
           <th class="Title-table">Thời gian thanh toán</th>
           <th class="Title-table">Trạng thái</th>
@@ -41,6 +71,9 @@
         <tr v-for="item in pageOfItems" :key="item.id" v-else>
           <th>{{ item.id }}</th>
           <th scope="row" class="td-table-custom" @click="detailOrder(item.id)">{{ item.username }}</th>
+          <td class="td-table">
+            {{ item.customer.phone}}
+          </td>
           <td class="td-table status-color-out td-action">
             {{ formatPrice(item.sumprice) }} đ
           </td>
@@ -94,7 +127,7 @@
       <jw-pagination
         :labels="customLabels"
         :maxPages="15"
-        :items="getData"
+        :items="checkData"
         @changePage="onChangePage"
       ></jw-pagination>
     </div>
@@ -313,6 +346,7 @@ export default {
       returnProduct: false,
       cancelReturn: false,
       setIdOrder: "",
+      searchString: "",
       getData: "",
       note: "",
       formData: {
@@ -327,12 +361,40 @@ export default {
         cartDetails: "",
         productDetails: [],
       },
+      searchStatus: "",
+      checkData: []
     };
   },
   created() {
     this.getAllProduct();
   },
   methods: {
+    searchOrder(list){
+      // console.log(this.searchString)
+      // console.log(this.searchStatus)
+      console.log(list)
+      if(list.length > 0){
+        this.checkData = list.filter(data => {
+            if(this.searchString == "" && this.searchStatus == ""){
+              return true;
+            }else{
+              if(this.searchString != "" && this.searchStatus != ""){
+                return data.status == this.searchStatus && data.customer.phone.indexOf(this.searchString) >= 0
+              }else{
+                if(this.searchString != ""){
+                  return data.customer.phone.indexOf(this.searchString) >= 0
+                }else{
+                  return data.status == this.searchStatus
+                }
+              }
+            }
+          })
+      }else{
+        this.checkData = []
+      }
+     
+      
+    },
     setId(id){
       this.setIdOrder = id
     },
@@ -371,6 +433,7 @@ export default {
           })
         .then((response) => {
           this.getData = response.data.object;
+          this.searchOrder(response.data.object)
           // console.log(response.data.object);
         })
         .catch((e) => {

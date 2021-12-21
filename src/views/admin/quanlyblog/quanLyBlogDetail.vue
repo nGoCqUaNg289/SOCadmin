@@ -104,6 +104,16 @@
                           <i class="cil-trash" style="color: red; text-align: center;" @click="deleteRow(index)"></i>
                       </td>
                     </tr>
+                    <tr>
+                      <td class="text-center" colspan="4">
+                        <button
+                          style="border: none; color: red; background-color: white"
+                          @click="createNewPhoto()"
+                        >
+                          <i class="cil-plus"></i>
+                        </button>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
           </CCardBody>

@@ -105,8 +105,8 @@
           </CCardBody>
         </CCard>
       </CCol>
-        <!-- v-if="showDetail == 1" -->
-      <CCol md="12" lg="6" >
+        <!--  -->
+      <CCol md="12" lg="6" v-if="showDetail == 1">
         <CCard>
           <CCardHeader>
             <CIcon name="cil-justify-center" />
