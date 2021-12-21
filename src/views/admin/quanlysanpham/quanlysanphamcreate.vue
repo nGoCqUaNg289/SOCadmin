@@ -105,8 +105,8 @@
           </CCardBody>
         </CCard>
       </CCol>
-
-      <CCol md="12" lg="6" v-if="showDetail == 1">
+        <!-- v-if="showDetail == 1" -->
+      <CCol md="12" lg="6" >
         <CCard>
           <CCardHeader>
             <CIcon name="cil-justify-center" />
@@ -134,7 +134,15 @@
                 <tbody>
                   <tr v-for="(item, index) in orderDetails" :key="index">
                     <th scope="row">{{ index + 1 }}</th>
-                    <td><input type="text" v-model="item.propertyName" style="width: 100%;border: none;border-bottom: 1px dashed;"/></td>
+                    <td>
+                      <select class="form-select" aria-label="Default select example">
+                        <option selected>Open this select menu</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                      </select>
+                      <input type="text" v-model="item.propertyName" style="width: 100%;border: none;border-bottom: 1px dashed;"/>
+                    </td>
                     <td><input type="text" v-model="item.propertyValue" style="width: 100%;border: none;border-bottom: 1px dashed;"/></td>
                     <td>
                       <i
