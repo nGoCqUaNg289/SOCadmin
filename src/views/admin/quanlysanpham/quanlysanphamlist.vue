@@ -45,12 +45,6 @@
         </tr>
       </thead>
       <tbody>
-        <!-- <div class="spinner-grow" role="status" >
-          <span class="visually-hidden">Loading...</span>
-        </div>
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div> -->
         <th colspan="4" v-if="pageOfItems == ''">
           <div class="text-center">
             <div class="spinner-grow" role="status">
@@ -208,8 +202,6 @@ export default {
         });
     },
     dontSell(){
-      // console.log(this.setIdProduct)
-      
       axios
         .put(
           this.$store.state.MainLink + "admin/products/dontSell/" + this.setIdProduct, {},
