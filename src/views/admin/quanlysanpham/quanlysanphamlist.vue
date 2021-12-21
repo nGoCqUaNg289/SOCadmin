@@ -61,6 +61,12 @@
             {{ item.status }}
           </td>
           <td class="td-table td-action">
+            <CButton  @click="darkModal = true, setId(item.id), setTitle2()" data-toggle="tooltip" title="Ngừng kinh doanh" class="mr-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+              </svg>
+              </CButton>
             <CButton  @click="darkModal = true, setId(item.id), setTitle()" data-toggle="tooltip" title="Ngừng kinh doanh" class="mr-1" v-if="item.status != 'Không kinh doanh' && item.status != 'Ngừng kinh doanh' && item.status != 'Hết hàng'">
               <i class="cil-reload"></i>
               </CButton>
@@ -88,6 +94,13 @@
       size="lg"
       color="danger">
       Bạn có chắc muốn {{setTitleModal}} sản phẩm này ?
+      <br>
+      <select class="form-select" v-model="productStatus" v-if="setTitleModal == 'Thay đổi trạng thái'">
+        <option value="productReady" selected>Đang bán</option>
+        <option value="storageEmpty">Hết hàng</option>
+        <option value="comingsoon">Hàng sắp về</option>
+        <option value="dontSell">Ngừng kinh doanh</option>
+      </select>
       <template #header>
         <h6 class="modal-title">Xác nhận</h6>
         <CButtonClose @click="darkModal = false" class="text-white"/>
@@ -96,6 +109,7 @@
         <CButton @click="darkModal = false" color="secondary">Hủy</CButton>
         <CButton @click="darkModal = false, deleteProduct()" color="danger" v-if="setTitleModal == 'xóa'">Xóa sản phẩm</CButton>
         <CButton @click="darkModal = false, dontSell()" color="danger" v-else-if="setTitleModal == 'ngừng kinh doanh'">Ngừng kinh doanh</CButton>
+        <CButton @click="darkModal = false, changestatus()" color="danger" v-else-if="setTitleModal == 'Thay đổi trạng thái'">Thay đổi trạng thái</CButton>
       </template>
     </CModal>
   </div>
@@ -133,6 +147,7 @@ export default {
       searchString: "",
       setTitleModal: "",
       AcctionButton: "",
+      productStatus:"productReady"
     };
   },
   created() {
@@ -145,6 +160,10 @@ export default {
     },
     setTitle1(){
       this.setTitleModal = "xóa"
+      this.AcctionButton = this.setTitleModal.charAt(0).toUpperCase() +   this.setTitleModal.slice(1);
+    },
+    setTitle2(){
+      this.setTitleModal = "Thay đổi trạng thái"
       this.AcctionButton = this.setTitleModal.charAt(0).toUpperCase() +   this.setTitleModal.slice(1);
     },
     setId(id){
@@ -196,6 +215,20 @@ export default {
         .then(() => {
 
           this.getAllProduct();
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    changestatus(){
+      axios.put(this.$store.state.MainLink + `admin/products/${this.productStatus}/${this.setIdProduct}`,{}, {
+            headers: {
+              Authorization: this.$store.state.userToken,
+            },
+          })
+        .then(() => {
+          this.getAllProduct();
+          // console.log("123")
         })
         .catch((e) => {
           console.log(e);
