@@ -39,6 +39,7 @@
         <tr>
           <th scope="col" class="text-center">STT</th>
           <th scope="col" class="Title-table" colspan="1">Tên khách hàng</th>
+          <th scope="col" class="Title-table" colspan="1">Số điện thoại</th>
           <th scope="col" class="Title-table td-action" colspan="">
             Ngày tạo đơn
           </th>
@@ -69,6 +70,7 @@
         <tr v-for="item in pageOfItems" :key="item.id" v-else class="text-center">
           <th>{{ item.id }}</th>
           <td scope="row"  @click="DetailProduct(item.id)">{{ item.name }}</td>
+          <td scope="row"  @click="DetailProduct(item.id)">{{ item.phone }}</td>
           <td>
             <!-- <span class="badge rounded-pill bg-light"></span> -->
             {{ getDateString(item.expiredDate) }}

@@ -20,15 +20,16 @@
     <nav class="col-12 navbar justify-content-between">
       <a class="navbar-brand">
         <select class="form-select" aria-label="Default select example" v-model="searchStatus" @change="searchOrder(getData)">
-          <option value="" selected>Tất cả hóa đơn</option>
-          <option value="Chờ xác nhận">Chờ xác nhận</option>
+          <option value="Chờ xác nhận" selected>Chờ xác nhận</option>
+          
           <option value="Đã xác nhận">Đã xác nhận</option>
           <option value="Đang giao hàng">Đang giao hàng</option>
           <option value="Giao hàng thành công">Giao hàng thành công</option>
           <option value="Đã hủy">Đã hủy</option>
           <option value="Yêu cầu hủy">Yêu cầu hủy</option>
           <option value="Đơn hàng lỗi">Đơn hàng lỗi</option>
-          <option value="Đã nhận hàng hoàn về">Đã nhận hàng hoàn về</option>
+          <option value="Đã nhận lại hàng hoàn về">Đã nhận lại hàng hoàn về</option>
+          <option value="">Tất cả hóa đơn</option>
           <!-- <option value="3">Yêu cầu hủy</option> -->
         </select>
       </a>
@@ -361,7 +362,7 @@ export default {
         cartDetails: "",
         productDetails: [],
       },
-      searchStatus: "",
+      searchStatus: "Chờ xác nhận",
       checkData: []
     };
   },
